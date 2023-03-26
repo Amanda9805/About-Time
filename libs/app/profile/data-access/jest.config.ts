@@ -8,8 +8,11 @@ export default {
     },
   },
   transform: {
-    '^.+\\.[tj]s$': 'ts-jest',
+    '^.+\\.tsx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../../../coverage/libs/app/profile/data-access',
+  transformIgnorePatterns: [
+    'node_modules/(?!(jest-)?@?angular)',
+  ],
 };

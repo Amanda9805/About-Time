@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "firebase:use:dev": "firebase use default",
     "firebase:use:prod": "firebase use production",
     "export:emulators": "firebase emulators:export .emulators",
