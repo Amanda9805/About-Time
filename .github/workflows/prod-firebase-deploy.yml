@@ -43,9 +43,7 @@ jobs:
           
             # Deploying to firebase functions
       - name: Deploy
-        run: npx firebase-tools deploy
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
+        run: npx firebase-tools@latest deploy --only hosting --project cos301-miniproject --json
         
       # saving artifact for later use
 #       - name: Make artifact
