@@ -57,24 +57,14 @@ jobs:
           name: dist-artifact
           path: dist
       
-      # Setting Firebase
-      - name: Setting up Firebase
-        uses: pocket-apps/action-setup-firebase@v2
-        with:
-          firebase-token: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-      
-      # Setting project
-      - name: Setting project
-        run: firebase use production
-      
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-          channelId: live
-          projectId: '${{secrets.NX_FIREBASE_PROJECT_ID}}'
+          target: 'production'
+          projectId: 'cos301-miniproject'
     
   deploy_functions:
     name: "Deploying firebsae functions"
@@ -110,3 +100,4 @@ jobs:
           args: deploy --only functions
         env:
           FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
+          PROJECT_ID: 'cos301-miniproject'
