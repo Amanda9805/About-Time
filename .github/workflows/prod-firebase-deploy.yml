@@ -37,8 +37,16 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-artifact
-          path: dist
+          path: |
+            dist
+            firebase.json
+            firestore.indexes.json
+            firestore.rules
+            database.rules.json
+            .env.prod
           retention-days: 1
+      
+      # saving firebase.json
         
   deploy_app:
     name: "Deploying App"
@@ -103,4 +111,3 @@ jobs:
           args: deploy --only functions
         env:
           FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-          PROJECT_ID: 'cos301-miniproject'
