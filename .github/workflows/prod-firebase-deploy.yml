@@ -65,7 +65,7 @@ jobs:
       
       # Setting project
       - name: Setting project
-        run: firebase use default
+        run: firebase use production
       
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
@@ -101,7 +101,7 @@ jobs:
       
       # Setting project
       - name: Setting project
-        run: firebase use default
+        run: firebase use production
       
       # Deploying to firebase functions
       - name: Push to Firebase Functions
