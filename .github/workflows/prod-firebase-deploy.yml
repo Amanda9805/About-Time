@@ -30,7 +30,7 @@ jobs:
         
       # installing packages and building the app
       - name: Installing packages and buidling app
-        run: yarn install --frozen-lockfile && yarn build:app:prod
+        run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
         
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
