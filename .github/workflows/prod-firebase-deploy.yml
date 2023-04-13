@@ -30,56 +30,8 @@ jobs:
         
       # installing packages and building the app
       - name: Installing packages and buidling app
-        run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
+        run: yarn install --frozen-lockfile && yarn build:app:prod
         
-      - name: List files
-        run: |
-          cd dist
-          ls
-          cd apps
-          ls
-          cd app
-          ls
-        
-      # saving artifact for later use
-      - name: Make artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist-artifact
-          path: |
-            dist
-            firebase.json
-            firestore.indexes.json
-            firestore.rules
-            database.rules.json
-            .env.prod
-          retention-days: 1
-      
-      # saving firebase.json
-        
-  deploy_app:
-    name: "Deploying App"
-    environment: production
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      # checking out repo
-      - name: Checkout
-        uses: actions/checkout@v3
-        
-      # Getting artifacts
-      - name: Getting artifacts
-        uses: actions/download-artifact@master
-        
-      - name: CD
-        run: cd dist-artifact
-          
-      - name: "Create firebasesc"
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: ".firebasesc"
-          FILE_DATA: "${{secrets.FIREBASESC}}"
-      
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -88,6 +40,47 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
           projectId: 'cos301-miniproject'
           channelId: live
+        
+      # saving artifact for later use
+#       - name: Make artifact
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: dist-artifact
+#           path: |
+#             dist
+#             firebase.json
+#             firestore.indexes.json
+#             firestore.rules
+#             database.rules.json
+#             .env.prod
+#           retention-days: 1
+      
+      # saving firebase.json
+        
+#   deploy_app:
+#     name: "Deploying App"
+#     environment: production
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       # checking out repo
+#       - name: Checkout
+#         uses: actions/checkout@v3
+        
+#       # Getting artifacts
+#       - name: Getting artifacts
+#         uses: actions/download-artifact@master
+        
+#       - name: CD
+#         run: cd dist-artifact
+          
+#       - name: "Create firebasesc"
+#         uses: "finnp/create-file-action@master"
+#         env:
+#           FILE_NAME: ".firebasesc"
+#           FILE_DATA: "${{secrets.FIREBASESC}}"
+      
+
     
 #   deploy_functions:
 #     name: "Deploying firebsae functions"
