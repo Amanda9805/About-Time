@@ -11,7 +11,7 @@ jobs:
     steps:
       # checking out repo
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       # creating env file
       - name: .env creation
@@ -30,7 +30,7 @@ jobs:
         
       # installing packages and building the app
       - name: Installing packages and buidling app
-        run: yarn install --frozen-lockfile && yarn build:app:prod
+        run: yarn install --frozen-lockfile && yarn build:app:dev
         
       # saving artifact for later use
       - name: Make artifact
@@ -48,7 +48,7 @@ jobs:
     steps:
       # checking out repo
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         
       # Getting artifacts
       - name: Getting artifacts
