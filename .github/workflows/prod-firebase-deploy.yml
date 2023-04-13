@@ -70,6 +70,9 @@ jobs:
       # Getting artifacts
       - name: Getting artifacts
         uses: actions/download-artifact@master
+        
+      - name: CD
+        run: cd dist-artifact
           
       - name: "Create firebasesc"
         uses: "finnp/create-file-action@master"
