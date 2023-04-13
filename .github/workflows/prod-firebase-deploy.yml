@@ -56,6 +56,12 @@ jobs:
         with:
           name: dist-artifact
           path: dist
+          
+      - name: "Create firebasesc"
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: ".firebasesc"
+          FILE_DATA: "${{secrets.FIREBASESC}}"
       
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
@@ -65,6 +71,7 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
           target: 'production'
           projectId: 'cos301-miniproject'
+          channelId: live
     
   deploy_functions:
     name: "Deploying firebsae functions"
@@ -83,15 +90,11 @@ jobs:
           name: dist-artifact
           path: dist
       
-      # Setting Firebase
-      - name: Setting up Firebase
-        uses: pocket-apps/action-setup-firebase@v2
-        with:
-          firebase-token: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-      
-      # Setting project
-      - name: Setting project
-        run: firebase use production
+      - name: "Create firebasesc"
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: ".firebasesc"
+          FILE_DATA: "${{secrets.FIREBASESC}}"
       
       # Deploying to firebase functions
       - name: Push to Firebase Functions
