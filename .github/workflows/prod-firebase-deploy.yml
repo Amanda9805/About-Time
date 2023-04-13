@@ -58,7 +58,14 @@ jobs:
           path: dist
       
       # Setting Firebase
+      - name: Setting up Firebase
+        uses: pocket-apps/action-setup-firebase@v2
+        with:
+          firebase-token: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
       
+      # Setting project
+      - name: Setting project
+        run: firebase use default
       
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
@@ -85,6 +92,16 @@ jobs:
         with:
           name: dist-artifact
           path: dist
+      
+      # Setting Firebase
+      - name: Setting up Firebase
+        uses: pocket-apps/action-setup-firebase@v2
+        with:
+          firebase-token: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
+      
+      # Setting project
+      - name: Setting project
+        run: firebase use default
       
       # Deploying to firebase functions
       - name: Push to Firebase Functions
