@@ -30,7 +30,16 @@ jobs:
         
       # installing packages and building the app
       - name: Installing packages and buidling app
-        run: yarn install --frozen-lockfile && yarn build:app:prod
+        run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
+        
+      - name: List files
+        run: |
+          cd dist
+          ls
+          cd apps
+          ls
+          cd app
+          ls
         
       # saving artifact for later use
       - name: Make artifact
@@ -80,33 +89,33 @@ jobs:
           projectId: 'cos301-miniproject'
           channelId: live
     
-  deploy_functions:
-    name: "Deploying firebsae functions"
-    environment: production
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      # checking out repo
-      - name: Checkout
-        uses: actions/checkout@v3
+#   deploy_functions:
+#     name: "Deploying firebsae functions"
+#     environment: production
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       # checking out repo
+#       - name: Checkout
+#         uses: actions/checkout@v3
         
-      # Getting artifacts
-      - name: Getting artifacts
-        uses: actions/download-artifact@master
-        with:
-          name: dist-artifact
-          path: dist
+#       # Getting artifacts
+#       - name: Getting artifacts
+#         uses: actions/download-artifact@master
+#         with:
+#           name: dist-artifact
+#           path: dist
       
-      - name: "Create firebasesc"
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: ".firebasesc"
-          FILE_DATA: "${{secrets.FIREBASESC}}"
+#       - name: "Create firebasesc"
+#         uses: "finnp/create-file-action@master"
+#         env:
+#           FILE_NAME: ".firebasesc"
+#           FILE_DATA: "${{secrets.FIREBASESC}}"
           
-      - name: Deploy
-        run: npx firebase-tools deploy
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
+#       - name: Deploy
+#         run: npx firebase-tools deploy
+#         env:
+#           FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
       
       # Deploying to firebase functions
 #       - name: Push to Firebase Functions
