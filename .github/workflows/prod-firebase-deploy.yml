@@ -4,7 +4,7 @@ name: Prod | Deploy to Firebase
     branches:
       - main
 jobs:
-  build_app:
+  build:
     name: "Building App"
     environment: development
     runs-on: ubuntu-latest
@@ -43,7 +43,7 @@ jobs:
   deploy_app:
     name: "Deploying App"
     environment: production
-    needs: build_app
+    needs: build
     runs-on: ubuntu-latest
     steps:
       # checking out repo
@@ -57,11 +57,39 @@ jobs:
           name: dist-artifact
           path: dist
       
+      # Setting Firebase
+      
+      
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT_DEV }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
           channelId: live
           projectId: '${{secrets.NX_FIREBASE_PROJECT_ID}}'
+    
+  deploy_functions:
+    name: "Deploying firebsae functions"
+    environment: production
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # checking out repo
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      # Getting artifacts
+      - name: Getting artifacts
+        uses: actions/download-artifact@master
+        with:
+          name: dist-artifact
+          path: dist
+      
+      # Deploying to firebase functions
+      - name: Push to Firebase Functions
+        uses: w9jds/firebase-action@master
+        with: 
+          args: deploy --only functions
+        env:
+          FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
