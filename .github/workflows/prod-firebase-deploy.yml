@@ -42,13 +42,10 @@ jobs:
           channelId: live
           
             # Deploying to firebase functions
-      - name: Push to Firebase Functions
-        uses: w9jds/firebase-action@master
-        with: 
-          args: deploy --only functions
+      - name: Deploy
+        run: npx firebase-tools deploy
         env:
-          FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-          PROJECT_ID: '${{secrets.NX_FIREBASE_PROJECT_ID}}'
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
         
       # saving artifact for later use
 #       - name: Make artifact
