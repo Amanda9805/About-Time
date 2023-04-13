@@ -4,7 +4,7 @@ name: Prod | Deploy to Firebase
     branches:
       - main
 jobs:
-  build:
+  build_app:
     name: "Building App"
     environment: development
     runs-on: ubuntu-latest
@@ -36,14 +36,14 @@ jobs:
       - name: Make artifact
         uses: actions/upload-artifact@v3
         with:
-          name: app-artifacts
-          path: app-artifacts
+          name: dist-artifact
+          path: dist
           retention-days: 1
         
-  deploy:
+  deploy_app:
     name: "Deploying App"
     environment: production
-    needs: build
+    needs: build_app
     runs-on: ubuntu-latest
     steps:
       # checking out repo
@@ -54,8 +54,8 @@ jobs:
       - name: Getting artifacts
         uses: actions/download-artifact@master
         with:
-          name: app-artifacts
-          path: app-artifacts
+          name: dist-artifact
+          path: dist
       
       # Pushing to Firebase
       - name: Pushing to Firebase Hosting
