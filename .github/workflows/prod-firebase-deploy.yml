@@ -41,6 +41,15 @@ jobs:
           projectId: 'cos301-miniproject'
           channelId: live
           
+          
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
+          PROJECT_ID: ${{ secrets.NX_FIREBASE_PROJECT_ID }}
+          
       - name: Create SA key
         run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}' > $HOME/gcloud.json
       - name: Set project
