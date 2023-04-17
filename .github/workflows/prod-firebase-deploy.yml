@@ -33,7 +33,7 @@ jobs:
         run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
         
       # Pushing to Firebase
-       - name: Pushing to Firebase Hosting
+      - name: Pushing to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
