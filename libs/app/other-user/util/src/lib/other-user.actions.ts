@@ -1,4 +1,5 @@
 import { IProfile } from '@mp/api/profiles/util';
+import { IUser } from '@mp/api/users/util';
 import { IRelation } from 'libs/api/profiles/util/src/interfaces/relation.interface';
 
 
@@ -25,11 +26,11 @@ export class SetPosts {
 
 export class SetOtherProfile {
   static readonly type = '[OtherUser] SetOtherProfile';
-  constructor(public readonly profile: IProfile | null) {}
+  constructor(public readonly user: IUser | null) {}
 }
 
 export class SetCurrentProfile {
   static readonly type = '[OtherUser] SetCurrentProfile';
-  constructor(public readonly profile: IProfile | null) {}
+  // constructor(public readonly profile: IProfile | null) {}
 }
 

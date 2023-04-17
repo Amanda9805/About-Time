@@ -3,6 +3,8 @@ import {
   FetchUserPostsRequest,
   ICheckRelationshipRequest,
   ICheckRelationshipResponse,
+  IFetchProfileRequest,
+  IFetchProfileResponse,
   IFetchUserPostsResponse,
   IUpdateAccountDetailsRequest,
   IUpdateAccountDetailsResponse,
@@ -50,5 +52,15 @@ export const updateRelation = functions.https.onCall(
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(ProfilesService);
     return service.updateRelation(request);
+  }
+);
+
+export const fetchProfile = functions.https.onCall(
+  async (
+    request: IFetchProfileRequest
+  ): Promise<IFetchProfileResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(ProfilesService);
+    return service.fetchProfile(request);
   }
 );

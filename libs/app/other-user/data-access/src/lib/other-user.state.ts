@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { IPostList, IProfile, IUpdateRelationRequest, IRelation, RelationEnum, ICheckRelationshipRequest, FetchUserPostsRequest } from '@mp/api/profiles/util';
+import { IPostList, IProfile, IUpdateRelationRequest, IRelation, RelationEnum, ICheckRelationshipRequest, FetchUserPostsRequest, IFetchProfileRequest } from '@mp/api/profiles/util';
 import { SetError } from '@mp/app/errors/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { OtherUserApi } from './other-user.api';
 import { SetCurrentProfile, SetOtherProfile, SetPosts, SetRelation, UpdateRelation } from '@mp/app/other-user/util';
 // import { IRelation } from 'libs/api/profiles/util/src/interfaces/relation.interface';
+import { AuthState } from '@mp/app/auth/data-access';
+
 
 export interface OtherUserStateModel {
   currentUser: IProfile | null;
@@ -147,19 +149,33 @@ export class OtherUserState {
   }
 
   @Action(SetOtherProfile)
-  setOtherProfile(ctx: StateContext<OtherUserStateModel>, { profile }: SetOtherProfile) {
+  async setOtherProfile(ctx: StateContext<OtherUserStateModel>, { user }: SetOtherProfile) {
+
+    // Create the request using the passed in user
+    const request: IFetchProfileRequest = {
+      user: user!,
+    }
+    
+    // First call the api fetchUserPosts function
+    const responseRef = await this.otherUserApi.fetchProfile(request);
+    const response = responseRef.data;
+
+    // Assign the retrieved data to the otherUser
     return ctx.setState(
       produce((draft) => {
-        draft.otherUser = profile;
+        draft.otherUser = response.profile;
       })
     );
   }
 
   @Action(SetCurrentProfile)
-  setCurrentProfile(ctx: StateContext<OtherUserStateModel>, { profile }: SetCurrentProfile) {
+  setCurrentProfile(ctx: StateContext<OtherUserStateModel>) {
+    // Get current user from AUTH state
+    var user = this.store.selectSnapshot(AuthState).user;
+
     return ctx.setState(
       produce((draft) => {
-        draft.currentUser = profile;
+        draft.currentUser = user;
       })
     );
   }

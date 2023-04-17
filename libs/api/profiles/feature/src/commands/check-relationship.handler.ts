@@ -25,19 +25,6 @@ export class CheckRelationshipHandler implements ICommandHandler<CheckRelationsh
         // Call the function to get the data from the DB (need to pass in the list of filters to determine query to make)
         const checkRelationshipDoc = await this.repository.checkRelationship(relationship);
 
-        // // Some logic to determine if any posts were returned
-        // let flag = false;
-        // if (postsDoc.data.length != 0){
-        //     flag = true;
-        // }
-        
-        // // Format data into appropriate interface
-        // const responseData: PostList = {"postsFound": flag, "list" : postsDoc.data};
-        
-
-        // // Format the data from above to match the interface defined for the response
-        // const response : FetchPostsResponse = {"posts" : responseData};
-
         const responseData: IRelation = {"exists": checkRelationshipDoc.exists, "type": checkRelationshipDoc.type as RelationEnum};
 
         const response : ICheckRelationshipResponse = {"relation" : responseData};
