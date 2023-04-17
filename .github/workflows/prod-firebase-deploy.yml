@@ -56,8 +56,8 @@ jobs:
           firebase_token: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
       # - run: firebase use production
       - run: | 
-          firebase use default
+          firebase use cos301-miniproject
           firebase deploy --only hosting
       - run: |
-          firebase use default
+          firebase use cos301-miniproject
           firebase deploy --only functions
