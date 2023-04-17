@@ -9,12 +9,10 @@ jobs:
     environment: production
     runs-on: ubuntu-latest
     steps:
-      # checking out repo
-      - name: Checkout
+      - name: 🛏️ Checkout repository
         uses: actions/checkout@v3
         
-      # creating env file
-      - name: .env creation
+      - name: 📁 Create ENV File
         run: |
           touch .env.prod
           echo NX_ENVIRONMENT="production" >> .env.prod
@@ -28,12 +26,18 @@ jobs:
           echo NX_FIREBASE_API_KEY='${{ secrets.NX_FIREBASE_API_KEY }}' >> .env.prod
           cat .env.prod
         
-      # installing packages and building the app
-      - name: Installing packages and buidling app
+      - name: 🧰 Installing packages and buidling app
         run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
         
-      # Pushing to Firebase
-      - name: Pushing to Firebase Hosting
+      - name: 💀 Delete all Firebase Cloud Functions
+        uses: w9jds/firebase-action@master
+        with:
+          args: functions:delete default --project production
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
+          PROJECT_ID: '${{ secrets.NX_FIREBASE_PROJECT_ID }}'
+        
+      - name: 🔥 Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
@@ -41,18 +45,10 @@ jobs:
           projectId: 'cos301-miniproject'
           channelId: live
           
-          
-      - name: Deploy to Firebase
+      - name: 🔥 Deploy to Firebase Cloud Functions
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions --project production
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
           PROJECT_ID: '${{ secrets.NX_FIREBASE_PROJECT_ID }}'
-          
-      - name: Create SA key
-        run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}' > $HOME/gcloud.json
-      - name: Set project
-        run: firebase use production
-      - name: Deploy Cloud Functions
-        run: export GOOGLE_APPLICATION_CREDENTIALS=$HOME/gcloud.json && npx firebase-tools deploy --only functions --json
