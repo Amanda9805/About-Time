@@ -6,7 +6,7 @@ name: Prod | Deploy to Firebase
 jobs:
   build:
     name: "Building App"
-    environment: development
+    environment: production
     runs-on: ubuntu-latest
     steps:
       # checking out repo
