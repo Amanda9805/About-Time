@@ -8,3 +8,4 @@ export * from './update-profile-status.command';
 export * from './check-relationship.command';
 export * from './fetch-user-posts.command';
 export * from './update-relation.command';
+export * from './fetch-profile.command';
