@@ -42,10 +42,13 @@ jobs:
           channelId: live
           
             # Deploying to firebase functions
-      - name: Deploy
-        run: npx firebase-tools@latest deploy --only functions --project cos301-miniproject --json
+      - name:  Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+            args: deploy --only functions
+            repoToken: '${{ secrets.GITHUB_TOKEN }}'
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
+            FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
       # saving artifact for later use
 #       - name: Make artifact
 #         uses: actions/upload-artifact@v3
