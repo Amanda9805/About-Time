@@ -33,14 +33,14 @@ jobs:
         run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
         
       # Pushing to Firebase
-      # - name: Pushing to Firebase Hosting
-      #  uses: FirebaseExtended/action-hosting-deploy@v0
-      #  with:
-      #    repoToken: '${{ secrets.GITHUB_TOKEN }}'
-      #    firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-      #    projectId: 'cos301-miniproject'
-      #    channelId: live
-      #    
+       - name: Pushing to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
+          projectId: 'cos301-miniproject'
+          channelId: live
+          
       # Deploying to firebase functions
       # - name:  Deploy to Firebase
       #  uses: w9jds/firebase-action@master
@@ -50,23 +50,23 @@ jobs:
       #      FIREBASE_TOKEN: ''${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}''
       #      PROJECT_ID: 'cos301-miniproject'
       
-      - run: cat .firebaserc
+      #- run: cat .firebaserc
       
-      - name: "📚 Create firebasesc"
-        uses: "finnp/create-file-action@master"
-        env:
-          FILE_NAME: ".firebasesc"
-          FILE_DATA: "${{secrets.FIREBASESC}}"
+      #- name: "📚 Create firebasesc"
+      #  uses: "finnp/create-file-action@master"
+      #  env:
+      #    FILE_NAME: ".firebasesc"
+      #    FILE_DATA: "${{secrets.FIREBASESC}}"
           
-      - run: ls -a
-      - run: cat .firebaserc
+      # - run: ls -a
+      # - run: cat .firebaserc
       
-      - uses: w9jds/setup-firebase@main
-        with:
-          tools-version: 11.27.0
-          firebase_token: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
+      # - uses: w9jds/setup-firebase@main
+       # with:
+       #   tools-version: 11.27.0
+       #   firebase_token: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
       # - run: firebase use production
-      - run: ls -a
+      # - run: ls -a
       # - run: firebase use production
-      - run: firebase deploy --only hosting --project cos301-miniproject
-      - run: firebase deploy --only functions --project cos301-miniproject
+      # - run: firebase deploy --only hosting --project cos301-miniproject
+      # - run: firebase deploy --only functions --project cos301-miniproject
