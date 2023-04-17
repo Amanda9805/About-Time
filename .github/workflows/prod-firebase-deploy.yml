@@ -41,11 +41,11 @@ jobs:
           projectId: 'cos301-miniproject'
           channelId: live
           
-            # Deploying to firebase functions
+      # Deploying to firebase functions
       - name:  Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
             args: deploy --only functions
         env:
             FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-            PROJECT_ID: '${{secrets.NX_FIREBASE_PROJECT_ID}}'
+            PROJECT_ID: 'cos301-miniproject'
