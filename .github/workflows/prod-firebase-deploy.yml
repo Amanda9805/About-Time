@@ -50,6 +50,17 @@ jobs:
       #      FIREBASE_TOKEN: ''${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}''
       #      PROJECT_ID: 'cos301-miniproject'
       
+      - run: cat .firebaserc
+      
+      - name: "📚 Create firebasesc"
+        uses: "finnp/create-file-action@master"
+        env:
+          FILE_NAME: ".firebasesc"
+          FILE_DATA: "${{secrets.FIREBASESC}}"
+          
+      - run: ls -a
+      - run: cat .firebaserc
+      
       - uses: w9jds/setup-firebase@main
         with:
           tools-version: 11.27.0
