@@ -24,18 +24,10 @@ jobs:
           echo NX_FIREBASE_APP_ID='${{ secrets.NX_FIREBASE_APP_ID }}' >> .env.prod
           echo NX_FIREBASE_MEASUREMENT_ID='${{ secrets.NX_FIREBASE_MEASUREMENT_ID }}' >> .env.prod
           echo NX_FIREBASE_API_KEY='${{ secrets.NX_FIREBASE_API_KEY }}' >> .env.prod
-          cat .env.prod
+          # cat .env.prod
         
       - name: 🧰 Installing packages and buidling app
         run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
-        
-      - name: 💀 Delete all Firebase Cloud Functions
-        uses: w9jds/firebase-action@master
-        with:
-          args: functions:delete default --project production
-        env:
-          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
-          PROJECT_ID: '${{ secrets.NX_FIREBASE_PROJECT_ID }}'
         
       - name: 🔥 Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
