@@ -33,19 +33,27 @@ jobs:
         run: yarn install --frozen-lockfile && yarn build:app:prod && yarn build:api:prod
         
       # Pushing to Firebase
-      - name: Pushing to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-          projectId: 'cos301-miniproject'
-          channelId: live
-          
+      # - name: Pushing to Firebase Hosting
+      #  uses: FirebaseExtended/action-hosting-deploy@v0
+      #  with:
+      #    repoToken: '${{ secrets.GITHUB_TOKEN }}'
+      #    firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
+      #    projectId: 'cos301-miniproject'
+      #    channelId: live
+      #    
       # Deploying to firebase functions
-      - name:  Deploy to Firebase
-        uses: w9jds/firebase-action@master
+      # - name:  Deploy to Firebase
+      #  uses: w9jds/firebase-action@master
+      #  with:
+      #      args: deploy --only functions
+      #  env:
+      #      FIREBASE_TOKEN: ''${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}''
+      #      PROJECT_ID: 'cos301-miniproject'
+      
+      - uses: w9jds/setup-firebase@main
         with:
-            args: deploy --only functions
-        env:
-            FIREBASE_TOKEN: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}'
-            PROJECT_ID: 'cos301-miniproject'
+          tools-version: 11.27.0
+          firebase_token: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_COS301_MINIPROJECT }}
+      - run: firebase use production
+      - run: firebase deploy --only hosting
+      - run: firebase deploy --only functions
