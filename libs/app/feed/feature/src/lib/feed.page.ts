@@ -37,7 +37,7 @@ export class FeedPage {
       if (feed.model.list != null){
 
         this.postsData.postsFound = true;
-
+        this.postsData.list = [];//reset the posts data
         feed?.model.list?.forEach((post) => {
           this.postsData.list?.push(post);
         })
