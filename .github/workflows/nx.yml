@@ -4,7 +4,7 @@ on: push
 jobs:
   nrwl_test:
     name: "🐳 NRWL NX Text"
-    environment: development
+    environment: production
     runs-on: ubuntu-latest
     steps:
       - name: 🛏️ Checkout repository
