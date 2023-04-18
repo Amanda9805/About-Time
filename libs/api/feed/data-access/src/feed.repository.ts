@@ -183,6 +183,10 @@ export class FeedRepository {
     return { "timeRemaing": true, "value": 1000 };
   }
 
+  async modifyUserTime(timeMod : UserTimeModification){
+    return Status.SUCCESS;
+  }
+
 
 
   //   async findOne(profile: IProfile) {
