@@ -1,7 +1,9 @@
  <div id="wrapper"  (touchstart)="touchStart($event)" (touchend)="touchEnd()" (touchmove)="touchMove($event)">
 <ion-grid class="grid-container">
-  <ion-row class="title-container">
+  <ion-row>
     <ion-button (click)="goBack()"><ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon></ion-button>
+  </ion-row>
+  <ion-row class="title-container">
       <h1>{{posts.list?.at(currentPostIndex)?.title}}</h1>
   </ion-row>
   <ion-row>
@@ -15,8 +17,8 @@
     </ion-card>
   </ion-row>
   <ion-row class="post-navigation-container">
-    <ion-col><ion-icon  size="large" name="caret-back-outline"></ion-icon></ion-col>
-    <ion-col><ion-icon  size="large" name="caret-forward-outline"></ion-icon></ion-col>
+    <ion-col><ion-button (click)="back()"><ion-icon  class="nav-icons" size="large" name="caret-back-outline"></ion-icon></ion-button></ion-col>
+    <ion-col><ion-button (click)="forward()"><ion-icon  class="nav-icons" size="large" name="caret-forward-outline"></ion-icon></ion-button></ion-col>
   </ion-row>
   <ion-row class="post-content-row-container">
     <ion-col>

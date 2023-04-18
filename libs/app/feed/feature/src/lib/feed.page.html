@@ -1,4 +1,4 @@
-  <ion-chip>{{userTime}}</ion-chip>
+  <!-- <ion-chip>{{userTime}}</ion-chip> -->
   <ion-content *ngIf="feedOpen==false">
     <mp-feed-closed [posts]="postsData" (filterChanged)="setFilters($event)" (setCurrentPost)="setPost($event)"></mp-feed-closed>
   </ion-content>
