@@ -15,7 +15,7 @@ export class FetchPostsHandler implements ICommandHandler<FetchPostsCommand, Fet
 
         // This object will contain the data sent by the request (whose interface you have already defined)
         const request = command.request;
-        
+
         // Get the parameters from the request (in this case the filters)
         const filters = request.filters
 
@@ -23,17 +23,17 @@ export class FetchPostsHandler implements ICommandHandler<FetchPostsCommand, Fet
         const postsDoc = await this.repository.fetchPosts(filters);
 
         // Some logic to determine if any posts were returned
-        let flag = false;
+        let flag = false
         if (postsDoc.data.length != 0){
             flag = true;
         }
-        
+
         // Format data into appropriate interface
         const responseData: PostList = {"postsFound": flag, "list" : postsDoc.data};
 
         // Format the data from above to match the interface defined for the response
         const response : FetchPostsResponse = {"posts" : responseData};
-        
+
         return response;
     }
 }
