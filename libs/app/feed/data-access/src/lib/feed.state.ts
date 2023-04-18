@@ -6,7 +6,6 @@ import {
   SetPost,
   SetPostList,
   SetTimeModification,
-  SetUserTime,
 } from '@mp/app/feed/util';
 
 
@@ -19,15 +18,12 @@ import {
   Discipline,
   FilterType,
   FetchPostsRequest,
-  FetchPostsResponse,
 } from '@mp/api/feed/util';
 
 import { IUser } from '@mp/api/users/util';
 
 import { FeedApi } from './feed.api';
 import { SetError } from '@mp/app/errors/util';
-import { fetchPosts } from '@mp/api/core/feature';
-import { AuthState } from '@mp/app/auth/data-access';
 
 export interface FeedStateModel {
 

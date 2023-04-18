@@ -8,9 +8,10 @@ import { NgxsModule } from '@ngxs/store';
 import { FeedApi, FeedState } from '@mp/app/feed/data-access';
 import { NgxsActionsExecutingModule } from '@ngxs-labs/actions-executing';
 import { SetPostList } from '@mp/app/feed/util';
+import { TimerModule } from '@mp/app/timer/feature';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, FeedRouting, FeedUIModule, NgxsModule.forFeature([FeedState])],
+  imports: [CommonModule, IonicModule, FeedRouting, FeedUIModule, TimerModule, NgxsModule.forFeature([FeedState])],
   declarations: [FeedPage],
   providers: [FeedApi],
   //exports: [FeedPage],
