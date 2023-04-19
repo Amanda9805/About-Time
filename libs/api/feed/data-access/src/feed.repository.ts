@@ -176,19 +176,60 @@ export class FeedRepository {
         return Status.FAILURE;
       })
       
-      // Will this work?
       return Status.FAILURE;
 
   }
 
   async getUserTime(user: IUser) {
     // Query the database to return the amount of time the user has left
+    const userID = user.id;
+    const documents = await admin.firestore()
+          .collection("Profiles")
+          .where("userId", "==", userID)
+          .get();
 
-    return { "timeRemaing": true, "value": 1000 };
+    const profile = documents.docs[0];
+    const time = profile.data()["timeWatched"];
+
+    let flag = false;
+    if (time > 0){
+      flag = true;
+    }
+
+    return { "timeRemaing": flag, "value": time };
   }
 
   async modifyUserTime(timeMod : UserTimeModification){
-    return Status.SUCCESS;
+    const userID = timeMod.userID;
+    const amount = timeMod.timeValue;
+
+    const document = await admin.firestore()
+      .collection("Profiles")
+      .where("userId", "==", userID)
+      .get().then((user) => {
+        if (user.empty) {
+          return Status.FAILURE;
+        } else {
+
+          const docUser = user.docs[0];
+          let currValue = docUser?.data()["timeWatched"];
+          currValue += amount;
+
+          docUser.ref.update({ timeWatched: currValue }).then(() => {
+            return Status.SUCCESS;
+          }).catch(() => {
+            return Status.FAILURE;
+          });
+          return Status.FAILURE;
+        }
+      }
+      ).catch(() => {
+        return Status.FAILURE;
+      }).finally(() =>{
+        return Status.FAILURE;
+      })
+      
+      return Status.FAILURE;
   }
 
 
