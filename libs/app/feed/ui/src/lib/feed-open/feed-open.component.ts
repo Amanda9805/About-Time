@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Discipline, FilterType, Post, PostList, TimeModification } from '@mp/api/feed/util';
+import { SetUserTimeModification } from '@mp/app/timer/util';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'mp-feed-open',
@@ -16,8 +18,10 @@ export class FeedOpenComponent {
   };
 
   @Input() currentPost = 0;
-
-
+  feedOpen = true;
+  constructor(private store: Store) {
+    //
+  }
 
   // posts : PostList = {
   //   postsFound : false,
@@ -63,11 +67,13 @@ export class FeedOpenComponent {
 
   ngOnInit(){
     this.startTime = Date.now();
+
     this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
   }
 
   ngOnDestroy(){
     this.endTime = Date.now();
+    this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime}));
     this.updatePostTime.emit({
       postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
       time : this.endTime - this.startTime,
@@ -119,6 +125,7 @@ export class FeedOpenComponent {
     if(this.currentPostIndex>0){
       if(this.startTime != 0){
        this.endTime = Date.now();
+       this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime}));
        this.updatePostTime.emit({
          postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
          time : this.endTime - this.startTime,
@@ -139,7 +146,7 @@ export class FeedOpenComponent {
     if(this.currentPostIndex < this.posts.list.length - 1){
       if(this.startTime != 0){
         this.endTime = Date.now();
-        console.log('Time elapsed' , this.endTime - this.startTime);
+        this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime}));
         this.updatePostTime.emit({
           postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
           time : this.endTime - this.startTime,

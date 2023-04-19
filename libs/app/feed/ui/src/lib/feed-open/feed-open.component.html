@@ -1,5 +1,6 @@
  <div id="wrapper"  (touchstart)="touchStart($event)" (touchend)="touchEnd()" (touchmove)="touchMove($event)">
-<ion-grid class="grid-container">
+  <mp-timer [feedOpen]="feedOpen"></mp-timer>
+  <ion-grid class="grid-container">
   <ion-row>
     <ion-button (click)="goBack()"><ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon></ion-button>
   </ion-row>
