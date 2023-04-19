@@ -22,19 +22,18 @@
                 <h5 class="status-text">{{user.status}}</h5>
             </ion-text>
             
-       
-        
         <!-- Time left -->
             <ion-text>
                 <!-- If not private OR if private and friends -->
-                <h2 *ngIf="!user.private || (user.private && user.friends)" >10:00:30</h2>
+                <h2 *ngIf="!user.private || (user.private && user.friends)" >{{user.time}}</h2>
         
                 <!-- If user.private and not user.friends -->
                 <h2 *ngIf="user.private && !user.friends" >__:__:__</h2>
             </ion-text>
         <!-- Message Button --><!-- Friend Button - Dropdown? / perhaps ion-action-sheet -->
         <ion-list>
-            <ion-button shape="small">Message</ion-button><ion-button shape="small">Friend</ion-button>
+            <!-- <ion-button shape="small">Message</ion-button> -->
+            <ion-button shape="small">Friend</ion-button>
         </ion-list>
     </div>
 </ion-header>

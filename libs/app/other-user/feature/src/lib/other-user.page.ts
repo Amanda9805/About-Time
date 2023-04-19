@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
-import { IProfile, RelationEnum } from '@mp/api/profiles/util';
+import { IBadge, IMeter, IProfile, RelationEnum } from '@mp/api/profiles/util';
 import { OtherUserState } from '@mp/app/other-user/data-access';
 import { AuthState } from '@mp/app/auth/data-access';
 import { SetOtherProfile, SetRelation } from '@mp/app/other-user/util';
 import { Select, Store } from '@ngxs/store';
-import { IBadge } from 'libs/api/profiles/util/src/interfaces/badge.interface';
-import { IMeter } from 'libs/api/profiles/util/src/interfaces/meter.interface';
 import { Observable } from 'rxjs';
 
 
@@ -128,7 +126,7 @@ export class OtherUserPage {
       }
       else
       {
-        this.private == false;
+        this.private = false;
       }
 
     })
