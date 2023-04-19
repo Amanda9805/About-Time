@@ -187,7 +187,7 @@ export class FeedRepository {
           .get();
 
     const profile = documents.docs[0];
-    const time = profile.data()["timeWatched"];
+    const time = profile.data()["time"];
 
     let flag = false;
     if (time > 0){
@@ -211,7 +211,7 @@ export class FeedRepository {
 
           const docUser = user.docs[0];
       
-          docUser.ref.update({ timeWatched: admin.firestore.FieldValue.increment(amount)}).then(() => {
+          docUser.ref.update({ time: admin.firestore.FieldValue.increment(amount)}).then(() => {
             return Status.SUCCESS;
           }).catch(() => {
             return Status.FAILURE;
