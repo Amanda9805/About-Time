@@ -14,18 +14,18 @@ export class FriendsRepository {
             data : [
                 {
                     id : "friend_1",
-                    username : "Fire Lord Edwin"
-                    //image : link i presume 
+                    username : "Fire Lord Edwin",
+                    image : 'https://cdn.onlinewebfonts.com/svg/img_522399.png'//random image from web
                 }, 
                 {
                     id : "friend_2",
-                    username : "MadKea"
-                    //image : link i presume
+                    username : "MadKea",
+                    image : 'https://cdn.onlinewebfonts.com/svg/img_522399.png' //random image from web
                 },
                 {
                     id : "friend_3",
-                    username : "Lucky Luke"
-                    //image : link i presume
+                    username : "Lucky Luke",
+                    image : 'https://cdn.onlinewebfonts.com/svg/img_522399.png' //random image from web
                 }
             ]
         };
