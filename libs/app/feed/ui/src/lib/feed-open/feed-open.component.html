@@ -1,5 +1,4 @@
  <div id="wrapper"  (touchstart)="touchStart($event)" (touchend)="touchEnd()" (touchmove)="touchMove($event)">
-  <mp-timer [feedOpen]="feedOpen"></mp-timer>
   <ion-grid class="grid-container">
   <ion-row>
     <ion-button (click)="goBack()"><ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon></ion-button>
@@ -13,7 +12,9 @@
       <img src="https://ionicframework.com/docs/img/demos/thumbnail.svg" alt="">
       <ion-col class="timer-container">
         <div class="timer-col-containers"><ion-chip>{{posts.list?.at(currentPostIndex)?.author}}</ion-chip><ion-chip>{{posts.list?.at(currentPostIndex)?.time}}</ion-chip></div>
-        <div class="timer-col-containers"><ion-chip>00:01:14</ion-chip></div>
+        <div class="timer-col-containers">
+          <mp-timer id="timer" [feedOpen]="feedOpen"></mp-timer>
+        </div>
       </ion-col>
     </ion-card>
   </ion-row>
