@@ -159,10 +159,8 @@ export class FeedRepository {
         } else {
 
           const docPost = post.docs[0];
-          let currValue = docPost?.data()["timeWatched"];
-          currValue += amount;
 
-          docPost.ref.update({ timeWatched: currValue }).then(() => {
+          docPost.ref.update({ timeWatched: admin.firestore.FieldValue.increment(amount) }).then(() => {
             return Status.SUCCESS;
           }).catch(() => {
             return Status.FAILURE;
