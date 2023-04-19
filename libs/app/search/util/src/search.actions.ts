@@ -8,6 +8,6 @@ export class SetMinimizedProfile {
 
 export class SetProfilesList {
   static readonly type = '[Search] SetProfilesList';
-  constructor(public readonly message: string | null) { }
+  constructor(public payload : {username : string}) { }
 }
 

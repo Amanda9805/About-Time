@@ -1,8 +1,9 @@
-$backgroundColor: #242423;
-$vibrantGreen: #0E8C00;
-
 .container {
-  background-color: $backgroundColor;
+  background-color: #1D2A1C;
+}
+
+.container>* {
+  background-color: #1D2A1C;
 }
 
 .textColor{
@@ -12,7 +13,7 @@ $vibrantGreen: #0E8C00;
 
 
 ion-icon {
-  color: white;
+  color: #0E8C00;
 }
 ion-button {
   --border-radius: 0;

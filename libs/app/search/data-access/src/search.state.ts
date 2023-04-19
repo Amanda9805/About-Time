@@ -11,7 +11,7 @@ export interface SearchStateModel {
 
   minimizedProfile: MinimizedProfile | null;
   profilesList: ProfilesList | null;
-  
+
   MinimizedProfile : {
     model: {
       username: string | null;
@@ -36,7 +36,7 @@ export interface SearchStateModel {
 @State<SearchStateModel>({
   name: 'search',
   defaults: {
-    minimizedProfile: null, 
+    minimizedProfile: null,
     profilesList: null,
 
     MinimizedProfile: {
@@ -63,10 +63,10 @@ export interface SearchStateModel {
 
 @Injectable()
 export class SearchState{
-  [x: string]: any;
   constructor(
     private readonly store: Store,
-  ) { }
+    private readonly SearchApi: SearchApi,
+  ) {}
 
   @Selector()
   static profilesList(state: SearchStateModel) {
@@ -74,23 +74,30 @@ export class SearchState{
   }
 
   @Action(SetProfilesList)
-  async setProfilesLIst(
-    ctx: StateContext<SearchStateModel>) {
+  async setProfilesList(
+    ctx: StateContext<SearchStateModel>,
+    {payload}: SetProfilesList
+    ){
 
     const rqst: SearchRequest = {
-      username: this.store.selectSnapshot(SearchState).username,
+      username: payload.username,
     };
-    
+
     const listOfProfiles = await this.SearchApi.search$(rqst);
 
     const arrOfProfiles: MinimizedProfile[] = [];
 
-    listOfProfiles.data.list?.forEach((profile) => {
-      arrOfProfiles.push({
-        username: profile.username,
-        imageURL: profile.imageURL,
+    if(listOfProfiles.data.profiles?.userFound){
+      listOfProfiles.data.profiles?.list?.forEach((profile) => {
+        arrOfProfiles.push({
+          username: profile.username,
+          imageURL: profile.imageURL,
+        });
       });
-    });
+    }else{
+      console.log("No user found");
+    }
+
 
     console.table(arrOfProfiles);
 
