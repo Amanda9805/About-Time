@@ -5,10 +5,14 @@
   align-items: center;
 }
 
+ion-button{
+  --background: #0E8C00;
+}
+
 h1{
-  font-size: 3rem;
+  font-size: 1rem;
   font-weight: 500;
-  color: #000000;
+  color: white;
 }
 
 ion-card{
@@ -17,6 +21,8 @@ ion-card{
   height: fit-content;
   display: grid;
   place-items: center;
+  --background: #1D2A1C;
+  --color: white;
 }
 
 img{
@@ -103,5 +109,15 @@ ion-chip{
   left: 0px;
   top: 0px;
   position: absolute;
-  background-color: white;
+}
+
+.nav-icons{
+  color: #0E8C00;
+}
+
+ion-row{
+  ion-button{
+    --background: transparent;
+
+  }
 }

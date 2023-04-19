@@ -99,25 +99,47 @@ export class FeedOpenComponent {
       //do nothing
     }else if(this.tEnd-this.tStart > 200) {
       //go back one post
-      if(this.startTime != 0){
-        this.endTime = Date.now();
-        this.updatePostTime.emit({
-          postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
-          time : this.endTime - this.startTime,
-        });
-      }
-      this.startTime = Date.now();//reset timer
-
-      console.log(this.posts?.list?.at(this.currentPostIndex))
-      if (this.currentPostIndex > 0){
-        this.currentPostIndex--;
-      }
-      this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
+      this.back();
 
     }else if(this.tEnd-this.tStart < -200) {
       //go forward one post
+      this.forward();
+      }
+  }
+
+  touchMove(e : TouchEvent) {
+    this.tEnd = e.touches[0].pageX;
+  }
+
+  goBack(){
+    this.retutnToFeedClosed.emit();
+  }
+
+  back(){
+    if(this.currentPostIndex>0){
+      if(this.startTime != 0){
+       this.endTime = Date.now();
+       this.updatePostTime.emit({
+         postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
+         time : this.endTime - this.startTime,
+       });
+     }
+     this.startTime = Date.now();//reset timer
+
+     console.log(this.posts?.list?.at(this.currentPostIndex))
+     if (this.currentPostIndex > 0){
+       this.currentPostIndex--;
+     }
+     this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
+     }
+  }
+
+  forward(){
+    if(this.posts.list!=null)
+    if(this.currentPostIndex < this.posts.list.length - 1){
       if(this.startTime != 0){
         this.endTime = Date.now();
+        console.log('Time elapsed' , this.endTime - this.startTime);
         this.updatePostTime.emit({
           postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
           time : this.endTime - this.startTime,
@@ -130,19 +152,10 @@ export class FeedOpenComponent {
         }
       }
       this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
+      this.tStart = 0;
+      this.tEnd = 0;
 
     }
-
-    this.tStart = 0;
-    this.tEnd = 0;
-  }
-
-  touchMove(e : TouchEvent) {
-    this.tEnd = e.touches[0].pageX;
-  }
-
-  goBack(){
-    this.retutnToFeedClosed.emit();
   }
 
 }
