@@ -8,8 +8,7 @@ import { Location } from '@angular/common';
 })
 export class SettingsPage {
 
-  privacy = false;
-  sliderValue = 50;
+  privacy = true;
   public alertButtons = ['Yes', 'No'];
 
   constructor(public alertController: AlertController,  private location: Location) { }

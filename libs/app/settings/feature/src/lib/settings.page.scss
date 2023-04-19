@@ -6,7 +6,9 @@ $vibrantGreen: #0E8C00;
   --color: white;
 }
 ion-header {
+  --ion-background-color: #242423;
   ion-toolbar {
+    background-color: #242423;
     ion-title {
       font-size: 3rem;
       color: $vibrantGreen;
@@ -15,6 +17,7 @@ ion-header {
 }
 
 ion-content {
+  --ion-background-color: #242423;
   ion-list {
     ion-item {
       ion-label {
@@ -42,6 +45,10 @@ ion-content {
 .center-container {
   height: 100%;
   display: flex;
-  background-color: $backgroundColor;
+  --ion-background-color: $backgroundColor;
 }
 
+.my-toggle {
+  --background-checked: #0E8C00; // set the background color when the toggle is checked to vibrant green
+  --border-color-checked: #0E8C00; // set the border color when the toggle is checked to vibrant green
+}

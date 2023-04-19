@@ -9,8 +9,10 @@ $vibrantGreen: #0E8C00;
 
 // Custom styles for ion-header
 ion-header {
+  --ion-background-color: #242423;
+
   ion-toolbar {
-    background-color: $backgroundColor;
+    --ion-background-color: #242423;
 
       // Custom styles for ion-buttons in start slot
       ion-button {
@@ -50,7 +52,11 @@ ion-header {
 
 // Custom styles for ion-content
 ion-content {
+  --ion-background-color: #242423;
+
   form {
+    --ion-background-color: #242423;
+
     ion-item {
       ion-label {
         // Custom styles for ion-label

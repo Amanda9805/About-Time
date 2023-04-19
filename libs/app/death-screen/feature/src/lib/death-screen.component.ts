@@ -49,11 +49,11 @@ export class DeathScreenPage {
         break;
       case 'Ad':
         // Navigate to Ad page
-        this.router.navigate(['/ad']);
+       // this.router.navigate(['/ad']);
         break;
       case 'Buy':
         // Navigate to Buy page
-        this.router.navigate(['/buy']);
+       // this.router.navigate(['/buy']);
         break;
       default:
         // Do nothing for other actions

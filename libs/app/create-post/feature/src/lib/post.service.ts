@@ -10,10 +10,9 @@ export class PostService {
   createPost(postData: any): Promise<any> {
     // Create a new FormData object to send the form data as multipart/form-data
     const formData = new FormData();
-    formData.append('title', postData.title);
-    formData.append('caption', postData.caption);
-    formData.append('link', postData.link);
-    formData.append('tag', postData.tag);
+    formData.append('Title', postData.title);
+    formData.append('Caption', postData.caption);
+    formData.append('Discipline', postData.Discipline);
     if (postData.photo) {
       formData.append('photo', postData.photo, postData.photo.name);
     }
