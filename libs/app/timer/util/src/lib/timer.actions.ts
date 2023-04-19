@@ -4,5 +4,5 @@ export class SetUserTime {
 
 export class SetUserTimeModification{
   static readonly type = '[Feed] SetUserTimeModification';
-  constructor(public payload: {time : number}) {}
+  constructor(public payload: {time : number, userID : string}) {}
 }

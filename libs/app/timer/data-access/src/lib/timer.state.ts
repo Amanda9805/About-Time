@@ -124,7 +124,7 @@ export class TimerState {
     ){
     const userTimeModificationRqst = {
       modification: {
-      userID : this.store.selectSnapshot(AuthState).user.userID,
+      userID : payload.userID,
       timeValue: payload.time,
       }
     }

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { Discipline, FilterType, Post, PostList, TimeModification } from '@mp/api/feed/util';
+import { AuthState } from '@mp/app/auth/data-access';
+import { FeedState } from '@mp/app/feed/data-access';
 import { SetUserTimeModification } from '@mp/app/timer/util';
 import { Store } from '@ngxs/store';
 
@@ -73,7 +75,7 @@ export class FeedOpenComponent {
 
   ngOnDestroy(){
     this.endTime = Date.now();
-    this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime}));
+    this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
     this.updatePostTime.emit({
       postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
       time : this.endTime - this.startTime,
@@ -125,7 +127,7 @@ export class FeedOpenComponent {
     if(this.currentPostIndex>0){
       if(this.startTime != 0){
        this.endTime = Date.now();
-       this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime}));
+       this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
        this.updatePostTime.emit({
          postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
          time : this.endTime - this.startTime,
@@ -146,7 +148,7 @@ export class FeedOpenComponent {
     if(this.currentPostIndex < this.posts.list.length - 1){
       if(this.startTime != 0){
         this.endTime = Date.now();
-        this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime}));
+        this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
         this.updatePostTime.emit({
           postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
           time : this.endTime - this.startTime,

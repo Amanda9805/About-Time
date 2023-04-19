@@ -8,6 +8,7 @@ import {
   SetTimeModification,
 } from '@mp/app/feed/util';
 
+import {SetUserTimeModification} from '@mp/app/timer/util'
 
 import {
   FilterList,
@@ -18,12 +19,15 @@ import {
   Discipline,
   FilterType,
   FetchPostsRequest,
+  FetchPostsResponse,
 } from '@mp/api/feed/util';
 
 import { IUser } from '@mp/api/users/util';
 
 import { FeedApi } from './feed.api';
 import { SetError } from '@mp/app/errors/util';
+import { fetchPosts } from '@mp/api/core/feature';
+import { AuthState } from '@mp/app/auth/data-access';
 
 export interface FeedStateModel {
 
@@ -273,6 +277,10 @@ export class FeedState {
         const addTimeRqst = {modification : this.store.selectSnapshot(FeedState).timeModification};
 
         const rqstStatus = await this.feedApi.addTime$(addTimeRqst);
+
+        const authorID = this.store.selectSnapshot(FeedState).post.author.id;
+
+        ctx.dispatch(new SetUserTimeModification({time: payload.time ,userID: authorID}));
 
         if(rqstStatus.data.status === 'success'){
           console.log('Time added successfully');
