@@ -144,9 +144,9 @@ export class FeedRepository {
   }
 
 
-  async addTime(timeMode: TimeModification) {
+  async addTime(timeMode: TimeModification) : Promise<Status> {
     // Query the database to add the amount of time to the post
-
+    
     const postID = timeMode.postID;
     const amount = timeMode.time;
 
@@ -172,8 +172,12 @@ export class FeedRepository {
       }
       ).catch(() => {
         return Status.FAILURE;
-      });
-
+      }).finally(() =>{
+        return Status.FAILURE;
+      })
+      
+      // Will this work?
+      return Status.FAILURE;
 
   }
 
