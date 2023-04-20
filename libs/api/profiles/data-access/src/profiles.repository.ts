@@ -78,12 +78,15 @@ async deleteAccount(profile : IProfile) {
 
         const userData = user.docs[0].data();
         const friends = userData["accountDetails"]["friends"];
+        const blocked = userData["accountDetails"]["blockedUsers"];
         if (otherUserID == undefined){
           return {"exists": false, "type": "Not-Friend"}
         }
         
         if (otherUserID in friends){
           return {"exists": true, "type": "Friend"}
+        } else if (otherUserID in blocked) {
+          return {"exists": true, "type": "Blocked"}
         } else {
           return {"exists": true, "type": "Not-Friend"}
         }
@@ -153,6 +156,8 @@ async deleteAccount(profile : IProfile) {
   }
 
   async updateRelation(relation: IRelation) {
+
+
 
     // Change the relation in the db
 
