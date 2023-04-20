@@ -19,7 +19,7 @@ export class FriendsRepository {
         if (UserId != null) {
             documents = await admin.firestore()
                     .collection('Friends')
-                    .where('userID','==', UserId)  //finding all the friends of the user through the user id
+                    .where('userId','==', UserId)  //finding all the friends of the user through the user id
                     .orderBy('friendName', 'asc')
                     .get();
         }
