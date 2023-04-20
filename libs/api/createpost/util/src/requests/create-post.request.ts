@@ -1,5 +1,5 @@
-import { Post } from "../interfaces/post.interface";
+import { NewPost } from "../interfaces/newpost.interface";
 
 export interface CreatePostRequest{
-    post: Post;
+    post: NewPost;
 }
