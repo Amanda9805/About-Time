@@ -100,7 +100,7 @@ export class FeedRepository {
 
     console.log(`Documents retrieved: ${documents}`);
 
-    const toReturn: { id: string; title: string; author: null; description: string; content: string; time: number; discipline: Discipline; image: string | undefined}[] = [];
+    const toReturn: { id: string; title: string; author: string; description: string; content: string; time: number; discipline: Discipline; image: string | undefined}[] = [];
 
 
     const postIDs : string []= [];
@@ -132,7 +132,7 @@ export class FeedRepository {
       toReturn.push({
         id: currentDoc['id'],
         title: currentDoc['title'],
-        author: null,  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
+        author: currentDoc["userId"],  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
         description: currentDocPostData['desc'],
         content: currentDocPostData['content'],
         time: currentDocPostData['timeWatched'],
