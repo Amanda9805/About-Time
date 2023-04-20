@@ -100,7 +100,31 @@ export class FeedRepository {
 
     console.log(`Documents retrieved: ${documents}`);
 
-    const toReturn: { id: string; title: string; author: null; description: string; content: string; time: number; discipline: Discipline; }[] = [];
+    const toReturn: { id: string; title: string; author: null; description: string; content: string; time: number; discipline: Discipline; image: string | undefined}[] = [];
+
+
+    const postIDs : string []= [];
+    documents.forEach((doc) => {
+      const currentDoc = doc.data();
+      postIDs.push(
+        currentDoc['id'],
+      );
+    });
+
+    const postImages = new Map<string, string>();
+
+    const imageDocuments = await admin.firestore()
+    .collection("PostPhotos")
+    .where("postId", "in", postIDs)
+    .get().then((docs) => {
+      docs.forEach((doc) => {
+        const data = doc.data();
+        postImages.set(data["postId"], data["image"]);
+      })
+    });
+
+
+
 
     documents.forEach((doc) => {
       const currentDoc = doc.data();
@@ -113,32 +137,10 @@ export class FeedRepository {
         content: currentDocPostData['content'],
         time: currentDocPostData['timeWatched'],
         discipline: this.interpretDiscipline(currentDocPostData['discipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
+        image : postImages.get(currentDoc['id'])
       });
     });
 
-    // This is some mock data - will actually need to query the database
-    // const toReturn = {
-    //     data: [
-    //         {
-    //             id: "post 1",
-    //             title: "Burger King Foot Lettuce",
-    //             author: null,
-    //             description: "This is a very orginal and cool post!",
-    //             content: "Wow, I really am I a super cool story - pls spend time",
-    //             discipline: Discipline.SCIENCE,
-    //             time: 500
-    //         },
-    //         {
-    //             id: "post 1",
-    //             title: "Burger King Foot Lettuce",
-    //             author: null,
-    //             description: "This is a very orginal and cool post!",
-    //             content: "Wow, I really am I a super cool story - pls spend time",
-    //             discipline: Discipline.SCIENCE,
-    //             time: 500
-    //         }
-    //     ]
-    // };
 
     return { data: toReturn };
   }
