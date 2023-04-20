@@ -100,6 +100,14 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/login/feature').then((m) => m.LoginModule),
   },
+  {
+    path: 'loading',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/loading/feature').then((m) => m.LoadingModule),
+  },
   // {
   //   path: 'settings',
   //   pathMatch: 'full',
