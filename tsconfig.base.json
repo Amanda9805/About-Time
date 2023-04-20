@@ -185,6 +185,9 @@
       "@mp/app/home/feature": [
         "libs/app/home/feature/src/index.ts"
       ],
+      "@mp/app/loading/feature": [
+        "libs/app/loading/feature/src/index.ts"
+      ],
       "@mp/app/login/data-access": [
         "libs/app/login/data-access/src/index.ts"
       ],
