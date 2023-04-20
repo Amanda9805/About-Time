@@ -6,6 +6,12 @@ import { Discipline } from '@mp/api/feed/util';
 import { IUser } from '@mp/api/users/util';
 import { Status } from '@mp/api/feed/util';
 
+
+// Login details: email: super@super.com
+
+// password: Testing123?
+
+
 @Injectable()
 export class FeedRepository {
 
@@ -184,7 +190,7 @@ export class FeedRepository {
     // Query the database to return the amount of time the user has left
     const userID = user.id;
     const documents = await admin.firestore()
-          .collection("Profiles")
+          .collection("profiles")
           .where("userId", "==", userID)
           .get();
 
@@ -204,7 +210,7 @@ export class FeedRepository {
     const amount = timeMod.timeValue;
 
     const document = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get().then((user) => {
         if (user.empty) {

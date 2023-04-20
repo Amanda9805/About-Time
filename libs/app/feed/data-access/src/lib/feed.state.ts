@@ -223,6 +223,7 @@ export class FeedState {
         content: post.content,
         discipline: post.discipline,
         time: post.time,
+        image : "put image url here"
       });
     });
 
