@@ -14,33 +14,77 @@ export class FriendsRepository {
 
         const UserId = miniProfile.id;  //the id of the user 
         let documents;
-
+        const friendIDs : string[] = [];
 
         if (UserId != null) {
             documents = await admin.firestore()
-                    .collection('Friends')
-                    .where('userId','==', UserId)  //finding all the friends of the user through the user id
-                    .orderBy('friendName', 'asc')
-                    .get();
+                    .collection('Profiles')
+                    .where('userId','==', UserId)  //finding the Profile for the user in question
+                    .get().then((doc) => {
+                        if (doc.empty){
+                            return {data: []}; // return no friends
+                        } else {
+                            const details = doc.docs[0].data()['accountDetails'];
+                            const friends = details['friends'];
+                            friends.forEach((id: string) => {
+                                friendIDs.push(id);
+                            })
+                        }
+                    }).catch(() =>{
+                        return {data: []}; // return no friends
+                    });
         }
         else {
-            console.log('User not found'); //if the user is not found 
+            return {data: []}; // return no friends
         }
 
         console.log(`Documents retrieved: ${documents}`);
 
-        const toReturn : {id: string; friend: string; image: string; }[] = []; //return the list of friends minimised profile 
+        const toReturn : {id: string; username: string; image: string; }[] = []; //return the list of friends minimised profile 
 
-        documents?.forEach((doc) => {
-            const currentDoc = doc.data();
+        const friendProfilesDocuments = await admin.firestore()
+        .collection("Profiles")
+        .where("userId", "in", friendIDs)
+        .get();
 
-            toReturn.push({
-                id: currentDoc['id'],
-                friend: currentDoc['friend'],
-                image: currentDoc['image'],
-            });
-            
+
+        const imageLinks = new Map<string, string>();
+        const friendImageDocuments = await admin.firestore()
+        .collection("UserPhotos")
+        .where("userId", "in", friendIDs)
+        .get().then((images) =>{
+            images.forEach((image) => {
+                const userIDForImage = image.data()["userId"]
+                const imageLink = image.data()["image"]
+
+                imageLinks.set(userIDForImage, imageLink);
+            })
         });
+
+        friendProfilesDocuments.forEach((doc) =>
+        {
+            const currentDoc = doc.data();
+            const userID = currentDoc["userId"];
+            const userName = currentDoc["accountDetails"]["userName"];
+            const imageStr  = imageLinks.get(userID);
+            if (imageStr == undefined){
+                toReturn.push({
+                    id: userID,
+                    username: userName,
+                    image: ""
+                })
+            } else {
+                toReturn.push({
+                    id: userID,
+                    username: userName,
+                    image: imageStr
+                })
+            }
+
+            
+
+        })
+
 
         return { data: toReturn };
 
