@@ -1,4 +1,4 @@
 export interface MinimizedProfile{
-    username: string;
+    username: string | undefined;
     imageURL: string;   //reference to profile picture
 }

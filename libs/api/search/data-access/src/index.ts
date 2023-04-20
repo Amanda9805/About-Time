@@ -1,2 +1,2 @@
-export * from './search.module';
-export * from './search.repository';
+export * from './search-api.module';
+export * from './search-api.repository';
