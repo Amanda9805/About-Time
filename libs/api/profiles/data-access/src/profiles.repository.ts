@@ -65,7 +65,33 @@ async deleteAccount(profile : IProfile) {
 }
 
   async checkRelationship(relationship: IRelationship) {
-    return {"exists": true, "type": "FRIEND"}
+    const userID = relationship.currentUser?.userId;
+    const otherUserID = relationship.otherUser?.userId;
+
+    const documents = await admin.firestore()
+    .collection("Profiles")
+    .where("userId", "==", userID)
+    .get().then((user) => {
+      if (user.empty) {
+        return {"exists": false, "type": "Not-Friend"}
+      } else {
+
+        const userData = user.docs[0].data();
+        const friends = userData["accountDetails"]["friends"];
+        if (otherUserID == undefined){
+          return {"exists": false, "type": "Not-Friend"}
+        }
+        
+        if (otherUserID in friends){
+          return {"exists": true, "type": "Friend"}
+        } else {
+          return {"exists": true, "type": "Not-Friend"}
+        }
+      }
+    }
+    );
+    
+    return {"exists": false, "type": "Not-Friend"}
   }
 
   async fetchUserPosts(userProfile: IProfile) {
