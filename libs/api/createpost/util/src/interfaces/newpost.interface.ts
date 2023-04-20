@@ -1,13 +1,11 @@
 import {IUser} from '@mp/api/users/util';
 import { Discipline } from "../enums/discipline.enum"
 
-export interface Post {
-    id : string;
+export interface NewPost {
     title : string;
-    author : IUser;
+    author : string;
     description : string;
     content : string;
-    imageURL : string;
-    discipline : Discipline;
-    time : number;
+    discipline : string;
+    image : string;
 }
