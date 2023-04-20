@@ -21,3 +21,16 @@ ion-button {
   --border-style: solid;
   --border-width: 1px;
 }
+
+
+ion-tab-button:active{
+  ion-icon {
+    color:#ffffff;
+  }
+
+}
+
+img{
+  height: 60px;
+  background-color: #1D2A1C;
+}
