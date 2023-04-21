@@ -11,7 +11,6 @@ import { Location } from '@angular/common';
 })
 export class CreatePostPage {
   post = {
-    user:'',
     title: '',
     caption: '',
     link: '',
@@ -40,7 +39,6 @@ export class CreatePostPage {
         alert('Post created successfully!');
         // Reset form data
         this.post = {
-          user: '',
           title: '',
           caption: '',
           link: '',
