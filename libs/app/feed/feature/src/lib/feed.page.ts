@@ -5,7 +5,7 @@ import {
 } from '@ngxs-labs/actions-executing';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { SetFilterList, SetPost, SetPostList, SetTimeModification, SetUserTime } from '@mp/app/feed/util';
+import { SetFilterList, SetPost, SetPostList, SetTimeModification } from '@mp/app/feed/util';
 import { FeedState } from '@mp/app/feed/data-access';
 import { FilterList, FilterType, Post, PostList, TimeModification, UserTime } from '@mp/api/feed/util';
 @Component({
@@ -37,7 +37,7 @@ export class FeedPage {
       if (feed.model.list != null){
 
         this.postsData.postsFound = true;
-
+        this.postsData.list = [];//reset the posts data
         feed?.model.list?.forEach((post) => {
           this.postsData.list?.push(post);
         })

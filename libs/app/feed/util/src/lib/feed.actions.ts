@@ -1,8 +1,5 @@
-import {FilterList, FilterType} from '@mp/api/feed/util';
-import {PostList} from '@mp/api/feed/util';
-import {Post} from '@mp/api/feed/util';
-import { TimeModification } from '@mp/api/feed/util';
-import { UserTime } from '@mp/api/feed/util';
+import { FilterType } from '@mp/api/feed/util';
+import { Post } from '@mp/api/feed/util';
 
 export class SetFilterList {
   static readonly type = '[Feed] Set Filter List';
@@ -21,8 +18,4 @@ export class SetPost {
 export class SetTimeModification {
   static readonly type = '[Feed] SetTimeModification';
   constructor(public payload: {postID : string, time : number}) {}
-}
-
-export class SetUserTime {
-  static readonly type = '[Feed] SetUserTime';
 }

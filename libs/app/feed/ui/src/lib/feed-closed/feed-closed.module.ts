@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FeedClosedComponent } from './feed-closed.component'
 import { NgxsModule } from '@ngxs/store';
+import { TimerModule } from '@mp/app/timer/feature';
 
 
 
@@ -11,6 +12,7 @@ import { NgxsModule } from '@ngxs/store';
     imports: [
         CommonModule,
         IonicModule,
+        TimerModule,
     ],
     exports: [FeedClosedComponent]
 })
