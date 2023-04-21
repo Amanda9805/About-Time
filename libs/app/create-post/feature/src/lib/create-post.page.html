@@ -1,16 +1,31 @@
 <ion-header>
   <ion-toolbar>
-      <ion-button class = "cust_button_var1" (click)="goBack()"><</ion-button>
+    <ion-button class="cust_button_var1" (click)="goBack()">
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form (ngSubmit)="submitForm()">
+<ng-container>
 
-    <ion-item>
-      <ion-label>Title</ion-label>
-      <ion-input type="text" [(ngModel)]="post.title" name="title" required></ion-input>
-    </ion-item>
+  <ion-content>
+    <form [formGroup]="createPostForm" (submit)="submitForm()" ngxsForm="createPostForm">
+
+      <!-- <ion-item>
+      <ion-label>User </ion-label>
+
+      {{ post.user }}
+    </ion-item> -->
+
+      <ion-item>
+        <ion-label>Title</ion-label>
+        <ion-input type="text" formControlName="title" [(ngModel)]="post.title" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-input type="text" formControlName="description" [(ngModel)]="post.description" name="description"
+          required></ion-input>
+      </ion-item>
 
     <ion-item>
       <ion-label>Caption</ion-label>
@@ -18,17 +33,12 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Link</ion-label>
-      <ion-input type="text" [(ngModel)]="post.link" name="link"></ion-input>
-    </ion-item>
-
-    <ion-item>
       <ion-label>Discipline</ion-label>
       <ion-select [(ngModel)]="post.tag" name="tag">
         <ion-select-option value="food">Food</ion-select-option>
-        <ion-select-option value="travel">Gaming</ion-select-option>
-        <ion-select-option value="fitness">Sport</ion-select-option>
-        <ion-select-option value="science">News</ion-select-option>
+        <ion-select-option value="travel">Travel</ion-select-option>
+        <ion-select-option value="fitness">Fitness</ion-select-option>
+        <ion-select-option value="science">Science</ion-select-option>
         <ion-select-option value="art">Art</ion-select-option>
 
       </ion-select>
@@ -36,9 +46,19 @@
 
     <ion-item>
       <ion-label>Photo</ion-label>
-      <input type="file" (change)="onFileChange($event)" required>
+      <input type="file" (change)="onFileChange($event)">
     </ion-item>
 
-    <ion-button class = "cust_button_var1">Submit</ion-button>
-  </form>
-</ion-content>
+      <ion-button class="cust_button_var1" type="submit">Submit</ion-button>
+    </form>
+  </ion-content>
+</ng-container>
+<ng-template #loading>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ngx-skeleton-loader count="1" [theme]="{ height: '150px' }" appearance="line"></ngx-skeleton-loader>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-template>
