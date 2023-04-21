@@ -5,6 +5,7 @@ import * as admin from 'firebase-admin';
 import { IRelationship } from '@mp/api/profiles/util'
 import { Discipline } from '@mp/api/profiles/util'
 import { IRelation } from '@mp/api/profiles/util';
+import { IUser } from '@mp/api/users/util';
 
 @Injectable()
 export class ProfilesRepository {
@@ -195,15 +196,21 @@ export class ProfilesRepository {
 
   async fetchProfile(user: IUser) {
     // Use user email to get profile from the db
+    const uid = user.id;
 
-
-    // Return the relevant profile
-    return {
-      userId: "u01",
-      // email: "jon@ravenmail.com",
-      // userName: "Jon Snow",
-      // photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
-      // phoneNumber: "1234567890",
-    }
+    const documents = await admin.firestore()
+    .collection("Profiles")
+      .where("userId", "==", uid)
+      .get().then((user) => {
+        if (user.empty) {
+          // Not sure what to return here
+          return { "userId": "not-found"}
+        } 
+        else
+        {
+          const userData = user.docs[0].data();
+          return userData;
+        }
+      });
   }
 }
