@@ -63,9 +63,10 @@
               <h2>{{user.time}}</h2>
           </ion-text>
       <!-- Message Button --><!-- Friend Button - Dropdown? / perhaps ion-action-sheet -->
-      <!-- <ion-list>
-          <ion-button shape="small">Message</ion-button><ion-button shape="small">Friend</ion-button>
-      </ion-list> -->
+      <ion-list>
+          <ion-button shape="small" [routerLink] = "['/settings']">Settings</ion-button>
+          <!-- <ion-button shape="small">Friend</ion-button> -->
+      </ion-list>
   </div>
 </ion-header>
 

@@ -3,7 +3,7 @@ import { IBadge, IMeter, IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { OtherUserUIModule } from '@mp/app/other-user/ui';
+import { SetProfile } from '../../util/src/profile.actions';
 
 @Component({
   selector: 'ms-profile-page',
@@ -95,6 +95,8 @@ export class ProfilePage {
   ]
 
   NgOnInit() {
+    this.store.dispatch(new SetProfile());
+
     // Get the profile from the state
     this.store.select(ProfileState.profile).subscribe((profile) => {
 

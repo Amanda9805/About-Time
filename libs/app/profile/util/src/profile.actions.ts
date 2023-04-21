@@ -10,7 +10,7 @@ export class SubscribeToProfile {
 
 export class SetProfile {
   static readonly type = '[Profile] SetProfile';
-  constructor(public readonly profile: IProfile | null) {}
+  // constructor(public readonly profile: IProfile | null) {}
 }
 
 export class UpdateAccountDetails {

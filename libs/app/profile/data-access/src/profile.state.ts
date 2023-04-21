@@ -79,15 +79,15 @@ export class ProfileState {
     return ctx.dispatch(new AuthLogout());
   }
 
-  @Action(SubscribeToProfile)
-  subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
-    const user = this.store.selectSnapshot(AuthState.user);
-    if (!user) return ctx.dispatch(new SetError('User not set'));
+  // @Action(SubscribeToProfile)
+  // subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
+  //   const user = this.store.selectSnapshot(AuthState.user);
+  //   if (!user) return ctx.dispatch(new SetError('User not set'));
 
-    return this.profileApi
-      .profile$(user.uid)
-      .pipe(tap((profile: IProfile) => ctx.dispatch(new SetProfile(profile))));
-  }
+  //   return this.profileApi
+  //     .profile$(user.uid)
+  //     .pipe(tap((profile: IProfile) => ctx.dispatch(new SetProfile(profile))));
+  // }
 
   // @Action(SetProfile)
   // setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
@@ -107,6 +107,7 @@ export class ProfileState {
     const request: IFetchProfileRequest = {
       user: user!,
     }
+    console.log("request: ", request);
     
     // First call the api fetchProfilefunction
     const responseRef = await this.profileApi.fetchProfile(request);
