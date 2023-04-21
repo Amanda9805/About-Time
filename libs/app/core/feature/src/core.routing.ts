@@ -11,12 +11,17 @@ const redirectLoggedIn = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'welcome',
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/welcome/feature').then((m) => m.WelcomeModule),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('@mp/app/splash/feature').then((m) => m.SplashModule),
   },
   // {
   //   path: 'response',
