@@ -11,6 +11,7 @@ import { Profile } from '../models';
 export class CreateProfileHandler
   implements ICommandHandler<CreateProfileCommand>
 {
+  static ASSIGNED_MINUTES = 60; // User is assigned 1 hour of time
   constructor(private publisher: EventPublisher) { }
 
   async execute(command: CreateProfileCommand) {
@@ -21,7 +22,6 @@ export class CreateProfileHandler
     const userName = request.user.userName;
     const email = request.user.email;
     const photoURL = request.user.photoURL;
-    const cellphone = request.user.phoneNumber;
 
     const data: IProfile = {
       userId,
@@ -33,6 +33,7 @@ export class CreateProfileHandler
       },
       status: ProfileStatus.INCOMPLETE,
       created: Timestamp.fromDate(new Date()),
+      time: (CreateProfileHandler.ASSIGNED_MINUTES * 60 * 1000),
     };
     const profile = this.publisher.mergeObjectContext(Profile.fromData(data));
 
