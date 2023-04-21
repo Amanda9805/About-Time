@@ -29,7 +29,6 @@ export class CreateProfileHandler
         userName,
         email,
         photoURL,
-        status: ProfileStatus.INCOMPLETE,
       },
       status: ProfileStatus.INCOMPLETE,
       created: Timestamp.fromDate(new Date()),

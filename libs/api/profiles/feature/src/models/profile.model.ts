@@ -58,18 +58,15 @@ export class Profile extends AggregateRoot implements IProfile {
   private updateAccountDetailsStatus() {
     if (!this.accountDetails) {
       this.accountDetails = {};
-      this.accountDetails.status = ProfileStatus.INCOMPLETE;
       this.status = ProfileStatus.INCOMPLETE;
       return;
     }
 
     if (!this.accountDetails.userName || !this.accountDetails.email) {
-      this.accountDetails.status = ProfileStatus.INCOMPLETE;
       this.status = ProfileStatus.INCOMPLETE;
       return;
     }
 
-    this.accountDetails.status = ProfileStatus.COMPLETE;
     return;
   }
 
