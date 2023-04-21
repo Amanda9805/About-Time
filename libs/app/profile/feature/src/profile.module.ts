@@ -7,6 +7,10 @@ import { ProfileModule as ProfileUiModule } from '@mp/app/profile/ui';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { ProfilePage } from './profile.page';
 import { ProfileRouting } from './profile.routing';
+import { OtherUserUIModule } from '@mp/app/other-user/ui';
+import { RouterModule } from '@angular/router';
+
+
 
 @NgModule({
   imports: [
@@ -17,6 +21,8 @@ import { ProfileRouting } from './profile.routing';
     ProfileUiModule,
     ProfileDataAccessModule,
     NgxSkeletonLoaderModule,
+    OtherUserUIModule,
+    RouterModule
   ],
   declarations: [ProfilePage],
 })

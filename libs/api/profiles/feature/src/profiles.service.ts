@@ -172,4 +172,5 @@ export class ProfilesService {
       IFetchProfileResponse
     >(new FetchProfileCommand(request));
   }
+
 }

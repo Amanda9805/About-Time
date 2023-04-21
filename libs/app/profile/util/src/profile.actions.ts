@@ -10,7 +10,7 @@ export class SubscribeToProfile {
 
 export class SetProfile {
   static readonly type = '[Profile] SetProfile';
-  constructor(public readonly profile: IProfile | null) {}
+  // constructor(public readonly profile: IProfile | null) {}
 }
 
 export class UpdateAccountDetails {
@@ -31,4 +31,9 @@ export class UpdateOccupationDetails {
 
 export class UpdatePersonalDetails {
   static readonly type = '[Profile] UpdatePersonalDetails';
+}
+
+export class SetPosts {
+  static readonly type = '[Profile] SetPosts';
+  constructor(public readonly profile: IProfile | null) {}
 }

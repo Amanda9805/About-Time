@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
+  FetchUserPostsRequest,
+  IFetchProfileRequest,
+  IPostList,
   IProfile,
   IUpdateAccountDetailsRequest,
 } from '@mp/api/profiles/util';
@@ -8,6 +11,7 @@ import { Logout as AuthLogout } from '@mp/app/auth/util';
 import { SetError } from '@mp/app/errors/util';
 import {
   Logout,
+  SetPosts,
   SetProfile,
   SubscribeToProfile,
   UpdateAccountDetails,
@@ -20,6 +24,8 @@ import { ProfilesApi } from './profiles.api';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
   profile: IProfile | null;
+  posts: IPostList | null;
+
   accountDetailsForm: {
     model: {
       userName: string | null;
@@ -37,6 +43,7 @@ export interface ProfileStateModel {
   name: 'profile',
   defaults: {
     profile: null,
+    posts: null,
     accountDetailsForm: {
       model: {
         userName: null,
@@ -62,29 +69,59 @@ export class ProfileState {
     return state.profile;
   }
 
+  @Selector() 
+  static posts(state: ProfileStateModel) {
+    return state.posts;
+  }
+
   @Action(Logout)
   async logout(ctx: StateContext<ProfileStateModel>) {
     return ctx.dispatch(new AuthLogout());
   }
 
-  @Action(SubscribeToProfile)
-  subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
-    const user = this.store.selectSnapshot(AuthState.user);
-    if (!user) return ctx.dispatch(new SetError('User not set'));
+  // @Action(SubscribeToProfile)
+  // subscribeToProfile(ctx: StateContext<ProfileStateModel>) {
+  //   const user = this.store.selectSnapshot(AuthState.user);
+  //   if (!user) return ctx.dispatch(new SetError('User not set'));
 
-    return this.profileApi
-      .profile$(user.uid)
-      .pipe(tap((profile: IProfile) => ctx.dispatch(new SetProfile(profile))));
-  }
+  //   return this.profileApi
+  //     .profile$(user.uid)
+  //     .pipe(tap((profile: IProfile) => ctx.dispatch(new SetProfile(profile))));
+  // }
+
+  // @Action(SetProfile)
+  // setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
+  //   return ctx.setState(
+  //     produce((draft) => {
+  //       draft.profile = profile;
+  //     })
+  //   );
+  // }
 
   @Action(SetProfile)
-  setProfile(ctx: StateContext<ProfileStateModel>, { profile }: SetProfile) {
+  async setProfile(ctx: StateContext<ProfileStateModel>) {
+    // Get current user from AUTH state
+    var user = {"id": this.store.selectSnapshot(AuthState).user.uid};
+
+    // Create the request using the passed in user
+    const request: IFetchProfileRequest = {
+      user: user!,
+    }
+    console.log("request: ", request);
+    
+    // First call the api fetchProfilefunction
+    const responseRef = await this.profileApi.fetchProfile(request);
+    const response = responseRef.data;
+
+    // Assign the returned data to the profile in the state
     return ctx.setState(
       produce((draft) => {
-        draft.profile = profile;
+        draft.profile = response.profile;
       })
     );
   }
+
+*/
 
   @Action(UpdateAccountDetails)
   async updateAccountDetails(ctx: StateContext<ProfileStateModel>) {
@@ -117,7 +154,60 @@ export class ProfileState {
       const response = responseRef.data;
       return ctx.dispatch(new SetProfile(response.profile));
     } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message));
+      return ctx.dispatch(new SetError((error as Error).message))
+
+*/
+    @Action(SetPosts)
+  async setPosts(ctx: StateContext<ProfileStateModel>) {
+    const request: FetchUserPostsRequest = {
+      userProfile: ctx.getState().profile!,
     }
+    
+    // First call the api fetchUserPosts function
+    const responseRef = await this.profileApi.fetchUserPosts(request);
+    const response = responseRef.data;
+
+    // then set the posts in the state
+    return ctx.setState(
+      produce((draft) => {
+        draft.posts = response.posts;
+      })
+    );
   }
+
+  // @Action(UpdateAccountDetails)
+  // async updateAccountDetails(ctx: StateContext<ProfileStateModel>) {
+  //   try {
+  //     const state = ctx.getState();
+  //     const userId = state.profile?.userId;
+  //     const userName = state.accountDetailsForm.model.userName;
+  //     const email = state.accountDetailsForm.model.email;
+  //     // const photoURL = state.accountDetailsForm.model.photoURL;
+  //     const password = state.accountDetailsForm.model.password;
+
+  //     if (!userId || !userName || !email || !password)
+  //       return ctx.dispatch(
+  //         new SetError(
+  //           'UserId or user name or email or photo URL or password not set'
+  //         )
+  //       );
+
+  //     const request: IUpdateAccountDetailsRequest = {
+  //       profile: {
+  //         userId,
+  //         accountDetails: {
+  //           userName,
+  //           email,
+  //           password,
+  //         },
+  //       },
+  //     };
+
+  //     const responseRef = await this.profileApi.updateAccountDetails(request);
+  //     const response = responseRef.data;
+  //     return ctx.dispatch(new SetProfile(response.profile));
+  //   } catch (error) {
+  //     return ctx.dispatch(new SetError((error as Error).message));
+  //   }
+  // }
 }
