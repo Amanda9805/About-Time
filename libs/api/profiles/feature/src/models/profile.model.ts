@@ -52,9 +52,6 @@ export class Profile extends AggregateRoot implements IProfile {
     this.accountDetails.photoURL = accountDetails.photoURL
       ? accountDetails.photoURL
       : this.accountDetails.photoURL;
-    this.accountDetails.password = accountDetails.password
-      ? accountDetails.password
-      : this.accountDetails.password;
     this.apply(new AccountDetailsUpdatedEvent(this.toJSON()));
   }
 

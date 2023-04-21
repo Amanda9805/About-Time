@@ -3,10 +3,9 @@ import { IBadge } from './badge.interface';
 import { IMeter } from './meter.interface';
 
 export interface IAccountDetails {
-  userName?: string | null | undefined;
   email?: string | null | undefined;
   photoURL?: string | null | undefined;
-  password?: string | null | undefined;
+  userName?: string | null | undefined;
   title?: string | null | undefined;
   private?: boolean | null | undefined;
   // friends?: string[] | null | undefined;
