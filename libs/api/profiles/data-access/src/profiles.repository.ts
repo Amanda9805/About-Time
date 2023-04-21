@@ -200,17 +200,17 @@ export class ProfilesRepository {
 
     const documents = await admin.firestore()
     .collection("Profiles")
-      .where("userId", "==", uid)
-      .get().then((user) => {
-        if (user.empty) {
-          // Not sure what to return here
-          return { "userId": "not-found"}
-        } 
-        else
-        {
-          const userData = user.docs[0].data();
-          return userData;
-        }
-      });
+    .where("userId", "==", uid)
+    .get().then((user) => {
+      if (user.empty) {
+        // Not sure what to return here
+        return { "userId": "not-found"}
+      } 
+      else
+      {
+        const userData = user.docs[0].data();
+        return userData;
+      }
+    });
   }
 }
