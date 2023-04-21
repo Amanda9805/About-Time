@@ -114,7 +114,7 @@ export class OtherUserPage {
       {
         this.private == false;
       }
-      this.badges = profile?.accountDetails?.badges!;
+      this.badges = profile?.accountDetails?.badgesReceived!;
       this.meters = profile?.accountDetails?.meters!;
     })
     this.store.select(OtherUserState.relation).subscribe((relation) => {

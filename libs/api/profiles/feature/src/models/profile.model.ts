@@ -21,7 +21,8 @@ export class Profile extends AggregateRoot implements IProfile {
     public userId: string,
     public accountDetails?: IAccountDetails | null | undefined,
     public status?: ProfileStatus | null | undefined,
-    public created?: FirebaseFirestore.Timestamp | null | undefined
+    public created?: FirebaseFirestore.Timestamp | null | undefined,
+    public time?: number | null | undefined,
   ) {
     super();
   }
@@ -51,38 +52,26 @@ export class Profile extends AggregateRoot implements IProfile {
     this.accountDetails.photoURL = accountDetails.photoURL
       ? accountDetails.photoURL
       : this.accountDetails.photoURL;
-    this.accountDetails.password = accountDetails.password
-      ? accountDetails.password
-      : this.accountDetails.password;
     this.apply(new AccountDetailsUpdatedEvent(this.toJSON()));
   }
 
   private updateAccountDetailsStatus() {
     if (!this.accountDetails) {
       this.accountDetails = {};
-      this.accountDetails.status = ProfileStatus.INCOMPLETE;
       this.status = ProfileStatus.INCOMPLETE;
       return;
     }
 
     if (!this.accountDetails.userName || !this.accountDetails.email) {
-      this.accountDetails.status = ProfileStatus.INCOMPLETE;
       this.status = ProfileStatus.INCOMPLETE;
       return;
     }
 
-    this.accountDetails.status = ProfileStatus.COMPLETE;
     return;
   }
 
   updateStatus() {
     this.updateAccountDetailsStatus();
-
-    if (
-      this.accountDetails?.status === ProfileStatus.COMPLETE
-    ) {
-      this.status = ProfileStatus.COMPLETE;
-    }
 
     this.apply(new ProfileStatusUpdatedEvent(this.toJSON()));
   }
@@ -93,6 +82,7 @@ export class Profile extends AggregateRoot implements IProfile {
       accountDetails: this.accountDetails,
       status: this.status,
       created: this.created,
+      time: this.time,
     };
   }
 }

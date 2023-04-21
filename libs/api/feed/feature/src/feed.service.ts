@@ -1,17 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { AddTimeCommand, AddTimeRequest, AddTimeResponse, 
-    FetchPostsCommand, FetchPostsRequest, FetchPostsResponse, GetUserTimeCommand, GetUserTimeRequest, GetUserTimeResponse } from '@mp/api/feed/util';
+import {
+    AddTimeCommand, AddTimeRequest, AddTimeResponse,
+    FetchPostsCommand, FetchPostsRequest, FetchPostsResponse, GetUserTimeCommand,
+    GetUserTimeRequest, GetUserTimeResponse,
+    ModifyUserTimeCommand, ModifyUserTimeRequest, ModifyUserTimeResponse
+} from '@mp/api/feed/util';
 
 @Injectable()
 export class FeedService {
-    constructor(private readonly commandBus: CommandBus) {}
+    constructor(private readonly commandBus: CommandBus) { }
 
     async fetchPosts(
         request: FetchPostsRequest
     ): Promise<FetchPostsResponse> {
         return await this.commandBus.execute<
-        FetchPostsCommand, 
+            FetchPostsCommand,
             FetchPostsResponse
         >(new FetchPostsCommand(request));
     }
@@ -20,7 +24,7 @@ export class FeedService {
         request: AddTimeRequest
     ): Promise<AddTimeResponse> {
         return await this.commandBus.execute<
-        AddTimeCommand, 
+            AddTimeCommand,
             AddTimeResponse
         >(new AddTimeCommand(request));
     }
@@ -29,11 +33,17 @@ export class FeedService {
         request: GetUserTimeRequest
     ): Promise<GetUserTimeResponse> {
         return await this.commandBus.execute<
-        GetUserTimeCommand, 
+            GetUserTimeCommand,
             GetUserTimeResponse
         >(new GetUserTimeCommand(request));
     }
 
-
-
+    async modifyUserTime(
+        request: ModifyUserTimeRequest
+    ): Promise<ModifyUserTimeResponse> {
+        return await this.commandBus.execute<
+            ModifyUserTimeCommand,
+            ModifyUserTimeResponse
+        >(new ModifyUserTimeCommand(request));
+    }
 }
