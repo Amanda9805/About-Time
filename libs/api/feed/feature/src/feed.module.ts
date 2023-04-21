@@ -1,14 +1,11 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
-import { FetchPostsHandler, AddTimeHandler, GetUserTimeHandler, ModifyUserTimeHandler } from './commands';
+import { FetchPostsHandler } from './commands'; 
 import { FeedService } from './feed.service';
-import { PostModule as PostModuleAccessModule } from '@mp/api/feed/data-access';
+import { PostModule as PostModuleAccessModule} from '@mp/api/feed/data-access';
 
 export const CommandHandlers = [
-    FetchPostsHandler,
-    AddTimeHandler,
-    GetUserTimeHandler,
-    ModifyUserTimeHandler
+    FetchPostsHandler
 ];
 
 @Module({
@@ -19,5 +16,4 @@ export const CommandHandlers = [
     ],
     exports: [FeedService],
 })
-
-export class FeedModule { }
+export class FeedModule {}

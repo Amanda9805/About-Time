@@ -1,26 +1,10 @@
 {
   "name": "app-loading-feature",
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/app/loading/feature/src",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
+  "sourceRoot": "libs/app/loading/feature/src",
+  "prefix": "mp",
   "targets": {
-    "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/libs/app/loading/feature",
-        "main": "libs/app/loading/feature/src/index.ts",
-        "tsConfig": "libs/app/loading/feature/tsconfig.lib.json",
-        "assets": ["libs/app/loading/feature/*.md"]
-      }
-    },
-    "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["libs/app/loading/feature/**/*.ts"]
-      }
-    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
@@ -33,6 +17,16 @@
           "ci": true,
           "codeCoverage": true
         }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/app/loading/feature/**/*.ts",
+          "libs/app/loading/feature/**/*.html"
+        ]
       }
     }
   },

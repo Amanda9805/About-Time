@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Output, Input, ChangeDetectorRef, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FilterList, FilterType, Post, PostList } from '@mp/api/feed/util';
 import { Store } from '@ngxs/store';
-import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'mp-feed-closed',
@@ -15,6 +13,7 @@ export class FeedClosedComponent {
     postsFound : false,
     list : [],
   };
+
 
   filters: FilterList = {
     list: [],

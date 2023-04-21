@@ -1,5 +1,5 @@
 export interface MinimisedProfile {
     id: string;
     username: string;
-    image : string;
+    // image : reference to an image for this profile
 }

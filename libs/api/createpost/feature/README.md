@@ -1,11 +1,11 @@
-# api-createpost-feature
+# api-create-profile-api-feature
 
 This library was generated with [Nx](https://nx.dev).
 
 ## Building
 
-Run `nx build api-createpost-feature` to build the library.
+Run `nx build api-create-profile-api-feature` to build the library.
 
 ## Running unit tests
 
-Run `nx test api-createpost-feature` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test api-create-profile-api-feature` to execute the unit tests via [Jest](https://jestjs.io).

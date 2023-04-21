@@ -31,6 +31,7 @@ export class EventstoreSagas {
       ofType(AccountDetailsUpdatedEvent),
       map((event: AccountDetailsUpdatedEvent) => {
         // Special case, delete password before hitting eventstore
+        delete event.profile.accountDetails?.password;
         return compileLogEventCommand(event);
       })
     );

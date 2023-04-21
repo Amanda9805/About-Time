@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'api-search-util',
+  displayName: 'api-search-api-util',
   preset: '../../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../../coverage/libs/api/search/util',
+  coverageDirectory: '../../../../coverage/libs/api/search-api/util',
 };

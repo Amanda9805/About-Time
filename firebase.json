@@ -8,7 +8,7 @@
   },
   "functions": {
     "source": "dist/apps/api",
-    "codebase": "functions",
+    "codebase": "default",
     "ignore": [
       "node_modules",
       ".git",

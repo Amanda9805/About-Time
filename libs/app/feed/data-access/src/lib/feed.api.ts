@@ -12,9 +12,7 @@ import {
   FetchPostsRequest,
   FetchPostsResponse,
   GetUserTimeRequest,
-  GetUserTimeResponse,
-  ModifyUserTimeRequest,
-  ModifyUserTimeResponse
+  GetUserTimeResponse
 } from '@mp/api/feed/util';
 
 @Injectable()
@@ -42,13 +40,6 @@ export class FeedApi {
     return await httpsCallable<GetUserTimeRequest, GetUserTimeResponse>(
       this.functions,
       'getUserTime'
-    )(request);
-  }
-
-  async modifyUserTime$(request: ModifyUserTimeRequest){
-    return await httpsCallable<ModifyUserTimeRequest, ModifyUserTimeResponse>(
-      this.functions,
-      'modifyUserTime'
     )(request);
   }
 
