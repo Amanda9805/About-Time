@@ -41,12 +41,12 @@ export interface FeedStateModel {
     model: {
       id: string | null;
       title: string | null;
-      author: IUser | null;
+      author: string | null;
       description: string | null;
       content: string | null;
       discipline: Discipline | null;
       time: number | null;
-      image: string | null
+      image: string | undefined;
     };
     dirty: false;
     status: string;
@@ -112,7 +112,7 @@ export interface FeedStateModel {
         content: null,
         discipline: null,
         time: null,
-        image: null
+        image: '',
       },
 
       dirty: false,

@@ -115,6 +115,7 @@ const routes: Routes = [
   },
   // {
   //   path: 'settings',
+
   //   pathMatch: 'full',
   //   canActivate: [AuthGuard],
   //   data: { authGuardPipe: redirectLoggedIn },

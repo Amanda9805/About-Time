@@ -106,6 +106,7 @@
       "@mp/app/login/feature": ["libs/app/login/feature/src/index.ts"],
       "@mp/app/login/util": ["libs/app/login/util/src/index.ts"],
       "@mp/app/messages/feature": ["libs/app/messages/feature/src/index.ts"],
+      "@mp/app/loading/feature" : ["libs/app/loading/feature/src/index.ts"],
       "@mp/app/other-user/data-access": [
         "libs/app/other-user/data-access/src/index.ts"
       ],
@@ -130,6 +131,10 @@
       "@mp/app/reset/feature": ["libs/app/reset/feature/src/index.ts"],
       "@mp/app/reset/util": ["libs/app/reset/util/src/index.ts"],
       "@mp/app/search/feature": ["libs/app/search/feature/src/index.ts"],
+      "@mp/app/search/util" : ["libs/app/search/util/src/index.ts"],
+      "@mp/app/search/data-access": [
+        "libs/app/search/data-access/src/index.ts"
+      ],
       "@mp/app/settings/feature": ["libs/app/settings/feature/src/index.ts"],
 
       "@mp/app/splash/feature": ["libs/app/splash/feature/src/index.ts"],
