@@ -1,51 +1,57 @@
-ion-col{
+ion-col {
   display: flex;
   place-items: center;
   height: 100%;
 }
 
-ion-card{
+ion-card {
   padding: 0px;
   margin: 0px;
-  --background: #1D2A1C;
+  // --background: #1D2A1C;
+  background: transparent;
 }
 
-ion-card-content{
+ion-card-content {
   overflow: hidden;
-
 }
 
-ion-row{
+ion-row {
   height: 100%;
 }
 
-#post-preview-content-container{
-height: 100%;
-background-color: #1D2A1C;
+#post-preview-content-container {
+  height: 100%;
+  // background-color: #1D2A1C;
+  width: 100%;
 }
 
-ion-card-title{
+ion-card-title {
   font-size: small;
   --color: white;
 }
 
-ion-card-subtitle{
+ion-card-subtitle {
   padding-top: 10px;
   font-size: small;
   --color: white;
 }
 
-#post-preview-container{
-  height: 250px;
-  margin-top: 10px;
-  border: #0E8C00 2px solid;
-  }
+// #post-preview-container {
+//   height: 250px;
+//   margin-top: 10px;
+//   border: #0E8C00 2px solid;
+// }
 
-ion-grid{
+.post-preview {
+  border: #0E8C00 2px solid;
+  margin: 10px;
+}
+
+ion-grid {
   height: 100%;
 }
 
-#filters-container{
+#filters-container {
   height: 50px;
   width: auto;
   display: flex;
@@ -57,13 +63,13 @@ ion-grid{
   background-color: #1D2A1C;
 }
 
-.filter{
+.filter {
   min-width: fit-content;
   position: relative;
   white-space: nowrap;
 }
 
-ion-chip{
+ion-chip {
   --background: #0E8C00;
   --color: white;
 }

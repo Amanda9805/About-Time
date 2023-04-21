@@ -6,10 +6,9 @@ import {
   SetPost,
   SetPostList,
   SetTimeModification,
+  AddToPostList
 } from '@mp/app/feed/util';
-
-import {SetUserTimeModification} from '@mp/app/timer/util'
-
+import { SetUserTimeModification } from '@mp/app/timer/util'
 import {
   FilterList,
   Post,
@@ -21,9 +20,7 @@ import {
   FetchPostsRequest,
   FetchPostsResponse,
 } from '@mp/api/feed/util';
-
 import { IUser } from '@mp/api/users/util';
-
 import { FeedApi } from './feed.api';
 import { SetError } from '@mp/app/errors/util';
 import { fetchPosts } from '@mp/api/core/feature';
@@ -94,7 +91,6 @@ export interface FeedStateModel {
 }
 
 @State<FeedStateModel>({
-
   name: 'feed',
   defaults: {
     filterList: null,
@@ -185,8 +181,6 @@ export class FeedState {
     { payload }: SetFilterList
   ) {
     try {
-
-
       ctx.setState(
         produce((draft) => {
           draft.filterList = {
@@ -211,7 +205,6 @@ export class FeedState {
       filters: this.store.selectSnapshot(FeedState).filterList?.list,
     };
 
-
     const listOfPosts = await this.feedApi.fetchPosts$(rqst);
 
     const arrOfPosts: Post[] = [];
@@ -225,7 +218,7 @@ export class FeedState {
         content: post.content,
         discipline: post.discipline,
         time: post.time,
-        image : "put image url here"
+        image: post.image
       });
     });
 
@@ -266,32 +259,36 @@ export class FeedState {
   }
 
   @Action(SetTimeModification)
-  async setTimeModification(ctx: StateContext<FeedStateModel>,
-    { payload }: SetTimeModification) {
+  async setTimeModification(ctx: StateContext<FeedStateModel>, { payload }: SetTimeModification) {
     try {
-
       ctx.setState(
         produce((draft) => {
           draft.TimeModification = { model: { postID: payload.postID, time: payload.time }, dirty: false, status: '', errors: {} };
         }));
 
       const addTimeRqst = { modification: this.store.selectSnapshot(FeedState).timeModification };
-
       const rqstStatus = await this.feedApi.addTime$(addTimeRqst);
+      const authorID = this.store.selectSnapshot(FeedState).post.author.id;
+      ctx.dispatch(new SetUserTimeModification({ time: payload.time, userID: authorID }));
 
+      if (rqstStatus.data.status === 'success') {
+        console.log('Time added successfully');
+      } else {
+        ctx.dispatch(new SetError('Time could not be added'));
+      }
+      return;
 
-        const authorID = this.store.selectSnapshot(FeedState).post.author.id;
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
 
-        ctx.dispatch(new SetUserTimeModification({time: payload.time ,userID: authorID}));
-
-        if(rqstStatus.data.status === 'success'){
-          console.log('Time added successfully');
-        }else{
-          ctx.dispatch(new SetError('Time could not be added'));
-        }
-        return;
-
-
+  @Action(AddToPostList)
+  async addToPostList(ctx: StateContext<FeedState>, { payload }: AddToPostList) {
+    const post: Post = payload.post;
+    console.log("Adding to Post List", post);
+    try {
+      return;
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
