@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { IBadge, IMeter, IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Select, Store } from '@ngxs/store';
@@ -16,7 +16,9 @@ export class ProfilePage {
 
   constructor(
     private store: Store
-  ) { }
+  ) {
+
+   }
 
   // MOCK DATA
   user: any = {
@@ -95,11 +97,15 @@ export class ProfilePage {
     },
   ]
 
-  NgOnInit() {
+  ngOnInit() {
+    console.log('Profile page loaded');
+
     this.store.dispatch(new SetProfile());
+    console.log('Profile = set!');
 
     // Get the profile from the state
     this.store.select(ProfileState.profile).subscribe((profile) => {
+      // const profile = profileObj?.model;
 
       // Get the info for the user
       this.user.name = profile?.accountDetails?.userName;

@@ -1,35 +1,35 @@
-import { ProfilesRepository } from '@mp/api/profiles/data-access';
-// import { FetchPostsResponse, FetchPostsCommand } from '@mp/api/feed/util';
-import { FetchProfileCommand, IFetchProfileResponse, IProfile } from '@mp/api/profiles/util';
-import {CommandHandler, ICommandHandler} from '@nestjs/cqrs';
-import { RelationEnum } from 'libs/api/profiles/util/src/enums/relations.enum';
-import { IRelation } from 'libs/api/profiles/util/src/interfaces/relation.interface';
-// import { PostList } from '@mp/api/feed/util';
+// import { ProfilesRepository } from '@mp/api/profiles/data-access';
+// // import { FetchPostsResponse, FetchPostsCommand } from '@mp/api/feed/util';
+// import { FetchProfileCommand, IFetchProfileResponse, IProfile } from '@mp/api/profiles/util';
+// import {CommandHandler, ICommandHandler} from '@nestjs/cqrs';
+// import { RelationEnum } from 'libs/api/profiles/util/src/enums/relations.enum';
+// import { IRelation } from 'libs/api/profiles/util/src/interfaces/relation.interface';
+// // import { PostList } from '@mp/api/feed/util';
 
-@CommandHandler(FetchProfileCommand)
-export class FetchProfileHandler implements ICommandHandler<FetchProfileCommand, IFetchProfileResponse> {
-    constructor(
-        private readonly repository: ProfilesRepository
-    ) {}
+// @CommandHandler(FetchProfileCommand)
+// export class FetchProfileHandler implements ICommandHandler<FetchProfileCommand, IFetchProfileResponse> {
+//     constructor(
+//         private readonly repository: ProfilesRepository
+//     ) {}
   
-    async execute(command: FetchProfileCommand) {
-      // For debugging
-      console.log(`${FetchProfileCommand.name}`);
+//     async execute(command: FetchProfileCommand) {
+//       // For debugging
+//       console.log(`${FetchProfileCommand.name}`);
 
-      // This object will contain the data sent by the request (whose interface you have already defined)
-      const request = command.request;
+//       // This object will contain the data sent by the request (whose interface you have already defined)
+//       const request = command.request;
       
-      // Get the parameters from the request (in this case the filters)
-      const user = request.user
+//       // Get the parameters from the request (in this case the filters)
+//       const user = request.user
 
-      // Call the function to get the data from the DB (need to pass in the list of filters to determine query to make)
-      const fetchProfileDoc = await this.repository.fetchProfile(user);
+//       // Call the function to get the data from the DB (need to pass in the list of filters to determine query to make)
+//       const fetchProfileDoc = await this.repository.fetchProfile(user);
 
-      const responseData: IProfile = {"userId": fetchProfileDoc.userId,};
+//       const responseData: IProfile = {"userId": fetchProfileDoc.userId,};
 
-      const response : IFetchProfileResponse = {"profile": responseData};
+//       const response : IFetchProfileResponse = {"profile": responseData};
       
-      return response;
-    }
-  }
+//       return response;
+//     }
+//   }
   

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   FetchUserPostsRequest,
+  IBadge,
   IFetchProfileRequest,
+  IMeter,
   IPostList,
   IProfile,
   IUpdateAccountDetailsRequest,
@@ -24,7 +26,34 @@ import { ProfilesApi } from './profiles.api';
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface ProfileStateModel {
   profile: IProfile | null;
+  // profile: {
+  //   model: {
+  //     userId: string | null;
+  //     accountDetails: {
+  //       userName: string | null;
+  //       email: string | null;
+  //       photoURL: string | null;
+  //       title: string | null;
+  //       friends: string[] | null;
+  //       friendsRequests: string[] | null;
+  //       blockedUsers: string[] | null;
+  //       meters: IMeter[] | null;
+  //       badgesReceived: IBadge[] | null;
+  //       private: boolean | null;
+  //     };
+  //     time: string | null;
+  //   }
+  //   dirty: false;
+  //   status: string;
+  //   errors: object;
+  // }
   posts: IPostList | null;
+
+  // Profile: {
+  //   model: {
+
+  //   }
+  // }
 
   accountDetailsForm: {
     model: {
@@ -43,6 +72,27 @@ export interface ProfileStateModel {
   name: 'profile',
   defaults: {
     profile: null,
+    // profile: {
+    //   model: {
+    //     userId: null,
+    //     accountDetails: {
+    //       userName: null,
+    //       email: null,
+    //       photoURL: null,
+    //       title: null,
+    //       friends: null,
+    //       friendsRequests: null,
+    //       blockedUsers: null,
+    //       meters: null,
+    //       badgesReceived: null,
+    //       private:  null,
+    //     },
+    //     time: null,
+    //   },
+    //   dirty: false,
+    //   status: '',
+    //   errors: {},
+    // },
     posts: null,
     accountDetailsForm: {
       model: {
