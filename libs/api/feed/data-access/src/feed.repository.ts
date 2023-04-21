@@ -142,7 +142,7 @@ export class FeedRepository {
         description: currentDocPostData['desc'],
         content: currentDocPostData['content'],
         time: currentDocPostData['timeWatched'],
-        discipline: this.interpretDiscipline(currentDocPostData['discipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
+        discipline: this.interpretDiscipline(currentDocPostData['descipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
         image : postImages.get(currentDoc['id'])
       });
     });
