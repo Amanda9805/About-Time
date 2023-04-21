@@ -76,12 +76,6 @@ export class Profile extends AggregateRoot implements IProfile {
   updateStatus() {
     this.updateAccountDetailsStatus();
 
-    if (
-      this.accountDetails?.status === ProfileStatus.COMPLETE
-    ) {
-      this.status = ProfileStatus.COMPLETE;
-    }
-
     this.apply(new ProfileStatusUpdatedEvent(this.toJSON()));
   }
 
