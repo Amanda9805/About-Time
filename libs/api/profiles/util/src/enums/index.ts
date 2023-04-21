@@ -9,4 +9,5 @@ export * from './privacy-status.enum';
 
 export * from './relations.enum';
 export * from './status.enum';
+export * from './discipline.enum';
 
