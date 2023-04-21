@@ -189,4 +189,19 @@ export class ProfilesRepository {
     }
 
   }
+
+
+  async fetchProfile(user: IUser) {
+    // Use user email to get profile from the db
+
+
+    // Return the relevant profile
+    return {
+      userId: "u01",
+      // email: "jon@ravenmail.com",
+      // userName: "Jon Snow",
+      // photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
+      // phoneNumber: "1234567890",
+    }
+  }
 }

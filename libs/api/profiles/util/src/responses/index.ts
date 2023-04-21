@@ -14,4 +14,5 @@ export * from './update-privacy-settings.response';
 export * from './check-relationship.response';
 export * from './fetch-user-posts.response';
 export * from './update-relation.response';
+export * from './fetch-profile.response';
 
