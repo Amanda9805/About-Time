@@ -1,18 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/"></ion-back-button>
+      <ion-back-button defaultHref="/welcome"></ion-back-button>
     </ion-buttons>
-    <ion-title>Login</ion-title>
+    <ion-title class = "ion-text-center">Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div class="container ion-text-center">
+    <img src = "https://i.imgur.com/PCGUzLY.png">
+  </div>
   <form [formGroup]="loginForm" ngxsForm="login.loginForm" (submit)="login()">
     <ion-list class="ion-padding-vertical">
       <ion-item>
@@ -34,21 +32,21 @@
         color="danger">
         <small>{{ passwordError }}</small>
       </ion-text>
-      <ion-row class="ion-padding-top">
+      <ion-row>
         <ion-col class="ion-text-right off-white">
           <ion-nav-link routerLink="/forgot">
-            <ion-text color="primary" class="link">Forgot Password</ion-text>
+            <ion-text class="link">Forgot Password?</ion-text>
           </ion-nav-link>
         </ion-col>
       </ion-row>
     </ion-list>
 
-    <ion-grid class="ion-padding">
+    <ion-grid >
       <ion-row>
         <ion-col>
-          <ion-button expand="block" [disabled]="!this.loginForm.valid || (busy$ | async)" type="submit">
+          <ion-button expand="full" [disabled]="!this.loginForm.valid || (busy$ | async)" type="submit">
             <ion-spinner *ngIf="busy$ | async"></ion-spinner>
-            <ion-text class="off-white">It's about time!</ion-text>
+            <ion-text class="off-white">Welcome. You're late!</ion-text>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -56,7 +54,7 @@
   </form>
 
   <!-- or -->
-  <ion-row class="ion-padding-top ion-padding-bottom">
+  <ion-row >
     <ion-col>
       <hr />
     </ion-col>
@@ -71,7 +69,7 @@
   <ion-row>
     <ion-col>
       <ion-nav-link>
-        <ion-button expand="block" fill="outline" (click)="continueWithGoogle()">
+        <ion-button expand="full" fill="outline" (click)="continueWithGoogle()">
           <ion-icon name="logo-google"></ion-icon>
           <ion-text style="padding-left: 5px">
             Continue with Google
@@ -83,7 +81,7 @@
   <ion-row>
     <ion-col>
       <ion-nav-link>
-        <ion-button expand="block" fill="outline" (click)="continueWithGoogle()">
+        <ion-button expand="full" fill="outline" (click)="continueWithGoogle()">
           <ion-icon name="logo-facebook"></ion-icon>
           <ion-text style="padding-left: 5px">
             Continue with Facebook
@@ -93,7 +91,7 @@
     </ion-col>
   </ion-row>
 
-  <ion-row class="ion-padding-top ion-padding-bottom">
+  <ion-row >
     <ion-col class="ion-text-center off-white">
       Don't have an account?
       <ion-nav-link routerLink="/register">
@@ -104,6 +102,6 @@
 
 </ion-content>
 
-<ion-footer collapse="condense" class="ion-padding ion-text-center">
+<!-- <ion-footer collapse="condense" class="ion-padding ion-text-center">
   <ms-copyright-component></ms-copyright-component>
-</ion-footer>
+</ion-footer> -->

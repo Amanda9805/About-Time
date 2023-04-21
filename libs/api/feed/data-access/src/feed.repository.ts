@@ -6,6 +6,12 @@ import { Discipline } from '@mp/api/feed/util';
 import { IUser } from '@mp/api/users/util';
 import { Status } from '@mp/api/feed/util';
 
+
+// Login details: email: super@super.com
+
+// password: Testing123?
+
+
 @Injectable()
 export class FeedRepository {
 
@@ -100,7 +106,31 @@ export class FeedRepository {
 
     console.log(`Documents retrieved: ${documents}`);
 
-    const toReturn: { id: string; title: string; author: null; description: string; content: string; time: number; discipline: Discipline; }[] = [];
+    const toReturn: { id: string; title: string; author: string; description: string; content: string; time: number; discipline: Discipline; image: string | undefined}[] = [];
+
+
+    const postIDs : string []= [];
+    documents.forEach((doc) => {
+      const currentDoc = doc.data();
+      postIDs.push(
+        currentDoc['id'],
+      );
+    });
+
+    const postImages = new Map<string, string>();
+
+    const imageDocuments = await admin.firestore()
+    .collection("PostPhotos")
+    .where("postId", "in", postIDs)
+    .get().then((docs) => {
+      docs.forEach((doc) => {
+        const data = doc.data();
+        postImages.set(data["postId"], data["image"]);
+      })
+    });
+
+
+
 
     documents.forEach((doc) => {
       const currentDoc = doc.data();
@@ -108,45 +138,23 @@ export class FeedRepository {
       toReturn.push({
         id: currentDoc['id'],
         title: currentDoc['title'],
-        author: null,  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
+        author: currentDoc["userId"],  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
         description: currentDocPostData['desc'],
         content: currentDocPostData['content'],
         time: currentDocPostData['timeWatched'],
-        discipline: this.interpretDiscipline(currentDocPostData['discipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
+        discipline: this.interpretDiscipline(currentDocPostData['descipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
+        image : postImages.get(currentDoc['id'])
       });
     });
 
-    // This is some mock data - will actually need to query the database
-    // const toReturn = {
-    //     data: [
-    //         {
-    //             id: "post 1",
-    //             title: "Burger King Foot Lettuce",
-    //             author: null,
-    //             description: "This is a very orginal and cool post!",
-    //             content: "Wow, I really am I a super cool story - pls spend time",
-    //             discipline: Discipline.SCIENCE,
-    //             time: 500
-    //         },
-    //         {
-    //             id: "post 1",
-    //             title: "Burger King Foot Lettuce",
-    //             author: null,
-    //             description: "This is a very orginal and cool post!",
-    //             content: "Wow, I really am I a super cool story - pls spend time",
-    //             discipline: Discipline.SCIENCE,
-    //             time: 500
-    //         }
-    //     ]
-    // };
 
     return { data: toReturn };
   }
 
 
-  async addTime(timeMode: TimeModification) {
+  async addTime(timeMode: TimeModification) : Promise<Status> {
     // Query the database to add the amount of time to the post
-
+    
     const postID = timeMode.postID;
     const amount = timeMode.time;
 
@@ -159,10 +167,8 @@ export class FeedRepository {
         } else {
 
           const docPost = post.docs[0];
-          let currValue = docPost?.data()["timeWatched"];
-          currValue += amount;
 
-          docPost.ref.update({ timeWatched: currValue }).then(() => {
+          docPost.ref.update({ timeWatched: admin.firestore.FieldValue.increment(amount) }).then(() => {
             return Status.SUCCESS;
           }).catch(() => {
             return Status.FAILURE;
@@ -172,15 +178,62 @@ export class FeedRepository {
       }
       ).catch(() => {
         return Status.FAILURE;
-      });
-
+      }).finally(() =>{
+        return Status.FAILURE;
+      })
+      
+      return Status.FAILURE;
 
   }
 
   async getUserTime(user: IUser) {
     // Query the database to return the amount of time the user has left
+    const userID = user.id;
+    const documents = await admin.firestore()
+          .collection("profiles")
+          .where("userId", "==", userID)
+          .get();
 
-    return { "timeRemaing": true, "value": 1000 };
+    const profile = documents.docs[0];
+    const time = profile.data()["time"];
+
+    let flag = false;
+    if (time > 0){
+      flag = true;
+    }
+
+    return { "timeRemaing": flag, "value": time };
+  }
+
+  async modifyUserTime(timeMod : UserTimeModification){
+    const userID = timeMod.userID;
+    const amount = timeMod.timeValue;
+
+    const document = await admin.firestore()
+      .collection("profiles")
+      .where("userId", "==", userID)
+      .get().then((user) => {
+        if (user.empty) {
+          return Status.FAILURE;
+        } else {
+
+          const docUser = user.docs[0];
+      
+          docUser.ref.update({ time: admin.firestore.FieldValue.increment(amount)}).then(() => {
+            return Status.SUCCESS;
+          }).catch(() => {
+            return Status.FAILURE;
+          });
+          return Status.FAILURE;
+        }
+      }
+      ).catch(() => {
+        return Status.FAILURE;
+      }).finally(() =>{
+        return Status.FAILURE;
+      })
+      
+      return Status.FAILURE;
   }
 
 
