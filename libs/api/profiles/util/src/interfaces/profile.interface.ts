@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase-admin/firestore';
-import { ProfileStatus } from '../enums';
+import { PrivacyStatus, ProfileStatus } from '../enums';
 import { IAccountDetails } from './account-details.interface';
 import { IAddressDetails } from './address-details.interface';
 import { IContactDetails } from './contact-details.interface';
@@ -15,4 +15,5 @@ export interface IProfile {
   // occupationDetails?: IOccupationDetails | null | undefined;
   status?: ProfileStatus | null | undefined;
   created?: Timestamp | null | undefined;
+  privacyStatus?: PrivacyStatus | null | undefined;
 }

@@ -6,6 +6,7 @@ import { IRelationship } from '../../util/src/interfaces/relationship.interface'
 import { Discipline } from '../../util/src/enums/discipline.enum';
 import { IUser } from '@mp/api/users/util';
 import { IRelation } from '../../util/src/interfaces/relation.interface';
+import { DeleteUsersResult } from 'firebase-admin/auth';
 
 @Injectable()
 export class ProfilesRepository {
@@ -48,20 +49,95 @@ export class ProfilesRepository {
 
   // Pertaining to the settings
   async updatePassword(user : IPasswordSettings) {
+    // not doing this
     return Status.SUCCESS;
   }
 
 
 async updatePrivacySettings(user : IProfile) {
-  return Status.SUCCESS; 
-  }
+  const userID = user.userId;
+
+  const pstatus = await admin.firestore()
+    .collection("profiles")
+    .where("userId", "==", userID) 
+    .get();
+        
+    const pdoc = pstatus.docs[0];
+    const currentStatus = pdoc?.data()["privacyStatus"];
+
+    if (currentStatus.toLowerCase() == "private") { // Privacy status is Private
+      pdoc.ref.update({ newStatus : "public"}).then(() => { // private to public
+        return Status.SUCCESS;
+      });
+    } 
+    else { // Privacy status is Public or anything else
+      pdoc.ref.update({ newStatus : "private"}).then(() => { // public to private 
+        return Status.SUCCESS;
+      });
+    }
+}
 
 async getPrivacySettings(user : IProfile) {
-  return PrivacyStatus.PUBLIC;
+  const userID = user.userId;
+  
+  const pstatus = await admin.firestore()
+    .collection("profiles")
+    .where("userId", "==", userID)
+    .get();
+
+  const pdoc = pstatus.docs[0];
+  const currentStatus = pdoc?.data()["privacyStatus"];
+
+  if (currentStatus.toLowerCase() == "private") {  // if private
+    return { status: "private" };
+  }
+  else { // if public or anything else
+    return { status: "public" };
   }
 
+}
+
 async deleteAccount(profile : IProfile) {
-  return Status.SUCCESS; 
+  // get userID for convenience
+  const userID = profile.userId;
+
+  // User db remove
+  const duser = await admin.firestore()
+    .collection("users")
+    .where("userId", "==", userID)
+    .get();
+
+  const currentUser = duser.docs[0];
+  await admin.firestore()
+    .collection("users")
+    .doc(currentUser.id)
+    .delete();
+  //-------------------------------------
+  // Profile db remove
+  const dprofile = await admin.firestore()
+    .collection("profiles")
+    .where("userId", "==", userID)
+    .get();
+
+  const currentProfile = dprofile.docs[0];
+  await admin.firestore()
+    .collection("profiles")
+    .doc(currentProfile.id)
+    .delete();
+  //------------------------------------
+  // Posts db remove
+  const dposts = await admin.firestore()
+    .collection("Posts")
+    .where("userId", "==", userID)
+    .get();
+
+  for (let j = 0; j != dposts.docs.length; j++) { // calling each instance of post relevant to user
+    const currentPost = dposts.docs[j].id;
+    await admin.firestore()
+      .collection("Posts")
+      .doc(currentPost)
+      .delete();
+  }
 }
 
   async checkRelationship(relationship: IRelationship) {
