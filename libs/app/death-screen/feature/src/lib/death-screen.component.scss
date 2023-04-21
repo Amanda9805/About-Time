@@ -10,7 +10,8 @@ ion-button {
 
 ion-action-sheet {
   &.custom-action-sheet {
-    --background: $backgroundColor;
+    --ion-background-color: #242423;
+
     ion-toolbar {
       &.custom-header {
         font-size: 1.5rem;
