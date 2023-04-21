@@ -88,30 +88,26 @@ export class CreatePostPage {
       return;
     }
 
-    // Call the post service to submit the form data
-    this.postService.createPost(this.post)
-      .then(response => {
-        // Handle successful post submission, e.g., show a success message
-        alert('Post created successfully!');
-        // Reset form data
-        this.post = {
-          user: '',
-          title: '',
-          caption: '',
-          link: '',
-          tag: '',
-          photo: null
-        };
-      })
-      .catch(error => {
-        // Handle error, e.g., show an error message
-        alert('Failed to create post. Please try again.');
-      });
+    const formData = new FormData();
+    formData.append('title', this.post.title);
+    formData.append('description', this.post.description);
+    formData.append('caption', this.post.content);
+    formData.append('discipline', this.post.discipline);
+    if (this.image) {
+      formData.append('image', this.post.image);
+    }
+    //this.store.dispatch(new CreatePost(formData));
+  }
+
+
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length) {
+      this.image = event.target.files[0];
+    }
   }
 
   handleSelect(event: Event) {
     const target = event.target as HTMLInputElement;
     this.post.discipline = target.value;
   }
-
 }
