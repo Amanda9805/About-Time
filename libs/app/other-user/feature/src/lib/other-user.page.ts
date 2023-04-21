@@ -117,7 +117,9 @@ export class OtherUserPage {
       this.user.pfp = profile?.accountDetails?.photoURL!;
       this.user.title = profile?.accountDetails?.title!;
       this.user.time = profile?.accountDetails?.time!;
-      this.badges = profile?.accountDetails?.badges!;
+
+      // Added:
+      this.badges = profile?.accountDetails?.badgesReceived!;
       this.meters = profile?.accountDetails?.meters!;
 
       // Determine privacy
@@ -128,7 +130,6 @@ export class OtherUserPage {
       {
         this.private = false;
       }
-
     })
 
     // Get the relation from the state and determine if the users are friends

@@ -6,11 +6,9 @@ import { Discipline } from '@mp/api/feed/util';
 import { IUser } from '@mp/api/users/util';
 import { Status } from '@mp/api/feed/util';
 
-
 // Login details: email: super@super.com
 
 // password: Testing123?
-
 
 @Injectable()
 export class FeedRepository {
@@ -33,36 +31,33 @@ export class FeedRepository {
     } else {
       return Discipline.MUSIC;
     }
-
   }
-
 
   async fetchPosts(filters: FilterList) {
 
-
     let discipline = "";
-    if (filters.list?.includes(FilterType.ART_FILTER)) {
+    if (filters?.list?.includes(FilterType.ART_FILTER)) {
       discipline = Discipline.ART;
-    } else if (filters.list?.includes(FilterType.FOOD_FILTER)) {
+    } else if (filters?.list?.includes(FilterType.FOOD_FILTER)) {
       discipline = Discipline.FOOD;
-    } else if (filters.list?.includes(FilterType.GAMING_FILTER)) {
+    } else if (filters?.list?.includes(FilterType.GAMING_FILTER)) {
       discipline = Discipline.GAMING;
-    } else if (filters.list?.includes(FilterType.SPORT_FILTER)) {
+    } else if (filters?.list?.includes(FilterType.SPORT_FILTER)) {
       discipline = Discipline.SPORT;
-    } else if (filters.list?.includes(FilterType.SCIENCE_FILTER)) {
+    } else if (filters?.list?.includes(FilterType.SCIENCE_FILTER)) {
       discipline = Discipline.SCIENCE;
-    } else if (filters.list?.includes(FilterType.NEWS_FILTER)) {
+    } else if (filters?.list?.includes(FilterType.NEWS_FILTER)) {
       discipline = Discipline.NEWS;
-    } else if (filters.list?.includes(FilterType.TRAVEL_FILTER)) {
+    } else if (filters?.list?.includes(FilterType.TRAVEL_FILTER)) {
       discipline = Discipline.TRAVEL;
-    } else if (filters.list?.includes(FilterType.MUSIC_FILTER)) {
+    } else if (filters?.list?.includes(FilterType.MUSIC_FILTER)) {
       discipline = Discipline.MUSIC;
     }
 
     let documents;
-    if (filters.list?.includes(FilterType.MOST_RECENT)) {
 
-      if (discipline.length != 0) {
+    if (filters?.list?.includes(FilterType.MOST_RECENT)) {
+      if (discipline) {
         documents = await admin.firestore()
           .collection("Posts")
           .where("discipline", "==", discipline)
@@ -74,10 +69,9 @@ export class FeedRepository {
           .orderBy("createdTimestamp", "desc")
           .get();
       }
-
     }
-    else if (filters.list?.includes(FilterType.MOST_POPULAR)) {
-      if (discipline.length != 0) {
+    else if (filters?.list?.includes(FilterType.MOST_POPULAR)) {
+      if (discipline) {
         documents = await admin.firestore()
           .collection("Posts")
           .where("discipline", "==", discipline)
@@ -90,7 +84,7 @@ export class FeedRepository {
           .get();
       }
     } else {
-      if (discipline.length != 0) {
+      if (discipline) {
         documents = await admin.firestore()
           .collection("Posts")
           .where("discipline", "==", discipline)
@@ -102,14 +96,20 @@ export class FeedRepository {
       }
     }
 
-
-
     console.log(`Documents retrieved: ${documents}`);
 
-    const toReturn: { id: string; title: string; author: string; description: string; content: string; time: number; discipline: Discipline; image: string | undefined}[] = [];
+    const toReturn: {
+      id: string;
+      title: string;
+      author: string;
+      description: string;
+      content: string;
+      time: number;
+      discipline: Discipline;
+      image: string | undefined
+    }[] = [];
 
-
-    const postIDs : string []= [];
+    const postIDs: string[] = [];
     documents.forEach((doc) => {
       const currentDoc = doc.data();
       postIDs.push(
@@ -117,44 +117,29 @@ export class FeedRepository {
       );
     });
 
-    const postImages = new Map<string, string>();
-
-    const imageDocuments = await admin.firestore()
-    .collection("PostPhotos")
-    .where("postId", "in", postIDs)
-    .get().then((docs) => {
-      docs.forEach((doc) => {
-        const data = doc.data();
-        postImages.set(data["postId"], data["image"]);
-      })
-    });
-
-
-
+    console.log("boo");
 
     documents.forEach((doc) => {
       const currentDoc = doc.data();
       const currentDocPostData = currentDoc['postDetails'];
+      console.log(currentDocPostData['discipline']);
       toReturn.push({
         id: currentDoc['id'],
         title: currentDoc['title'],
-        author: currentDoc["userId"],  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
+        author: currentDoc["userId"],
         description: currentDocPostData['desc'],
         content: currentDocPostData['content'],
-        time: currentDocPostData['timeWatched'],
-        discipline: this.interpretDiscipline(currentDocPostData['descipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
-        image : postImages.get(currentDoc['id'])
+        time: currentDoc['timeWatched'],
+        discipline: this.interpretDiscipline(currentDocPostData['discipline']),
+        image: currentDocPostData['image']
       });
     });
-
-
     return { data: toReturn };
   }
 
-
-  async addTime(timeMode: TimeModification) : Promise<Status> {
+  async addTime(timeMode: TimeModification): Promise<Status> {
     // Query the database to add the amount of time to the post
-    
+
     const postID = timeMode.postID;
     const amount = timeMode.time;
 
@@ -178,11 +163,11 @@ export class FeedRepository {
       }
       ).catch(() => {
         return Status.FAILURE;
-      }).finally(() =>{
+      }).finally(() => {
         return Status.FAILURE;
       })
-      
-      return Status.FAILURE;
+
+    return Status.FAILURE;
 
   }
 
@@ -190,22 +175,22 @@ export class FeedRepository {
     // Query the database to return the amount of time the user has left
     const userID = user.id;
     const documents = await admin.firestore()
-          .collection("profiles")
-          .where("userId", "==", userID)
-          .get();
+      .collection("profiles")
+      .where("userId", "==", userID)
+      .get();
 
     const profile = documents.docs[0];
     const time = profile.data()["time"];
 
     let flag = false;
-    if (time > 0){
+    if (time > 0) {
       flag = true;
     }
 
     return { "timeRemaing": flag, "value": time };
   }
 
-  async modifyUserTime(timeMod : UserTimeModification){
+  async modifyUserTime(timeMod: UserTimeModification) {
     const userID = timeMod.userID;
     const amount = timeMod.timeValue;
 
@@ -218,8 +203,8 @@ export class FeedRepository {
         } else {
 
           const docUser = user.docs[0];
-      
-          docUser.ref.update({ time: admin.firestore.FieldValue.increment(amount)}).then(() => {
+
+          docUser.ref.update({ time: admin.firestore.FieldValue.increment(amount) }).then(() => {
             return Status.SUCCESS;
           }).catch(() => {
             return Status.FAILURE;
@@ -229,46 +214,11 @@ export class FeedRepository {
       }
       ).catch(() => {
         return Status.FAILURE;
-      }).finally(() =>{
+      }).finally(() => {
         return Status.FAILURE;
       })
-      
-      return Status.FAILURE;
+
+    return Status.FAILURE;
   }
 
-
-
-  //   async findOne(profile: IProfile) {
-  //     return await admin
-  //       .firestore()
-  //       .collection('profiles')
-  //       .withConverter<IProfile>({
-  //         fromFirestore: (snapshot) => {
-  //           return snapshot.data() as IProfile;
-  //         },
-  //         toFirestore: (it: IProfile) => it,
-  //       })
-  //       .doc(profile.userId)
-  //       .get();
-  //   }
-
-  //   async createProfile(profile: IProfile) {
-  //     // Remove password field if present
-  //     delete profile.accountDetails?.password;
-  //     return await admin
-  //       .firestore()
-  //       .collection('profiles')
-  //       .doc(profile.userId)
-  //       .create(profile);
-  //   }
-
-  //   async updateProfile(profile: IProfile) {
-  //     // Remove password field if present
-  //     delete profile.accountDetails?.password;
-  //     return await admin
-  //       .firestore()
-  //       .collection('profiles')
-  //       .doc(profile.userId)
-  //       .set(profile, { merge: true });
-  //   }
 }

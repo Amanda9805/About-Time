@@ -43,7 +43,6 @@ import {
     IFetchProfileRequest,
     IFetchProfileResponse,
     FetchProfileCommand
-
 } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
