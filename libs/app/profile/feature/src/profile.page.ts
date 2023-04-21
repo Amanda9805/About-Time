@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component } from '@angular/core';
 import { IBadge, IMeter, IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
@@ -101,11 +102,11 @@ export class ProfilePage {
     this.store.select(ProfileState.profile).subscribe((profile) => {
 
       // Get the info for the user
-      this.user.name = profile?.accountDetails?.userName!;
-      this.user.pfp = profile?.accountDetails?.photoURL!;
-      this.user.title = profile?.accountDetails?.title!;
-      this.user.time = profile?.accountDetails?.time!;
-      this.badges = profile?.accountDetails?.badges!;
+      this.user.name = profile?.accountDetails?.userName;
+      this.user.pfp = profile?.accountDetails?.photoURL;
+      this.user.title = profile?.accountDetails?.title;
+      this.user.time = profile?.time;
+      this.badges = profile?.accountDetails?.badgesReceived!;
       this.meters = profile?.accountDetails?.meters!;
     })
 

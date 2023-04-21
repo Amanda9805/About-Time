@@ -116,7 +116,7 @@ export class OtherUserPage {
       this.user.name = profile?.accountDetails?.userName!;
       this.user.pfp = profile?.accountDetails?.photoURL!;
       this.user.title = profile?.accountDetails?.title!;
-      this.user.time = profile?.accountDetails?.time!;
+      this.user.time = profile?.time!;
 
       // Added:
       this.badges = profile?.accountDetails?.badgesReceived!;

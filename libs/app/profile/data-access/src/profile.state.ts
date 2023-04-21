@@ -69,7 +69,7 @@ export class ProfileState {
     return state.profile;
   }
 
-  @Selector() 
+  @Selector()
   static posts(state: ProfileStateModel) {
     return state.posts;
   }
@@ -108,7 +108,7 @@ export class ProfileState {
       user: user!,
     }
     console.log("request: ", request);
-    
+
     // First call the api fetchProfilefunction
     const responseRef = await this.profileApi.fetchProfile(request);
     const response = responseRef.data;
@@ -121,48 +121,14 @@ export class ProfileState {
     );
   }
 
-*/
 
-  @Action(UpdateAccountDetails)
-  async updateAccountDetails(ctx: StateContext<ProfileStateModel>) {
-    try {
-      const state = ctx.getState();
-      const userId = state.profile?.userId;
-      const userName = state.accountDetailsForm.model.userName;
-      const email = state.accountDetailsForm.model.email;
-      // const photoURL = state.accountDetailsForm.model.photoURL;
-      const password = state.accountDetailsForm.model.password;
 
-      if (!userId || !userName || !email || !password)
-        return ctx.dispatch(
-          new SetError(
-            'UserId or user name or email or photo URL or password not set'
-          )
-        );
-
-      const request: IUpdateAccountDetailsRequest = {
-        profile: {
-          userId,
-          accountDetails: {
-            userName,
-            email,
-          },
-        },
-      };
-
-      const responseRef = await this.profileApi.updateAccountDetails(request);
-      const response = responseRef.data;
-      return ctx.dispatch(new SetProfile(response.profile));
-    } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message))
-
-*/
     @Action(SetPosts)
   async setPosts(ctx: StateContext<ProfileStateModel>) {
     const request: FetchUserPostsRequest = {
       userProfile: ctx.getState().profile!,
     }
-    
+
     // First call the api fetchUserPosts function
     const responseRef = await this.profileApi.fetchUserPosts(request);
     const response = responseRef.data;
