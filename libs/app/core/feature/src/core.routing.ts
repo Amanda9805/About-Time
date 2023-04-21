@@ -11,12 +11,17 @@ const redirectLoggedIn = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'welcome',
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/welcome/feature').then((m) => m.WelcomeModule),
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('@mp/app/splash/feature').then((m) => m.SplashModule),
   },
   // {
   //   path: 'response',
@@ -45,15 +50,15 @@ const routes: Routes = [
     pathMatch: 'full',
     loadChildren: () =>
       import('@mp/app/privacy/feature').then((m) => m.PrivacyModule),
-   },
-  // {
-  //   path: 'search',
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import ('@mp/app/search/feature').then((m)=>m.SearchModule),
-  // },
+  },
+//   {
+//     path: 'search',
+//     pathMatch: 'full',
+//     canActivate: [AuthGuard],
+//     data: { authGuardPipe: redirectLoggedIn },
+//     loadChildren: () =>
+//       import ('@mp/app/search/feature').then((m)=>m.SearchModule),
+//   },
   // {
   //   path: 'feed',
   //   pathMatch: 'full',
@@ -100,8 +105,17 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/login/feature').then((m) => m.LoginModule),
   },
+  {
+    path: 'loading',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/loading/feature').then((m) => m.LoadingModule),
+  },
   // {
   //   path: 'settings',
+
   //   pathMatch: 'full',
   //   canActivate: [AuthGuard],
   //   data: { authGuardPipe: redirectLoggedIn },
