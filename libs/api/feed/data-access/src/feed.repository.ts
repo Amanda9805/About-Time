@@ -5,6 +5,7 @@ import { FilterList, FilterType, TimeModification, UserTimeModification } from '
 import { Discipline } from '@mp/api/feed/util';
 import { IUser } from '@mp/api/users/util';
 import { Status } from '@mp/api/feed/util';
+import { FieldValue } from 'firebase-admin/firestore';
 
 // Login details: email: super@super.com
 
@@ -143,37 +144,24 @@ export class FeedRepository {
     const postID = timeMode.postID;
     const amount = timeMode.time;
 
-    const post = await admin.firestore()
-      .collection("Posts")
-      .where("id", "==", postID)
-      .get().then((post) => {
-        if (post.empty) {
-          return Status.FAILURE;
-        } else {
+    const cb = await admin.firestore().collection("Posts").doc(postID).update({ timeWatched: FieldValue.increment(amount) });
 
-          const docPost = post.docs[0];
-
-          docPost.ref.update({ timeWatched: admin.firestore.FieldValue.increment(amount) }).then(() => {
-            return Status.SUCCESS;
-          }).catch(() => {
-            return Status.FAILURE;
-          });
-          return Status.FAILURE;
-        }
-      }
-      ).catch(() => {
-        return Status.FAILURE;
-      }).finally(() => {
-        return Status.FAILURE;
-      })
-
-    return Status.FAILURE;
+    if (cb) {
+      return Status.SUCCESS;
+    } else {
+      return Status.FAILURE;
+    }
 
   }
 
-  async getUserTime(user: IUser) {
+  async getUserTime(user: any) {
+    const id = user;
+
+    // const doc = (await admin.firestore().collection("profiles").doc(id).get()).data;
+    // console.log(doc);
+
     // Query the database to return the amount of time the user has left
-    const userID = user.id;
+    const userID = user;
     const documents = await admin.firestore()
       .collection("profiles")
       .where("userId", "==", userID)
@@ -192,33 +180,45 @@ export class FeedRepository {
 
   async modifyUserTime(timeMod: UserTimeModification) {
     const userID = timeMod.userID;
-    const amount = timeMod.timeValue;
+    const amount = timeMod.timeValue / 1000;
 
-    const document = await admin.firestore()
-      .collection("profiles")
-      .where("userId", "==", userID)
-      .get().then((user) => {
-        if (user.empty) {
-          return Status.FAILURE;
-        } else {
+    console.log("dieeeeeeeeee", amount);
 
-          const docUser = user.docs[0];
+    // await admin.firestore().collection("profiles").doc(userID).delete()
 
-          docUser.ref.update({ time: admin.firestore.FieldValue.increment(amount) }).then(() => {
-            return Status.SUCCESS;
-          }).catch(() => {
-            return Status.FAILURE;
-          });
-          return Status.FAILURE;
-        }
-      }
-      ).catch(() => {
-        return Status.FAILURE;
-      }).finally(() => {
-        return Status.FAILURE;
-      })
+    const cb = await admin.firestore().collection("profiles").doc(userID).update({ time: FieldValue.increment(amount) });
 
-    return Status.FAILURE;
+    if (cb) {
+      return Status.SUCCESS;
+    } else {
+      return Status.FAILURE;
+    }
+
+    //   const document = await admin.firestore()
+    //     .collection("profiles")
+    //     .where("userId", "==", userID)
+    //     .get().then((user) => {
+    //       if (user.empty) {
+    //         return Status.FAILURE;
+    //       } else {
+
+    //         const docUser = user.docs[0];
+
+    //         docUser.ref.update({ time: admin.firestore.FieldValue.increment(amount) }).then(() => {
+    //           return Status.SUCCESS;
+    //         }).catch(() => {
+    //           return Status.FAILURE;
+    //         });
+    //         return Status.FAILURE;
+    //       }
+    //     }
+    //     ).catch(() => {
+    //       return Status.FAILURE;
+    //     }).finally(() => {
+    //       return Status.FAILURE;
+    //     })
+
+    //   return Status.FAILURE;
   }
 
 }

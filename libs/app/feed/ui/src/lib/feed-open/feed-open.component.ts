@@ -14,9 +14,9 @@ export class FeedOpenComponent {
 
   image = 'https://ionicframework.com/docs/img/demos/thumbnail.svg';
 
-  @Input() posts : PostList = {
-    postsFound : false,
-    list : [],
+  @Input() posts: PostList = {
+    postsFound: false,
+    list: [],
   };
 
   @Input() currentPost = 0;
@@ -67,104 +67,102 @@ export class FeedOpenComponent {
 
   currentPostIndex = 0;
 
-  ngOnInit(){
+  ngOnInit() {
     this.startTime = Date.now();
 
     this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
+    console.log("DESTROYED");
     this.endTime = Date.now();
-    this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
+    this.store.dispatch(new SetUserTimeModification({ time: -(this.endTime - this.startTime), userID: this.store.selectSnapshot(AuthState).user.uid }));
     this.updatePostTime.emit({
-      postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
-      time : this.endTime - this.startTime,
+      postID: this.posts.list?.at(this.currentPostIndex)?.id as string,
+      time: this.endTime - this.startTime,
     });
   }
 
-  ngOnChanges(changes:SimpleChanges){
-    if(changes['currentPost']){
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['currentPost']) {
       this.currentPostIndex = changes['currentPost'].currentValue;
     }
   }
 
-  setPost(data:Post){
+  setPost(data: Post) {
     this.setCurrentPost.emit(data);
   }
 
   tStart = 0;
   tEnd = 0;
 
-   touchStart(e : TouchEvent) {
+  touchStart(e: TouchEvent) {
     this.tStart = e.touches[0].pageX;
   }
 
   touchEnd() {
-
-
-    if (this.tEnd-this.tStart > -200 && this.tEnd-this.tStart < 200) {
+    if (this.tEnd - this.tStart > -200 && this.tEnd - this.tStart < 200) {
       //swipe gesture not big enough to be considered a swipe
       //do nothing
-    }else if(this.tEnd-this.tStart > 200) {
+    } else if (this.tEnd - this.tStart > 200) {
       //go back one post
       this.back();
 
-    }else if(this.tEnd-this.tStart < -200) {
+    } else if (this.tEnd - this.tStart < -200) {
       //go forward one post
       this.forward();
-      }
+    }
   }
 
-  touchMove(e : TouchEvent) {
+  touchMove(e: TouchEvent) {
     this.tEnd = e.touches[0].pageX;
   }
 
-  goBack(){
+  goBack() {
     this.retutnToFeedClosed.emit();
   }
 
-  back(){
-    if(this.currentPostIndex>0){
-      if(this.startTime != 0){
-       this.endTime = Date.now();
-       this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
-       this.updatePostTime.emit({
-         postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
-         time : this.endTime - this.startTime,
-       });
-     }
-     this.startTime = Date.now();//reset timer
-
-     console.log(this.posts?.list?.at(this.currentPostIndex))
-     if (this.currentPostIndex > 0){
-       this.currentPostIndex--;
-     }
-     this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
-     }
-  }
-
-  forward(){
-    if(this.posts.list!=null)
-    if(this.currentPostIndex < this.posts.list.length - 1){
-      if(this.startTime != 0){
+  async back() {
+    if (this.currentPostIndex > 0) {
+      if (this.startTime != 0) {
         this.endTime = Date.now();
-        this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
+        this.store.dispatch(new SetUserTimeModification({ time: -(this.endTime - this.startTime), userID: this.store.selectSnapshot(AuthState).user.uid }));
         this.updatePostTime.emit({
-          postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
-          time : this.endTime - this.startTime,
+          postID: this.posts.list?.at(this.currentPostIndex)?.id as string,
+          time: this.endTime - this.startTime,
         });
       }
       this.startTime = Date.now();//reset timer
-      if(this.posts.list!=null){
-        if (this.currentPostIndex < this.posts.list.length - 1){
-          this.currentPostIndex++;
-        }
+
+      console.log(this.posts?.list?.at(this.currentPostIndex))
+      if (this.currentPostIndex > 0) {
+        this.currentPostIndex--;
       }
       this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
-      this.tStart = 0;
-      this.tEnd = 0;
-
     }
+  }
+
+  async forward() {
+    if (this.posts.list != null)
+      if (this.currentPostIndex < this.posts.list.length - 1) {
+        if (this.startTime != 0) {
+          this.endTime = Date.now();
+          this.store.dispatch(new SetUserTimeModification({ time: -(this.endTime - this.startTime), userID: this.store.selectSnapshot(AuthState).user.uid }));
+          this.updatePostTime.emit({
+            postID: this.posts.list?.at(this.currentPostIndex)?.id as string,
+            time: this.endTime - this.startTime,
+          });
+        }
+        this.startTime = Date.now();//reset timer
+        if (this.posts.list != null) {
+          if (this.currentPostIndex < this.posts.list.length - 1) {
+            this.currentPostIndex++;
+          }
+        }
+        this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
+        this.tStart = 0;
+        this.tEnd = 0;
+      }
   }
 
 }

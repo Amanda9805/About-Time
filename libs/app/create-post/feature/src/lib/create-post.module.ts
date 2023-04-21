@@ -13,6 +13,7 @@ import { CreatePostModule as CreatePostModuleDataAccess } from '@mp/app/create-p
 @NgModule({
   imports: [CommonModule, IonicModule, CreatePostRouting, HttpClientModule, ReactiveFormsModule, NgxSkeletonLoaderModule, CreatePostModuleDataAccess],
   declarations: [CreatePostPage],
-  providers: [PostService]
+  providers: [PostService],
+  schemas: []
 })
 export class CreatePostModule { }

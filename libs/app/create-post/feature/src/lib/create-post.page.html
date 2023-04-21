@@ -9,13 +9,6 @@
 
   <ion-content>
     <form [formGroup]="createPostForm" (submit)="submitForm()" ngxsForm="createPostForm">
-
-      <!-- <ion-item>
-      <ion-label>User </ion-label>
-
-      {{ post.user }}
-    </ion-item> -->
-
       <ion-item>
         <ion-label>Title</ion-label>
         <ion-input type="text" formControlName="title" [(ngModel)]="post.title" required></ion-input>

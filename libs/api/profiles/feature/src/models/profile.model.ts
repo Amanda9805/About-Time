@@ -21,7 +21,8 @@ export class Profile extends AggregateRoot implements IProfile {
     public userId: string,
     public accountDetails?: IAccountDetails | null | undefined,
     public status?: ProfileStatus | null | undefined,
-    public created?: FirebaseFirestore.Timestamp | null | undefined
+    public created?: FirebaseFirestore.Timestamp | null | undefined,
+    public time?: number | null | undefined
   ) {
     super();
   }
@@ -31,7 +32,8 @@ export class Profile extends AggregateRoot implements IProfile {
       profile.userId,
       profile.accountDetails,
       profile.status,
-      profile.created
+      profile.created,
+      profile.time,
     );
     return instance;
   }
@@ -93,6 +95,7 @@ export class Profile extends AggregateRoot implements IProfile {
       accountDetails: this.accountDetails,
       status: this.status,
       created: this.created,
+      time: this.time
     };
   }
 }

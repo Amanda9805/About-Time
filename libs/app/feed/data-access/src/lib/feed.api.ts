@@ -22,30 +22,31 @@ export class FeedApi {
   constructor(
     private readonly firestore: Firestore,
     private readonly functions: Functions
-  ) {}
+  ) { }
 
-  async fetchPosts$(request: FetchPostsRequest){
+  async fetchPosts$(request: FetchPostsRequest) {
     return await httpsCallable<FetchPostsRequest, FetchPostsResponse>(
       this.functions,
       'fetchPosts'
     )(request);
   }
 
-  async addTime$(request: AddTimeRequest){
+  async addTime$(request: AddTimeRequest) {
     return await httpsCallable<AddTimeRequest, AddTimeResponse>(
       this.functions,
       'addTime'
     )(request);
   }
 
-  async getUserTime$(request: GetUserTimeRequest){
+  async getUserTime$(request: GetUserTimeRequest) {
+    console.log("FUCKY FUCKY");
     return await httpsCallable<GetUserTimeRequest, GetUserTimeResponse>(
       this.functions,
       'getUserTime'
     )(request);
   }
 
-  async modifyUserTime$(request: ModifyUserTimeRequest){
+  async modifyUserTime$(request: ModifyUserTimeRequest) {
     return await httpsCallable<ModifyUserTimeRequest, ModifyUserTimeResponse>(
       this.functions,
       'modifyUserTime'
