@@ -17,45 +17,43 @@ export class TimerComponent {
 
   @Input() feedOpen = false;
 
-  hours = 0;
-  minutes = 0;
-  seconds = 0;
-  allocatedTime = 0;
+  protected hours = 0;
+  protected minutes = 0;
+  protected seconds = 0;
+  protected allocatedTime = 0;
 
   constructor(private store: Store) {
 
     this.store.dispatch(new SetUserTime());
 
     this.store.select(TimerState.userTime).subscribe((userTime) => {
-      if(userTime.model != null)
-      if (userTime.model.timeAmount != null){
-        this.allocatedTime = userTime.model.timeAmount;
-      }
-     })
+      if (userTime.model != null)
+        if (userTime.model.timeAmount != null) {
+          this.allocatedTime = userTime.model.timeAmount;
+        }
+    })
 
     this.setTime();
-
   }
 
-  ngOnChanges(){
-    if(this.feedOpen){
+  ngOnChanges() {
+    if (this.feedOpen) {
       this.startTimer();
     }
   }
 
-
-  startTimer(){
+  startTimer() {
     console.log("start TImer");
     setInterval(() => {
-    this.allocatedTime--;
-    this.setTime();
+      this.allocatedTime--;
+      this.setTime();
     }, 1000);
   }
 
-  setTime(){
-      this.hours = Math.floor(this.allocatedTime / 3600);
-      this.minutes = Math.floor((this.allocatedTime % 3600) / 60);
-      this.seconds = this.allocatedTime % 60;
+  setTime() {
+    this.hours = Math.floor(this.allocatedTime / 3600);
+    this.minutes = Math.floor((this.allocatedTime % 3600) / 60);
+    this.seconds = this.allocatedTime % 60;
   }
 
 }

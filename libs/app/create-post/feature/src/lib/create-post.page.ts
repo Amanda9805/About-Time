@@ -112,4 +112,5 @@ export class CreatePostPage {
     const target = event.target as HTMLInputElement;
     this.post.discipline = target.value;
   }
+
 }

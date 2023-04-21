@@ -33,6 +33,7 @@ export class CreateProfileHandler
       },
       status: ProfileStatus.INCOMPLETE,
       created: Timestamp.fromDate(new Date()),
+      time: 1000
     };
     const profile = this.publisher.mergeObjectContext(Profile.fromData(data));
 

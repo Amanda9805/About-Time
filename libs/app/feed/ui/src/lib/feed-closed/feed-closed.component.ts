@@ -11,17 +11,17 @@ import { Observable } from 'rxjs';
 })
 export class FeedClosedComponent {
 
-  @Input() posts : PostList = {
-    postsFound : false,
-    list : [],
+  @Input() posts: PostList = {
+    postsFound: false,
+    list: [],
   };
 
   filters: FilterList = {
     list: [],
   };
 
-  constructor(){
-      this.filters.list?.push(
+  constructor() {
+    this.filters.list?.push(
       FilterType.MOST_RECENT,
       FilterType.MOST_POPULAR,
       FilterType.SCIENCE_FILTER,
@@ -36,14 +36,11 @@ export class FeedClosedComponent {
   @Output() setCurrentPost = new EventEmitter<Post>();
 
 
-  onSetFilters(data:FilterType){
+  onSetFilters(data: FilterType) {
     this.filterChanged.emit(data);
   }
 
-  setPost(data:Post){
+  setPost(data: Post) {
     this.setCurrentPost.emit(data);
   }
-
-
 }
-

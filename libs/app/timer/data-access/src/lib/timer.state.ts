@@ -26,8 +26,8 @@ export interface TimerStateModel {
 
   UserTime: {
     model: {
-      timeRemaining : boolean | null;
-      timeAmount : number | null;
+      timeRemaining: boolean | null;
+      timeAmount: number | null;
     };
     dirty: false;
     status: string;
@@ -46,7 +46,6 @@ export interface TimerStateModel {
 }
 
 @State<TimerStateModel>({
-
   name: 'timer',
   defaults: {
     userTime: null,
@@ -79,7 +78,7 @@ export class TimerState {
   constructor(
     private readonly feedApi: FeedApi,
     private readonly store: Store,
-    ) {}
+  ) { }
 
   @Selector()
   static userTime(state: TimerStateModel) {
@@ -87,56 +86,60 @@ export class TimerState {
   }
 
   @Action(SetUserTime)
-  async setUserTime(ctx: StateContext<TimerStateModel>){
+  async setUserTime(ctx: StateContext<TimerStateModel>) {
     const userTimeRqst = {
-      user : this.store.selectSnapshot(AuthState).user,
+      user: await this.store.selectSnapshot(AuthState).user.uid,
     }
 
-//    const userTime = await this.feedApi.getUserTime$(userTimeRqst);
-//comment out below and uncomment above to test with real data
-    const userTime = {
-          data: {
-            userTime: {
-              timeRemaining: true,
-              timeAmount: 52345,
-            }
-          }
-        }
+    console.log(userTimeRqst);
+
+    const userTime = await this.feedApi.getUserTime$(userTimeRqst);
+    // console.log(userTime, "GET UFCEEEEEEEDEDEDEEDED");
+    // comment out below and uncomment above to test with real data
+    // const userTime = {
+    //   data: {
+    //     userTime: {
+    //       timeRemaining: true,
+    //       timeAmount: 52345,
+    //     }
+    //   }
+    // }
 
     console.log('userTime: ', userTime);
     ctx.setState(
-      produce((draft) => {
+      await produce((draft) => {
         draft.userTime = {
           timeRemaining: userTime.data.userTime.timeRemaining,
           timeAmount: userTime.data.userTime.timeAmount,
         }
-        draft.UserTime = {model : {
-          timeRemaining: userTime.data.userTime.timeRemaining,
-          timeAmount: userTime.data.userTime.timeAmount,
-        }, dirty : false, status : '', errors : {}};
+        draft.UserTime = {
+          model: {
+            timeRemaining: userTime.data.userTime.timeRemaining,
+            timeAmount: userTime.data.userTime.timeAmount,
+          }, dirty: false, status: '', errors: {}
+        };
       })
     )
   }
 
   @Action(SetUserTimeModification)
-  async setUserTimeModification(ctx: StateContext<TimerStateModel>,
-    {payload} : SetUserTimeModification,
-    ){
+  async setUserTimeModification(ctx: StateContext<TimerStateModel>, { payload }: SetUserTimeModification) {
+
     const userTimeModificationRqst = {
       modification: {
-      userID : payload.userID,
-      timeValue: payload.time,
+        userID: payload.userID,
+        timeValue: payload.time,
       }
     }
 
     const userTimeModification = await this.feedApi.modifyUserTime$(userTimeModificationRqst);
     console.log('userTimeModification: ', userTimeModification);
-    if(userTimeModification.data.status){
+    if (userTimeModification.data.status) {
       console.log('UserTime updated');
-    }else{
+      ctx.dispatch(new SetUserTime());
+    } else {
       ctx.dispatch(new SetError('UserTime not updated'));
     }
 
-    ctx.dispatch(new SetUserTime());
   }
 }

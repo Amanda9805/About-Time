@@ -29,9 +29,7 @@ export class FeedService {
         >(new AddTimeCommand(request));
     }
 
-    async getUserTime(
-        request: GetUserTimeRequest
-    ): Promise<GetUserTimeResponse> {
+    async getUserTime(request: GetUserTimeRequest): Promise<GetUserTimeResponse> {
         return await this.commandBus.execute<
             GetUserTimeCommand,
             GetUserTimeResponse

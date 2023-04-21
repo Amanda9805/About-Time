@@ -7,10 +7,8 @@ import { TimerModule } from '@mp/app/timer/feature';
 @NgModule({
     declarations: [FeedOpenComponent],
     imports: [
-        CommonModule,
-        IonicModule,
-        TimerModule
+        CommonModule, IonicModule, TimerModule
     ],
     exports: [FeedOpenComponent]
 })
-export class FeedOpenModule {}
+export class FeedOpenModule { }
