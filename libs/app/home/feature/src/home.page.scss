@@ -1,13 +1,32 @@
+.container {
+  background-color: #1D2A1C;
+}
+
+.container>* {
+  background-color: #1D2A1C;
+}
+
+.textColor{
+  --color: white;
+  color:  white;
+}
+
+
 ion-icon {
+
   color:#0E8C00;
+
 }
 ion-button {
   --border-radius: 0;
-  --border-color: #000;
+  --border-color: white;
   --border-style: solid;
   --border-width: 1px;
 
 }
+
+
+
 
 ion-tab-button:active{
   ion-icon {

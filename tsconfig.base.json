@@ -99,11 +99,6 @@
       "@mp/app/forgot/data-access": [
         "libs/app/forgot/data-access/src/index.ts"
       ],
-
-
-
-
-
       "@mp/app/forgot/feature": ["libs/app/forgot/feature/src/index.ts"],
       "@mp/app/forgot/util": ["libs/app/forgot/util/src/index.ts"],
       "@mp/app/home/feature": ["libs/app/home/feature/src/index.ts"],
@@ -111,7 +106,6 @@
       "@mp/app/login/feature": ["libs/app/login/feature/src/index.ts"],
       "@mp/app/login/util": ["libs/app/login/util/src/index.ts"],
       "@mp/app/messages/feature": ["libs/app/messages/feature/src/index.ts"],
-
       "@mp/app/other-user/data-access": [
         "libs/app/other-user/data-access/src/index.ts"
       ],
