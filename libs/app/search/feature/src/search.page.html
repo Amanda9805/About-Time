@@ -1,27 +1,3 @@
-<ion-content [fullscreen]="true">
-  <div class="center-container ion-align-items-center">
-    <ion-grid>
-      <ion-row class="ion-text-center">
-        <!--<ion-col>
-          <ion-text class="textColor">
-            <ion-chip color="success" [outline]="false">Search</ion-chip>
-          </ion-text>
-        </ion-col>-->
-        <ion-col class="timer">
-          <mp-timer></mp-timer>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-searchbar class="search" show-clear-button="focus" (search)="search($event)"></ion-searchbar>
-        <ion-list [inset]="true">
-          <ion-item *ngFor="let user of profilesData.list">
-            <ion-thumbnail slot="start">
-              <img alt="profile image" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>{{user.username}}</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-row>
-    </ion-grid>
-  </div>
-</ion-content>
+<ion-searchbar show-clear-button="focus"></ion-searchbar>
+<mp-timer></mp-timer>
+<mp-footer-component></mp-footer-component>

@@ -1,5 +1,5 @@
 {
-  "name": "@mp/api/search/util",
+  "name": "@mp/api/search-api/util",
   "version": "0.0.1",
   "type": "commonjs"
 }

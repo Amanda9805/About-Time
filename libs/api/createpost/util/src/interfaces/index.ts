@@ -1,1 +1,1 @@
-export * from './newpost.interface';
+export * from './post.interface';

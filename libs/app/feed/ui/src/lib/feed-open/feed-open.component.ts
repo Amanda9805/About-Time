@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { Discipline, FilterType, Post, PostList, TimeModification } from '@mp/api/feed/util';
-import { AuthState } from '@mp/app/auth/data-access';
-import { FeedState } from '@mp/app/feed/data-access';
-import { SetUserTimeModification } from '@mp/app/timer/util';
-import { Store } from '@ngxs/store';
+import { Discipline, FilterType, Post, PostList } from '@mp/api/feed/util';
 
 @Component({
   selector: 'mp-feed-open',
@@ -20,10 +16,8 @@ export class FeedOpenComponent {
   };
 
   @Input() currentPost = 0;
-  feedOpen = true;
-  constructor(private store: Store) {
-    //
-  }
+
+
 
   // posts : PostList = {
   //   postsFound : false,
@@ -58,29 +52,10 @@ export class FeedOpenComponent {
   //   ],
   // };
 
-  startTime = 0;
-  endTime = 0;
-
   @Output() setCurrentPost = new EventEmitter<Post>();
   @Output() retutnToFeedClosed = new EventEmitter<void>();
-  @Output() updatePostTime = new EventEmitter<TimeModification>();
 
   currentPostIndex = 0;
-
-  ngOnInit(){
-    this.startTime = Date.now();
-
-    this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
-  }
-
-  ngOnDestroy(){
-    this.endTime = Date.now();
-    this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
-    this.updatePostTime.emit({
-      postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
-      time : this.endTime - this.startTime,
-    });
-  }
 
   ngOnChanges(changes:SimpleChanges){
     if(changes['currentPost']){
@@ -107,12 +82,23 @@ export class FeedOpenComponent {
       //do nothing
     }else if(this.tEnd-this.tStart > 200) {
       //go back one post
-      this.back();
+      console.log(this.posts?.list?.at(this.currentPostIndex))
+      if (this.currentPostIndex > 0){
+        this.currentPostIndex--;
+      }
 
     }else if(this.tEnd-this.tStart < -200) {
       //go forward one post
-      this.forward();
+      if(this.posts.list!=null){
+        if (this.currentPostIndex < this.posts.list.length - 1){
+          this.currentPostIndex++;
+        }
       }
+
+    }
+
+    this.tStart = 0;
+    this.tEnd = 0;
   }
 
   touchMove(e : TouchEvent) {
@@ -121,50 +107,6 @@ export class FeedOpenComponent {
 
   goBack(){
     this.retutnToFeedClosed.emit();
-  }
-
-  back(){
-    if(this.currentPostIndex>0){
-      if(this.startTime != 0){
-       this.endTime = Date.now();
-       this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
-       this.updatePostTime.emit({
-         postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
-         time : this.endTime - this.startTime,
-       });
-     }
-     this.startTime = Date.now();//reset timer
-
-     console.log(this.posts?.list?.at(this.currentPostIndex))
-     if (this.currentPostIndex > 0){
-       this.currentPostIndex--;
-     }
-     this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
-     }
-  }
-
-  forward(){
-    if(this.posts.list!=null)
-    if(this.currentPostIndex < this.posts.list.length - 1){
-      if(this.startTime != 0){
-        this.endTime = Date.now();
-        this.store.dispatch(new SetUserTimeModification({time : this.endTime - this.startTime, userID: this.store.selectSnapshot(AuthState).user.userID}));
-        this.updatePostTime.emit({
-          postID : this.posts.list?.at(this.currentPostIndex)?.id as string,
-          time : this.endTime - this.startTime,
-        });
-      }
-      this.startTime = Date.now();//reset timer
-      if(this.posts.list!=null){
-        if (this.currentPostIndex < this.posts.list.length - 1){
-          this.currentPostIndex++;
-        }
-      }
-      this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
-      this.tStart = 0;
-      this.tEnd = 0;
-
-    }
   }
 
 }

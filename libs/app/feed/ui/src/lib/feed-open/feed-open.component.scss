@@ -5,18 +5,10 @@
   align-items: center;
 }
 
-ion-button{
-  --background: #0E8C00;
-}
-
-#timer{
-  margin-top: 10px;
-}
-
 h1{
-  font-size: 1rem;
+  font-size: 3rem;
   font-weight: 500;
-  color: white;
+  color: #000000;
 }
 
 ion-card{
@@ -25,8 +17,6 @@ ion-card{
   height: fit-content;
   display: grid;
   place-items: center;
-  --background: #1D2A1C;
-  --color: white;
 }
 
 img{
@@ -113,15 +103,5 @@ ion-chip{
   left: 0px;
   top: 0px;
   position: absolute;
-}
-
-.nav-icons{
-  color: #0E8C00;
-}
-
-ion-row{
-  ion-button{
-    --background: transparent;
-
-  }
+  background-color: white;
 }

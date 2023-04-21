@@ -19,7 +19,8 @@ import { FilterType } from '@mp/api/feed/util';
 })
 export class AccountDetailsComponent {
   @Select(ProfileState.profile) profile$!: Observable<IProfile | null>;
-  @Select(actionsExecuting([UpdateAccountDetails])) busy$!: Observable<ActionsExecuting>;
+  @Select(actionsExecuting([UpdateAccountDetails]))
+  busy$!: Observable<ActionsExecuting>;
   accountDetailsForm = this.fb.group({
     userName: ['', [Validators.minLength(6), Validators.maxLength(64)]],
     email: ['', [Validators.minLength(6), Validators.maxLength(64)]],

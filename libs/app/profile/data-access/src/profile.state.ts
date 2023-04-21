@@ -109,6 +109,7 @@ export class ProfileState {
           accountDetails: {
             userName,
             email,
+            password,
           },
         },
       };

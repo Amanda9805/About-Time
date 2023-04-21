@@ -1,3 +1,1 @@
-export * from './loading.module';
-export * from './loading.page';
-export * from './loading.routing';
+export * from './lib/app-loading-feature.module';
