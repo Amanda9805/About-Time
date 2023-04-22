@@ -104,7 +104,7 @@ async deleteAccount(profile : IProfile) {
   // User db remove
   const duser = await admin.firestore()
     .collection("users")
-    .where("userId", "==", userID)
+    .where("id", "==", userID)
     .get();
 
   const currentUser = duser.docs[0];
