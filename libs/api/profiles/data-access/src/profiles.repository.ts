@@ -313,14 +313,17 @@ export class ProfilesRepository {
   async fetchProfile(user: IUser): Promise<IProfile> {
     // Use user email to get profile from the db
     const uid = user.id;
+    console.log("uid: " + uid);
 
     const documents = await admin.firestore()
       .collection("Profiles")
       .where("userId", "==", uid)
       .get();
 
+    console.log("documents: " + documents);
     if (documents) {
       if (documents.empty) {
+        console.log("documents empty");
         return { userId: "Profile not found" };
       }
       else {
@@ -328,6 +331,7 @@ export class ProfilesRepository {
         return (userData as IProfile);
       }
     } else {
+      console.log("documents null");
       return { userId: "Profile not found" };
     }
 
