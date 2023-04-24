@@ -72,9 +72,10 @@ export class OtherUserState {
       }
       
       const request: IUpdateRelationRequest = {
-        relation: {
-          exists: true,
-          type: relType,
+        newRelation: {
+          userID : state.currentUser?.userId,
+          otherUserID : state.otherUser?.userId,
+          newRelationship: relType,
         }
       };
 
