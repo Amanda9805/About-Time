@@ -202,7 +202,9 @@ export class FeedState {
     ctx: StateContext<FeedStateModel>) {
 
     const rqst: FetchPostsRequest = {
-      filters: this.store.selectSnapshot(FeedState).filterList?.list,
+      filters: {
+        list: this.store.selectSnapshot(FeedState).filterList?.list
+      },
     };
 
     const listOfPosts = await this.feedApi.fetchPosts$(rqst);

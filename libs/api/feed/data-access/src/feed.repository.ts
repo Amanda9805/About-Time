@@ -56,18 +56,20 @@ export class FeedRepository {
     }
 
     let documents;
+    console.log(discipline);
 
     if (filters?.list?.includes(FilterType.MOST_RECENT)) {
+      console.log("MOST RECENT");
       if (discipline) {
         documents = await admin.firestore()
           .collection("Posts")
-          .where("discipline", "==", discipline)
-          .orderBy("createdTimestamp", "desc")
+          .where("postDetails.discipline", "==", discipline)
+          .orderBy("created", "desc")
           .get();
       } else {
         documents = await admin.firestore()
           .collection("Posts")
-          .orderBy("createdTimestamp", "desc")
+          .orderBy("created", "desc")
           .get();
       }
     }
@@ -75,7 +77,7 @@ export class FeedRepository {
       if (discipline) {
         documents = await admin.firestore()
           .collection("Posts")
-          .where("discipline", "==", discipline)
+          .where("postDetails.discipline", "==", discipline)
           .orderBy("timeWatched", "desc")
           .get();
       } else {
@@ -88,7 +90,7 @@ export class FeedRepository {
       if (discipline) {
         documents = await admin.firestore()
           .collection("Posts")
-          .where("discipline", "==", discipline)
+          .where("postDetails.discipline", "==", discipline)
           .get();
       } else {
         documents = await admin.firestore()
@@ -96,8 +98,6 @@ export class FeedRepository {
           .get();
       }
     }
-
-    console.log(`Documents retrieved: ${documents}`);
 
     const toReturn: {
       id: string;
@@ -117,8 +117,6 @@ export class FeedRepository {
         currentDoc['id'],
       );
     });
-
-    console.log("boo");
 
     documents.forEach((doc) => {
       const currentDoc = doc.data();
@@ -155,11 +153,6 @@ export class FeedRepository {
   }
 
   async getUserTime(user: any) {
-    const id = user;
-
-    // const doc = (await admin.firestore().collection("profiles").doc(id).get()).data;
-    // console.log(doc);
-
     // Query the database to return the amount of time the user has left
     const userID = user;
     const documents = await admin.firestore()
@@ -181,8 +174,6 @@ export class FeedRepository {
   async modifyUserTime(timeMod: UserTimeModification) {
     const userID = timeMod.userID;
     const amount = timeMod.timeValue / 1000;
-
-    console.log("dieeeeeeeeee", amount);
 
     // await admin.firestore().collection("profiles").doc(userID).delete()
 

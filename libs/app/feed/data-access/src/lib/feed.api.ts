@@ -39,7 +39,6 @@ export class FeedApi {
   }
 
   async getUserTime$(request: GetUserTimeRequest) {
-    console.log("FUCKY FUCKY");
     return await httpsCallable<GetUserTimeRequest, GetUserTimeResponse>(
       this.functions,
       'getUserTime'
