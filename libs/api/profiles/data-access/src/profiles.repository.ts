@@ -4,7 +4,11 @@ import { IPasswordSettings } from '@mp/api/profiles/util';
 import * as admin from 'firebase-admin';
 import { IRelationship } from '@mp/api/profiles/util'
 import { Discipline } from '@mp/api/profiles/util'
+
 import { RelationshipUpdate } from '@mp/api/profiles/util';
+
+import { IRelation } from '@mp/api/profiles/util';
+import { IUser } from '@mp/api/users/util';
 
 
 @Injectable()
@@ -25,7 +29,6 @@ export class ProfilesRepository {
 
   async createProfile(profile: IProfile) {
     // Remove password field if present
-    delete profile.accountDetails?.password;
     return await admin
       .firestore()
       .collection('profiles')
@@ -35,7 +38,6 @@ export class ProfilesRepository {
 
   async updateProfile(profile: IProfile) {
     // Remove password field if present
-    delete profile.accountDetails?.password;
     return await admin
       .firestore()
       .collection('profiles')
@@ -293,4 +295,58 @@ export class ProfilesRepository {
       return Discipline.MUSIC;
     }
   }
+
+
+  async fetchProfile(user: IUser) {
+    // Use user email to get profile from the db
+    // const uid = user.id;
+
+    // const documents = await admin.firestore()
+    // .collection("Profiles")
+    // .where("userId", "==", uid)
+    // .get().then((user) => {
+    //   if (user.empty) {
+    //     // Not sure what to return here
+    //     return { "userId": "not-found"}
+    //   } 
+    //   else
+    //   {
+    //     const userData = user.docs[0].data();
+    //     return userData;
+    //   }
+    // });
+
+    
+
+    // return {
+    //   userId: user.id,
+    //   accountDetails: {
+    //     photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
+    //     userName: "Test User",
+    //     title: "deus",
+    //     friends: ["friend1", "friend2"],
+    //     friendRequests: ["friendRequest1", "friendRequest2"],
+    //     blockedUsers: ["blockedUser1", "blockedUser2"],
+    //     meters: [],
+    //     badgesReceived: [],
+    //     private: false,
+    //   },
+    //   time: 9000
+    // } as IProfile;
+
+    return {
+      userId: user.id,
+    }
+  }
 }
+
+// email?: string | null | undefined;
+//   photoURL?: string | null | undefined;
+//   userName?: string | null | undefined;
+//   title?: string | null | undefined;
+//   friends?: string[] | null | undefined;
+//   friendRequests?: string[] | null | undefined;
+//   blockedUsers?: string[] | null | undefined;
+//   meters?: IMeter[] | null | undefined;
+//   badgesReceived?: IBadge[] | null | undefined;
+//   private?: boolean | null | undefined;

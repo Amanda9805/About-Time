@@ -39,8 +39,10 @@ import {
     FetchUserPostsRequest,
     IUpdateRelationRequest,
     IUpdateRelationResponse,
-    UpdateRelationCommand
-
+    UpdateRelationCommand,
+    IFetchProfileRequest,
+    IFetchProfileResponse,
+    FetchProfileCommand
 } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
@@ -160,6 +162,15 @@ export class ProfilesService {
       UpdateRelationCommand,
       IUpdateRelationResponse
     >(new UpdateRelationCommand(request));
+  }
+
+  async fetchProfile(
+    request: IFetchProfileRequest
+  ): Promise<IFetchProfileResponse> {
+    return await this.commandBus.execute<
+      FetchProfileCommand,
+      IFetchProfileResponse
+    >(new FetchProfileCommand(request));
   }
 
 }

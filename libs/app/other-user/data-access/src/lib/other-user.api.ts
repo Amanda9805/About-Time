@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 // import { FetchPostsRequest, FetchPostsResponse } from '@mp/api/feed/util';
-import { FetchUserPostsRequest, ICheckRelationshipRequest, ICheckRelationshipResponse, IFetchUserPostsResponse, IUpdateRelationRequest, IUpdateRelationResponse } from '@mp/api/profiles/util';
+import { FetchUserPostsRequest, ICheckRelationshipRequest, ICheckRelationshipResponse, IFetchProfileRequest, IFetchProfileResponse, IFetchUserPostsResponse, IUpdateRelationRequest, IUpdateRelationResponse } from '@mp/api/profiles/util';
 import {
     IProfile,
     IUpdateAccountDetailsRequest,
@@ -114,6 +114,16 @@ export class OtherUserApi {
     >(
       this.functions, 
       'updateRelation'
+    )(request);
+  }
+
+  async fetchProfile(request: IFetchProfileRequest) {
+    return await httpsCallable<
+      IFetchProfileRequest,
+      IFetchProfileResponse
+    >(
+      this.functions, 
+      'fetchProfile'
     )(request);
   }
 }
