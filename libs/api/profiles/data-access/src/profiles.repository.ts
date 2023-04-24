@@ -113,7 +113,20 @@ export class ProfilesRepository {
   }
 
   async deleteAccount(profile: IProfile) {
-    return Status.SUCCESS;
+
+    const userId = profile.userId;
+
+    const ref = await admin.firestore().collection("Profiles")
+    .where("userId", "==", userId).get();
+
+    if (ref){
+        const delRef = ref.docs[0].ref.delete();
+        return Status.SUCCESS;
+    } else {
+      return Status.FAILURE;
+    }
+
+
   }
 
   async checkRelationship(relationship: IRelationship) {
@@ -297,46 +310,30 @@ export class ProfilesRepository {
   }
 
 
-  async fetchProfile(user: IUser) {
+  async fetchProfile(user: IUser) : Promise<IProfile>
+   {
     // Use user email to get profile from the db
-    // const uid = user.id;
+    const uid = user.id;
 
-    // const documents = await admin.firestore()
-    // .collection("Profiles")
-    // .where("userId", "==", uid)
-    // .get().then((user) => {
-    //   if (user.empty) {
-    //     // Not sure what to return here
-    //     return { "userId": "not-found"}
-    //   } 
-    //   else
-    //   {
-    //     const userData = user.docs[0].data();
-    //     return userData;
-    //   }
-    // });
-
+    const documents = await admin.firestore()
+    .collection("Profiles")
+    .where("userId", "==", uid)
+    .get();
+    
+    if (documents){
+      if (documents.empty) {
+        return {userId : "Profile not found"};
+      } 
+      else
+      {
+        const userData = documents.docs[0].data();
+        return (userData as IProfile) ;
+      }
+    } else {
+      return {userId : "Profile not found"};
+    }
     
 
-    // return {
-    //   userId: user.id,
-    //   accountDetails: {
-    //     photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
-    //     userName: "Test User",
-    //     title: "deus",
-    //     friends: ["friend1", "friend2"],
-    //     friendRequests: ["friendRequest1", "friendRequest2"],
-    //     blockedUsers: ["blockedUser1", "blockedUser2"],
-    //     meters: [],
-    //     badgesReceived: [],
-    //     private: false,
-    //   },
-    //   time: 9000
-    // } as IProfile;
-
-    return {
-      userId: user.id,
-    }
   }
 }
 
