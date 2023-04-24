@@ -1,9 +1,9 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
+            <ion-back-button (click)="goBack()"></ion-back-button>
         </ion-buttons>
-        <ion-title>Forgot Password</ion-title>
+        <ion-title>{{title}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -33,7 +33,7 @@
                                 <ion-button expand="block" [disabled]="!this.forgotForm.valid || (busy$ | async)"
                                     type="submit">
                                     <ion-spinner *ngIf="busy$ | async"></ion-spinner>
-                                    <ion-text>Reset Password</ion-text>
+                                    <ion-text>Send email</ion-text>
                                 </ion-button>
                             </ion-col>
                         </ion-row>
