@@ -202,7 +202,9 @@ export class FeedState {
     ctx: StateContext<FeedStateModel>) {
 
     const rqst: FetchPostsRequest = {
-      filters: this.store.selectSnapshot(FeedState).filterList?.list,
+      filters: {
+        list: this.store.selectSnapshot(FeedState).filterList?.list
+      },
     };
 
     const listOfPosts = await this.feedApi.fetchPosts$(rqst);
@@ -266,9 +268,12 @@ export class FeedState {
           draft.TimeModification = { model: { postID: payload.postID, time: payload.time }, dirty: false, status: '', errors: {} };
         }));
 
-      const addTimeRqst = { modification: this.store.selectSnapshot(FeedState).timeModification };
+      const data = { postID: payload.postID, time: payload.time };
+
+      // const addTimeRqst = { modification: this.store.selectSnapshot(FeedState).timeModification };
+      const addTimeRqst = { modification: data };
       const rqstStatus = await this.feedApi.addTime$(addTimeRqst);
-      const authorID = this.store.selectSnapshot(FeedState).post.author.id;
+      const authorID = await this.store.selectSnapshot(FeedState).post.author;
       ctx.dispatch(new SetUserTimeModification({ time: payload.time, userID: authorID }));
 
       if (rqstStatus.data.status === 'success') {
@@ -278,17 +283,6 @@ export class FeedState {
       }
       return;
 
-    } catch (error) {
-      return ctx.dispatch(new SetError((error as Error).message));
-    }
-  }
-
-  @Action(AddToPostList)
-  async addToPostList(ctx: StateContext<FeedState>, { payload }: AddToPostList) {
-    const post: Post = payload.post;
-    console.log("Adding to Post List", post);
-    try {
-      return;
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }

@@ -47,6 +47,10 @@ ion-card-subtitle {
   margin: 10px;
 }
 
+.post-preview img {
+  filter: blur(1.5rem);
+}
+
 ion-grid {
   height: 100%;
 }

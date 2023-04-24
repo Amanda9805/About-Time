@@ -2,9 +2,6 @@ import { ProfilesRepository } from '@mp/api/profiles/data-access';
 // import { FetchPostsResponse, FetchPostsCommand } from '@mp/api/feed/util';
 import { FetchProfileCommand, IFetchProfileResponse, IProfile } from '@mp/api/profiles/util';
 import {CommandHandler, ICommandHandler} from '@nestjs/cqrs';
-// import { RelationEnum } from 'libs/api/profiles/util/src/enums/relations.enum';
-// import { IRelation } from 'libs/api/profiles/util/src/interfaces/relation.interface';
-
 // import { PostList } from '@mp/api/feed/util';
 
 @CommandHandler(FetchProfileCommand)

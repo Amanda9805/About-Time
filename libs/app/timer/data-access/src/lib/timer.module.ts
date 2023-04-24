@@ -6,6 +6,6 @@ import { FeedApi } from '@mp/app/feed/data-access';
 
 @NgModule({
   imports: [CommonModule, NgxsModule.forFeature([TimerState])],
-   providers: [FeedApi],
+  providers: [FeedApi],
 })
-export class TimerModule {}
+export class TimerModule { }

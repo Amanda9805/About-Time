@@ -32,7 +32,8 @@ export class Profile extends AggregateRoot implements IProfile {
       profile.userId,
       profile.accountDetails,
       profile.status,
-      profile.created
+      profile.created,
+      profile.time,
     );
     return instance;
   }

@@ -13,7 +13,7 @@ export class UpdatePrivacySettingsHandler implements ICommandHandler<UpdatePriva
         
         const request = command.request;
     
-        const status = await this.repository.updatePrivacySettings(request.privacySettings.profile);
+        const status = await this.repository.updatePrivacySettings(request.privacySettings.profile, request.privacySettings.newStatus);
 
         const responseData : Status = status;
         const response : IUpdatePrivacySettingsResponse = {status: responseData};
