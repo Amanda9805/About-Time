@@ -160,6 +160,10 @@ export class FeedRepository {
       .where("userId", "==", userID)
       .get();
 
+    if (!documents) {
+      return Status.FAILURE;
+    }
+
     const profile = documents.docs[0];
     const time = profile.data()["time"];
 
