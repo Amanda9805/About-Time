@@ -106,7 +106,20 @@ export class ProfilesRepository {
 
     if (ref) {
       const delRef = ref.docs[0].ref.delete();
-      return Status.SUCCESS;
+
+
+      const postsRef = await admin.firestore().collection("Profiles")
+        .where("userId", "==", userId).get();
+
+      if (postsRef) {
+        postsRef.forEach((post) => {
+          post.ref.delete()
+        });
+        return Status.SUCCESS;
+      } else {
+        return Status.FAILURE;
+      }
+
     } else {
       return Status.FAILURE;
     }
