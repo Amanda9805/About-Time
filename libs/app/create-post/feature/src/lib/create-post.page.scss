@@ -13,6 +13,9 @@ ion-header {
   }
 }
 
+.user{
+  display: none;
+}
 // Custom styles for ion-content
 ion-content {
   border-top: #0E8C00;
@@ -32,13 +35,13 @@ ion-content {
       ion-input {
         // Custom styles for ion-input
         --border-color:#0E8C00;
-        color:white;
+        color:#dfdbdb;
       }
 
       ion-select {
         // Custom styles for ion-select
         border-color: $vibrantGreen;
-        color: white;
+        color: rgb(231, 231, 231);
       }
 
       input[type="file"] {
@@ -46,34 +49,6 @@ ion-content {
         color: white;
       }
     }
-
-    // ion-button {
-    //   // Add your custom styles for ion-button here
-    //   &.my-custom-button {
-    //     // Custom background color
-    //     background-color: $vibrantGreen;
-
-    //     // Custom text color
-    //     color: white;
-    //     margin-right: auto;
-    //     // Custom font size
-    //     font-size: 1.2rem;
-
-    //     // Custom padding
-    //     padding: 10px 20px;
-
-    //     // Custom hover effect
-    //     &:hover {
-    //       background-color: darken($vibrantGreen, 10%);
-    //     }
-
-    //     // Custom disabled state
-    //     &[disabled] {
-    //       opacity: 0.5;
-    //       cursor: not-allowed;
-    //     }
-    //   }
-    // }
   }
 }
 
