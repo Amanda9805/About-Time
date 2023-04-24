@@ -165,6 +165,11 @@ export class FeedRepository {
     }
 
     const profile = documents.docs[0];
+
+    if (!profile.data()["time"]) {
+      return Status.FAILURE;
+    }
+
     const time = profile.data()["time"];
 
     let flag = false;
