@@ -4,12 +4,8 @@ import { IPasswordSettings } from '@mp/api/profiles/util';
 import * as admin from 'firebase-admin';
 import { IRelationship } from '@mp/api/profiles/util'
 import { Discipline } from '@mp/api/profiles/util'
-
 import { RelationshipUpdate } from '@mp/api/profiles/util';
-
-import { IRelation } from '@mp/api/profiles/util';
 import { IUser } from '@mp/api/users/util';
-
 
 @Injectable()
 export class ProfilesRepository {
@@ -45,88 +41,75 @@ export class ProfilesRepository {
       .set(profile, { merge: true });
   }
 
-
-
-
   // Pertaining to the settings
-  
   // Not super important
   async updatePassword(user: IPasswordSettings) {
     return Status.SUCCESS;
   }
 
-
-  async updatePrivacySettings(user: IProfile, newPrivacy : PrivacyStatus) {
+  async updatePrivacySettings(user: IProfile, newPrivacy: PrivacyStatus) {
     const userID = user.userId;
 
     let isNowPrivate = true;
-    if (newPrivacy == PrivacyStatus.PUBLIC){
+    if (newPrivacy == PrivacyStatus.PUBLIC) {
       isNowPrivate = false;
     }
     const isPrivate = isNowPrivate;
-    
-    const doc = await admin.firestore()
-    .collection("Profiles")
-    .where("userId", "==", userID)
-    .get();
 
-    if (doc){
+    const doc = await admin.firestore()
+      .collection("Profiles")
+      .where("userId", "==", userID)
+      .get();
+
+    if (doc) {
       const ref = doc.docs[0].data()["accountDetails"]["private"];
       const updateRef = ref.update({
         private: isPrivate,
       });
 
-      if (updateRef){
+      if (updateRef) {
         return Status.SUCCESS;
       } else {
         return Status.FAILURE;
       }
-     
+
     } else {
       return Status.FAILURE;
     }
-  
-  
+
   }
 
   async getPrivacySettings(user: IProfile) {
     const userID = user.userId;
-    
-    const doc = await admin.firestore()
-    .collection("Profiles")
-    .where("userId", "==", userID)
-    .get();
 
-    if (doc){
+    const doc = await admin.firestore()
+      .collection("Profiles")
+      .where("userId", "==", userID)
+      .get();
+
+    if (doc) {
       const isPrivate = doc.docs[0].data()["accountDetails"]["private"];
-      if (isPrivate){
+      if (isPrivate) {
         return PrivacyStatus.PRIVATE;
-      } else{
+      } else {
         return PrivacyStatus.PUBLIC;
       }
 
     } else {
       return PrivacyStatus.PRIVATE;
     }
-    
-    
   }
 
   async deleteAccount(profile: IProfile) {
-
     const userId = profile.userId;
+    const ref = await admin.firestore().collection("Profiles").where("userId", "==", userId).get();
 
-    const ref = await admin.firestore().collection("Profiles")
-    .where("userId", "==", userId).get();
-
-    if (ref){
-        const delRef = ref.docs[0].ref.delete();
-        return Status.SUCCESS;
+    if (ref) {
+      const delRef = ref.docs[0].ref.delete();
+      return Status.SUCCESS;
     } else {
       return Status.FAILURE;
     }
-
-
   }
 
   async checkRelationship(relationship: IRelationship) {
@@ -137,34 +120,32 @@ export class ProfilesRepository {
       .collection("Profiles")
       .where("userId", "==", userID)
       .get();
-      
-      
-      if (documents){
-        if (documents.empty) {
-          return { "exists": false, "type": "Not-Friend" }
-        } else {
 
-          const userData = documents.docs[0].data();
-          const friends = userData["accountDetails"]["friends"];
-          const blocked = userData["accountDetails"]["blockedUsers"];
 
-          if (otherUserID == undefined) {
-            return { "exists": false, "type": "Not-Friend" }
-          }
-
-          if (otherUserID in friends) {
-            return { "exists": true, "type": "Friend" }
-          } else if (otherUserID in blocked) {
-            return { "exists": true, "type": "Blocked" }
-          } else {
-            return { "exists": true, "type": "Not-Friend" }
-          }
-        }
-      } else {
+    if (documents) {
+      if (documents.empty) {
         return { "exists": false, "type": "Not-Friend" }
-      }
+      } else {
 
-    
+        const userData = documents.docs[0].data();
+        const friends = userData["accountDetails"]["friends"];
+        const blocked = userData["accountDetails"]["blockedUsers"];
+
+        if (otherUserID == undefined) {
+          return { "exists": false, "type": "Not-Friend" }
+        }
+
+        if (otherUserID in friends) {
+          return { "exists": true, "type": "Friend" }
+        } else if (otherUserID in blocked) {
+          return { "exists": true, "type": "Blocked" }
+        } else {
+          return { "exists": true, "type": "Not-Friend" }
+        }
+      }
+    } else {
+      return { "exists": false, "type": "Not-Friend" }
+    }
   }
 
   async fetchUserPosts(userProfile: IProfile) {
@@ -182,28 +163,27 @@ export class ProfilesRepository {
       .get();
 
 
-      if (userPostDocument){
-        userPostDocument.forEach((userPost) =>{
-          const data = userPost.data();
-          const dataDetails = data["postDetails"]
-          toReturn.push({
-            id: data['id'],
-            title: data['title'],
-            author: userID,  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
-            description: dataDetails['desc'],
-            content: dataDetails['content'],
-            time: dataDetails['timeWatched'],
-            discipline: this.interpretDiscipline(dataDetails['discipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
-            image: dataDetails["image"]
-          });
-        })
-      } 
+    if (userPostDocument) {
+      userPostDocument.forEach((userPost) => {
+        const data = userPost.data();
+        const dataDetails = data["postDetails"]
+        toReturn.push({
+          id: data['id'],
+          title: data['title'],
+          author: userID,  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
+          description: dataDetails['desc'],
+          content: dataDetails['content'],
+          time: dataDetails['timeWatched'],
+          discipline: this.interpretDiscipline(dataDetails['discipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
+          image: dataDetails["image"]
+        });
+      })
+    }
 
-      return {
-        "postsFound": true,
-        "list": toReturn
-      }
-
+    return {
+      "postsFound": true,
+      "list": toReturn
+    }
   }
 
   async updateRelation(newRelation: RelationshipUpdate) {
@@ -214,13 +194,13 @@ export class ProfilesRepository {
 
     // Change the relation in the db
 
-    if (newRel == RelationEnum.FRIEND){
+    if (newRel == RelationEnum.FRIEND) {
       const document = await admin.firestore()
-      .collection("Profiles")
-      .where("userId", "==", userID)
-      .get();
+        .collection("Profiles")
+        .where("userId", "==", userID)
+        .get();
 
-      if (document){
+      if (document) {
         const details = document.docs[0].data()["accountDetails"];
 
         details.update({
@@ -228,7 +208,7 @@ export class ProfilesRepository {
           friends: admin.firestore.FieldValue.arrayUnion(otherUserID)
         })
 
-        if (details){
+        if (details) {
           return Status.SUCCESS;
         } else {
           return Status.FAILURE;
@@ -236,16 +216,13 @@ export class ProfilesRepository {
       } else {
         return Status.FAILURE;
       }
-
-
-
-    } else if (newRel == RelationEnum.BLOCKED){
+    } else if (newRel == RelationEnum.BLOCKED) {
       const document = await admin.firestore()
-      .collection("Profiles")
-      .where("userId", "==", userID)
-      .get();
+        .collection("Profiles")
+        .where("userId", "==", userID)
+        .get();
 
-      if (document){
+      if (document) {
         const details = document.docs[0].data()["accountDetails"];
 
         details.update({
@@ -253,7 +230,7 @@ export class ProfilesRepository {
           blockedUsers: admin.firestore.FieldValue.arrayUnion(otherUserID)
         })
 
-        if (details){
+        if (details) {
           return Status.SUCCESS;
         } else {
           return Status.FAILURE;
@@ -261,13 +238,13 @@ export class ProfilesRepository {
       } else {
         return Status.FAILURE;
       }
-    } else{
+    } else {
       const document = await admin.firestore()
-      .collection("Profiles")
-      .where("userId", "==", userID)
-      .get();
+        .collection("Profiles")
+        .where("userId", "==", userID)
+        .get();
 
-      if (document){
+      if (document) {
         const details = document.docs[0].data()["accountDetails"];
 
         details.update({
@@ -275,7 +252,7 @@ export class ProfilesRepository {
           friends: admin.firestore.FieldValue.arrayRemove(otherUserID)
         })
 
-        if (details){
+        if (details) {
           return Status.SUCCESS;
         } else {
           return Status.FAILURE;
@@ -284,10 +261,7 @@ export class ProfilesRepository {
         return Status.FAILURE;
       }
     }
-
-
   }
-
 
   interpretDiscipline(disciplineStr: string) {
     if (disciplineStr.toLowerCase() == "art") {
@@ -309,47 +283,42 @@ export class ProfilesRepository {
     }
   }
 
-
-  async fetchProfile(user: IUser) : Promise<IProfile>
-   {
+  async fetchProfile(user: IUser): Promise<IProfile> {
     // Use user email to get profile from the db
     const uid = user.id;
 
     const documents = await admin.firestore()
-    .collection("Profiles")
-    .where("userId", "==", uid)
-    .get();
-    
-    if (documents){
+      .collection("Profiles")
+      .where("userId", "==", uid)
+      .get();
+
+    if (documents) {
       if (documents.empty) {
-        return {userId : "Profile not found"};
-      } 
-      else
-      {
+        return { userId: "Profile not found" };
+      }
+      else {
         const userData = documents.docs[0].data();
-        return (userData as IProfile) ;
+        return (userData as IProfile);
       }
     } else {
-      return {userId : "Profile not found"};
+      return { userId: "Profile not found" };
     }
-    
-
 
     //return {
-      // userId: user.id,
+    // userId: user.id,
     //  userId: "test",
     //  accountDetails: {
-     //   photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
-     //   userName: "Test User",
+    //   photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
+    //   userName: "Test User",
     //    title: "deus",
     //    friends: ["friend1", "friend2"],
     //    friendRequests: ["friendRequest1", "friendRequest2"],
     //    blockedUsers: ["blockedUser1", "blockedUser2"],
     //    meters: [],
     //    badgesReceived: [],
-     //   private: false,
-     // },
-     // time: 9000
+    //   private: false,
+    // },
+    // time: 9000
     //} as IProfile;
 
     // return {

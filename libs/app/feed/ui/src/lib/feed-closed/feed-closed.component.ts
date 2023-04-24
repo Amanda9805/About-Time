@@ -35,12 +35,20 @@ export class FeedClosedComponent {
   @Output() filterChanged = new EventEmitter<FilterType>();
   @Output() setCurrentPost = new EventEmitter<Post>();
 
-
   onSetFilters(data: FilterType) {
     this.filterChanged.emit(data);
   }
 
   setPost(data: Post) {
     this.setCurrentPost.emit(data);
+  }
+
+  handleRefresh(event: any) {
+    // const target = event.target as HTMLTextAreaElement;
+    setTimeout(() => {
+      // Any calls to load data go here
+      event.target.complete();
+    }, 2000);
+    console.log("refreshing of data");
   }
 }

@@ -3,53 +3,53 @@ import {
   DeleteAccountCommand,
   GetPrivacySettingsCommand,
   IDeleteAccountRequest,
-    IDeleteAccountResponse,
-    IGetPrivacySettingsRequest,
-    IGetPrivacySettingsResponse,
+  IDeleteAccountResponse,
+  IGetPrivacySettingsRequest,
+  IGetPrivacySettingsResponse,
 
   CheckRelationshipCommand,
   ICheckRelationshipResponse,
   ICheckRelationshipRequest,
 
-    IUpdateAccountDetailsRequest,
-    IUpdateAccountDetailsResponse,
-    IUpdateAddressDetailsRequest,
-    IUpdateAddressDetailsResponse,
-    IUpdateContactDetailsRequest,
-    IUpdateContactDetailsResponse,
-    IUpdateOccupationDetailsRequest,
-    IUpdateOccupationDetailsResponse,
-    IUpdatePasswordRequest,
-    IUpdatePasswordResponse,
-    IUpdatePersonalDetailsRequest,
-    IUpdatePersonalDetailsResponse,
-    IUpdatePrivacySettingsRequest,
-    IUpdatePrivacySettingsResponse,
-    UpdateAccountDetailsCommand,
-    UpdateAddressDetailsCommand,
-    UpdateContactDetailsCommand,
-    UpdateOccupationDetailsCommand,
+  IUpdateAccountDetailsRequest,
+  IUpdateAccountDetailsResponse,
+  IUpdateAddressDetailsRequest,
+  IUpdateAddressDetailsResponse,
+  IUpdateContactDetailsRequest,
+  IUpdateContactDetailsResponse,
+  IUpdateOccupationDetailsRequest,
+  IUpdateOccupationDetailsResponse,
+  IUpdatePasswordRequest,
+  IUpdatePasswordResponse,
+  IUpdatePersonalDetailsRequest,
+  IUpdatePersonalDetailsResponse,
+  IUpdatePrivacySettingsRequest,
+  IUpdatePrivacySettingsResponse,
+  UpdateAccountDetailsCommand,
+  UpdateAddressDetailsCommand,
+  UpdateContactDetailsCommand,
+  UpdateOccupationDetailsCommand,
 
-    UpdatePasswordCommand,
-    UpdatePrivacySettingsCommand,
+  UpdatePasswordCommand,
+  UpdatePrivacySettingsCommand,
 
-    UpdatePersonalDetailsCommand,
-    FetchUserPostsCommand,
-    IFetchUserPostsResponse,
-    FetchUserPostsRequest,
-    IUpdateRelationRequest,
-    IUpdateRelationResponse,
-    UpdateRelationCommand,
-    IFetchProfileRequest,
-    IFetchProfileResponse,
-    FetchProfileCommand
+  UpdatePersonalDetailsCommand,
+  FetchUserPostsCommand,
+  IFetchUserPostsResponse,
+  FetchUserPostsRequest,
+  IUpdateRelationRequest,
+  IUpdateRelationResponse,
+  UpdateRelationCommand,
+  IFetchProfileRequest,
+  IFetchProfileResponse,
+  FetchProfileCommand
 } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 
 @Injectable()
 export class ProfilesService {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus) { }
 
   async updateAccountDetails(
     request: IUpdateAccountDetailsRequest
@@ -96,9 +96,6 @@ export class ProfilesService {
     >(new UpdateOccupationDetailsCommand(request));
   }
 
-
-
-
   // For the settings
   async deleteAccount(
     request: IDeleteAccountRequest
@@ -135,7 +132,6 @@ export class ProfilesService {
       IUpdatePrivacySettingsResponse
     >(new UpdatePrivacySettingsCommand(request));
   }
-
 
   async checkRelationship(
     request: ICheckRelationshipRequest
