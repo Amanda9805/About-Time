@@ -9,23 +9,24 @@ import { Status } from '@mp/api/search/util';
 @Injectable()
 export class SearchRepository {
 
-    async search(user : string){
-        
-    const document = await admin.firestore()
-    .collection("Profiles")
-    .get();
+    async search(user: string) {
 
-    const toReturn: { username: string | undefined; imageURL: string; }[] = []; 
+        const document = await admin.firestore()
+            .collection("profiles")
+            .get();
 
-    const profileIDs = new Map<string, string>();
-    document.forEach((doc) =>{
-        const data = doc.data();
-        if (data["accountDetails"]["userName"].includes(user)){
-            toReturn.push({username : data["accountDetails"]["userName"], imageURL:data["photoURL"]});
-        }
-    })
+        const toReturn: { username: string | undefined; imageURL: string; }[] = [];
 
-    return {data: toReturn}; 
+        const profileIDs = new Map<string, string>();
+        document.forEach((doc) => {
+            const data = doc.data();
+            console.log(data);
+            if (data["accountDetails"].userName?.toLowerCase().includes(user.toLowerCase())) {
+                toReturn.push({ username: data["accountDetails"]["userName"], imageURL: data["photoURL"] });
+            }
+        })
 
-}
+        return { data: toReturn };
+
+    }
 }

@@ -16,20 +16,20 @@ export class SearchPage {
 
 
   profilesData: ProfilesList = {
-    userFound : false,
-    list : [],
+    userFound: false,
+    list: [],
   };
 
-  constructor(private store: Store){
+  constructor(private store: Store) {
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
-    this.store.dispatch(new SetProfilesList({username: ''}));
+    this.store.dispatch(new SetProfilesList({ username: '' }));
 
     this.store.select(SearchState.profilesList).subscribe((profiles) => {
-      if (profiles.model.list != null){
+      if (profiles.model.list != null) {
 
         this.profilesData.userFound = true;
 
@@ -37,12 +37,12 @@ export class SearchPage {
           this.profilesData.list?.push(profile);
         })
       }
-     })
+    })
   }
 
 
-  search(event : any){
-     this.store.dispatch(new SetProfilesList({username: event.target.value}));
+  search(event: any) {
+    this.store.dispatch(new SetProfilesList({ username: event.target.value }));
   }
 
 
