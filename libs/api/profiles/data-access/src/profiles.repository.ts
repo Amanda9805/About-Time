@@ -213,25 +213,26 @@ export class ProfilesRepository {
 
     
 
+    return {
+      // userId: user.id,
+      userId: "test",
+      accountDetails: {
+        photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
+        userName: "Test User",
+        title: "deus",
+        friends: ["friend1", "friend2"],
+        friendRequests: ["friendRequest1", "friendRequest2"],
+        blockedUsers: ["blockedUser1", "blockedUser2"],
+        meters: [],
+        badgesReceived: [],
+        private: false,
+      },
+      time: 9000
+    } as IProfile;
+
     // return {
     //   userId: user.id,
-    //   accountDetails: {
-    //     photoURL: "https://ionicframework.com/docs/img/demos/avatar.svg",
-    //     userName: "Test User",
-    //     title: "deus",
-    //     friends: ["friend1", "friend2"],
-    //     friendRequests: ["friendRequest1", "friendRequest2"],
-    //     blockedUsers: ["blockedUser1", "blockedUser2"],
-    //     meters: [],
-    //     badgesReceived: [],
-    //     private: false,
-    //   },
-    //   time: 9000
-    // } as IProfile;
-
-    return {
-      userId: user.id,
-    }
+    // }
   }
 }
 
