@@ -36,8 +36,6 @@ export const updateAccountDetails = functions.https.onCall(
   }
 );
 
-
-
 export const deleteAccount = functions.https.onCall(
   async (
     request: IDeleteAccountRequest
