@@ -16,7 +16,7 @@ export class UpdateRelationHandler implements ICommandHandler<UpdateRelationComm
         const request = command.request;
 
         // Get the parameters from the request (in this case the filters)
-        const relation = request.relation;
+        const relation = request.newRelation;
 
         // Call the function to get the data from the DB (need to pass in the list of filters to determine query to make)
         const updateRelationDoc = await this.repository.updateRelation(relation);

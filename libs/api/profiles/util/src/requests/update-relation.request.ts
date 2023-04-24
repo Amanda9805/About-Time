@@ -1,5 +1,5 @@
-import { IRelation } from '../interfaces/relation.interface';
+import { RelationshipUpdate } from "../interfaces";
 
 export interface IUpdateRelationRequest {
-  relation: IRelation;
+  newRelation: RelationshipUpdate;
 }

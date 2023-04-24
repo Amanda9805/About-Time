@@ -20,20 +20,22 @@ export class FriendsRepository {
             documents = await admin.firestore()
                 .collection('Profiles')
                 .where('userId', '==', UserId)  //finding the Profile for the user in question
-                .get().then((doc) => {
-                    if (doc.empty) {
-                        return { data: [] }; // return no friends
-                    } else {
-                        const details = doc.docs[0].data()['accountDetails'];
-                        const friends = details['friends'];
-                        friends.forEach((id: string) => {
-                            friendIDs.push(id);
-                        })
-                    }
-                    return { data: [] };
-                }).catch(() => {
+                .get();
+                
+            if (documents){
+                if (documents.empty) {
                     return { data: [] }; // return no friends
-                });
+                } else {
+                    const details = documents.docs[0].data()['accountDetails'];
+                    const friends = details['friends'];
+                    friends.forEach((id: string) => {
+                        friendIDs.push(id);
+                    })
+                }
+            } else {
+                return { data: [] };
+            }
+
         }
         else {
             return { data: [] }; // return no friends
@@ -47,67 +49,17 @@ export class FriendsRepository {
             .collection("Profiles")
             .where("userId", "in", friendIDs)
             .get();
+            
+        if (friendProfilesDocuments) {
+            friendProfilesDocuments.forEach((profile) =>{
+                const data = profile.data();
+                toReturn.push({id: data["userId"], username: data["accountDetails"]["userName"], image:data["photoURL"]})
+            })
+        }   
 
-
-        const imageLinks = new Map<string, string>();
-        const friendImageDocuments = await admin.firestore()
-            .collection("UserPhotos")
-            .where("userId", "in", friendIDs)
-            .get().then((images) => {
-                images.forEach((image) => {
-                    const userIDForImage = image.data()["userId"]
-                    const imageLink = image.data()["image"]
-
-                    imageLinks.set(userIDForImage, imageLink);
-                })
-            });
-
-        friendProfilesDocuments.forEach((doc) => {
-            const currentDoc = doc.data();
-            const userID = currentDoc["userId"];
-            const userName = currentDoc["accountDetails"]["userName"];
-            const imageStr = imageLinks.get(userID);
-            if (imageStr == undefined) {
-                toReturn.push({
-                    id: userID,
-                    username: userName,
-                    image: ""
-                })
-            } else {
-                toReturn.push({
-                    id: userID,
-                    username: userName,
-                    image: imageStr
-                })
-            }
-
-
-
-        })
-
-
-        return { data: toReturn };
-
-        //MOCK DATA BELOW
-        // const toReturn = {
-        //     data : [
-        //         {
-        //             id : "friend_1",
-        //             username : "Fire Lord Edwin",
-        //             image : 'https://cdn.onlinewebfonts.com/svg/img_522399.png'//random image from web
-        //         }, 
-        //         {
-        //             id : "friend_2",
-        //             username : "MadKea",
-        //             image : 'https://cdn.onlinewebfonts.com/svg/img_522399.png' //random image from web
-        //         },
-        //         {
-        //             id : "friend_3",
-        //             username : "Lucky Luke",
-        //             image : 'https://cdn.onlinewebfonts.com/svg/img_522399.png' //random image from web
-        //         }
-        //     ]
-        // };
+        return {data:toReturn};
+            
+ 
     }
 
     async removeFriend(user: IUser, miniProfile: MinimisedProfile): Promise<Status> {
@@ -130,16 +82,15 @@ export class FriendsRepository {
             friends: admin.firestore.FieldValue.arrayRemove(friendId),
         });
 
-
-        removeFriend.then(() => {
-            console.log(`Friend ${friendName} removed from user ${userName}'s friends list.`);
-
-        }).catch(() => {
-            console.error(`Error removing friend from user's friends list`);
+        if (removeFriend){
+            return Status.SUCCESS
+        } else {
             return Status.FAILURE;
-        });
+        }
 
 
-        return Status.SUCCESS
+
+
+       
     }
 }

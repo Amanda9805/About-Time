@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IProfile, RelationEnum } from '@mp/api/profiles/util';
+import { IBadge, IMeter, IProfile, RelationEnum } from '@mp/api/profiles/util';
 import { OtherUserState } from '@mp/app/other-user/data-access';
+import { AuthState } from '@mp/app/auth/data-access';
 import { SetOtherProfile, SetRelation } from '@mp/app/other-user/util';
 import { Select, Store } from '@ngxs/store';
-import { IBadge } from 'libs/api/profiles/util/src/interfaces/badge.interface';
-import { IMeter } from 'libs/api/profiles/util/src/interfaces/meter.interface';
 import { Observable } from 'rxjs';
 
 
@@ -16,6 +15,8 @@ import { Observable } from 'rxjs';
 export class OtherUserPage {
   // For the state
   @Select(OtherUserState.profile) profile$!: Observable<OtherUserState | null>;
+
+  currentUser: any;
 
   constructor(
     private store: Store
@@ -103,20 +104,35 @@ export class OtherUserPage {
   ]
 
   NgOnInit() {
-    // this.store.dispatch(new SetOtherProfile());
+    // Set the profile in the state -- passed in mock data
+    this.store.dispatch(new SetOtherProfile({id: '1'}));
+
+    // Determine the relation between the users
     this.store.dispatch(new SetRelation());
 
+    // Get the profile from the state
     this.store.select(OtherUserState.profile).subscribe((profile) => {
+      // Get the info for the user
+      this.user.name = profile?.accountDetails?.userName!;
+      this.user.pfp = profile?.accountDetails?.photoURL!;
+      this.user.title = profile?.accountDetails?.title!;
+      this.user.time = profile?.time!;
+
+      // Added:
+      this.badges = profile?.accountDetails?.badgesReceived!;
+      this.meters = profile?.accountDetails?.meters!;
+
+      // Determine privacy
       if (profile?.accountDetails?.private) {
         this.private = true;
       }
       else
       {
-        this.private == false;
+        this.private = false;
       }
-      this.badges = profile?.accountDetails?.badges!;
-      this.meters = profile?.accountDetails?.meters!;
     })
+
+    // Get the relation from the state and determine if the users are friends
     this.store.select(OtherUserState.relation).subscribe((relation) => {
       if (relation?.type === RelationEnum.FRIEND) {
         this.friends = true;
@@ -127,6 +143,7 @@ export class OtherUserPage {
       }
     })
 
+    // Get the user's posts from the state
     this.store.select(OtherUserState.posts).subscribe((posts) => {
       this.posts = posts?.list?.map((post) => {
         return {caption: post.title, imagePath: post.image}
