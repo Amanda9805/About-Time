@@ -3,8 +3,9 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   CreateProfileHandler,
+  FetchProfileHandler,
   UpdateAccountDetailsHandler,
-  UpdateProfileStatusHandler
+  UpdateProfileStatusHandler,
 } from './commands';
 import {
   AccountDetailsUpdatedHandler,
@@ -13,15 +14,23 @@ import {
 } from './events';
 import { ProfilesSagas } from './profiles.sagas';
 import { ProfilesService } from './profiles.service';
+import { FetchUserPostsHandler } from './commands/fetch-user-posts.handler';
+import { UpdateRelationHandler } from './commands/update-relation.handler';
 export const CommandHandlers = [
   CreateProfileHandler,
   UpdateAccountDetailsHandler,
   UpdateProfileStatusHandler,
+  FetchProfileHandler,
+  FetchUserPostsHandler,
+  UpdateRelationHandler
 ];
 export const EventHandlers = [
   ProfileCreatedHandler,
   AccountDetailsUpdatedHandler,
   ProfileStatusUpdatedHandler,
+  FetchProfileHandler,
+  FetchUserPostsHandler,
+  UpdateRelationHandler
 ];
 
 @Module({
