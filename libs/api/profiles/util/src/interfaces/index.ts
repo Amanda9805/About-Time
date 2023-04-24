@@ -12,4 +12,5 @@ export * from './post-list.interface';
 export * from './post.interface';
 export * from './relation.interface';
 export * from './relationship.interface';
+export * from './relationship-update.interface'
 

@@ -1,10 +1,11 @@
-import { IProfile, Post, Status, PrivacyStatus } from '@mp/api/profiles/util';
+import { IProfile, Post, Status, PrivacyStatus, RelationEnum } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import { IPasswordSettings } from '@mp/api/profiles/util';
 import * as admin from 'firebase-admin';
 import { IRelationship } from '@mp/api/profiles/util'
 import { Discipline } from '@mp/api/profiles/util'
-import { IRelation } from '@mp/api/profiles/util';
+import { RelationshipUpdate } from '@mp/api/profiles/util';
+
 
 @Injectable()
 export class ProfilesRepository {
@@ -46,17 +47,67 @@ export class ProfilesRepository {
 
 
   // Pertaining to the settings
+  
+  // Not super important
   async updatePassword(user: IPasswordSettings) {
     return Status.SUCCESS;
   }
 
 
-  async updatePrivacySettings(user: IProfile) {
-    return Status.SUCCESS;
+  async updatePrivacySettings(user: IProfile, newPrivacy : PrivacyStatus) {
+    const userID = user.userId;
+
+    let isNowPrivate = true;
+    if (newPrivacy == PrivacyStatus.PUBLIC){
+      isNowPrivate = false;
+    }
+    const isPrivate = isNowPrivate;
+    
+    const doc = await admin.firestore()
+    .collection("Profiles")
+    .where("userId", "==", userID)
+    .get();
+
+    if (doc){
+      const ref = doc.docs[0].data()["accountDetails"]["private"];
+      const updateRef = ref.update({
+        private: isPrivate,
+      });
+
+      if (updateRef){
+        return Status.SUCCESS;
+      } else {
+        return Status.FAILURE;
+      }
+     
+    } else {
+      return Status.FAILURE;
+    }
+  
+  
   }
 
   async getPrivacySettings(user: IProfile) {
-    return PrivacyStatus.PUBLIC;
+    const userID = user.userId;
+    
+    const doc = await admin.firestore()
+    .collection("Profiles")
+    .where("userId", "==", userID)
+    .get();
+
+    if (doc){
+      const isPrivate = doc.docs[0].data()["accountDetails"]["private"];
+      if (isPrivate){
+        return PrivacyStatus.PRIVATE;
+      } else{
+        return PrivacyStatus.PUBLIC;
+      }
+
+    } else {
+      return PrivacyStatus.PRIVATE;
+    }
+    
+    
   }
 
   async deleteAccount(profile: IProfile) {
@@ -70,14 +121,18 @@ export class ProfilesRepository {
     const documents = await admin.firestore()
       .collection("Profiles")
       .where("userId", "==", userID)
-      .get().then((user) => {
-        if (user.empty) {
+      .get();
+      
+      
+      if (documents){
+        if (documents.empty) {
           return { "exists": false, "type": "Not-Friend" }
         } else {
 
-          const userData = user.docs[0].data();
+          const userData = documents.docs[0].data();
           const friends = userData["accountDetails"]["friends"];
           const blocked = userData["accountDetails"]["blockedUsers"];
+
           if (otherUserID == undefined) {
             return { "exists": false, "type": "Not-Friend" }
           }
@@ -90,18 +145,15 @@ export class ProfilesRepository {
             return { "exists": true, "type": "Not-Friend" }
           }
         }
+      } else {
+        return { "exists": false, "type": "Not-Friend" }
       }
-      );
 
-    return { "exists": false, "type": "Not-Friend" }
+    
   }
 
   async fetchUserPosts(userProfile: IProfile) {
-
-
     const userID = userProfile.userId;
-    const postIDs: string[] = [];
-    const postImages = new Map<string, string>();
 
     const toReturn: {
       id: string; title: string; author: string; description: string;
@@ -115,57 +167,108 @@ export class ProfilesRepository {
       .get();
 
 
-
-    userPostDocument.forEach((userPost) => {
-      const data = userPost.data();
-      postIDs.push(data["id"])
-    });
-
-
-    const postImageDocument = await admin.firestore()
-      .collection("PostPhotos")
-      .where("postId", "in", postIDs)
-      .get().then((postImageList) => {
-        postImageList.forEach((postImage) => {
-          const data = postImage.data();
-          postImages.set(data["postId"], data["image"])
+      if (userPostDocument){
+        userPostDocument.forEach((userPost) =>{
+          const data = userPost.data();
+          const dataDetails = data["postDetails"]
+          toReturn.push({
+            id: data['id'],
+            title: data['title'],
+            author: userID,  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
+            description: dataDetails['desc'],
+            content: dataDetails['content'],
+            time: dataDetails['timeWatched'],
+            discipline: this.interpretDiscipline(dataDetails['discipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
+            image: dataDetails["image"]
+          });
         })
-      });
+      } 
 
-    userPostDocument.forEach((userPost) => {
-      const currentDoc = userPost.data();
-      const currentDocPostData = currentDoc['postDetails'];
-      toReturn.push({
-        id: currentDoc['id'],
-        title: currentDoc['title'],
-        author: userID,  // TODO: Create function to interpret ```currentDoc['author']``` 's userId value and fetch the appropriate user details
-        description: currentDocPostData['desc'],
-        content: currentDocPostData['content'],
-        time: currentDocPostData['timeWatched'],
-        discipline: this.interpretDiscipline(currentDocPostData['discipline']),   // TODO - done: Create function to interpret ```currentDocPostData['discipline']``` 's value
-        image: postImages.get(currentDoc["id"])
-      });
-    });
+      return {
+        "postsFound": true,
+        "list": toReturn
+      }
 
-
-
-    return {
-      "postsFound": true,
-      // "list": toReturn.data
-      "list": toReturn
-    }
   }
 
-  async updateRelation(relation: IRelation) {
+  async updateRelation(newRelation: RelationshipUpdate) {
 
-
+    const userID = newRelation.userID;
+    const otherUserID = newRelation.otherUserID;
+    const newRel = newRelation.newRelationship;
 
     // Change the relation in the db
 
-    // Get succes response from db
+    if (newRel == RelationEnum.FRIEND){
+      const document = await admin.firestore()
+      .collection("Profiles")
+      .where("userId", "==", userID)
+      .get();
 
-    // Return success enum
-    return Status.SUCCESS;
+      if (document){
+        const details = document.docs[0].data()["accountDetails"];
+
+        details.update({
+          blockedUsers: admin.firestore.FieldValue.arrayRemove(otherUserID),
+          friends: admin.firestore.FieldValue.arrayUnion(otherUserID)
+        })
+
+        if (details){
+          return Status.SUCCESS;
+        } else {
+          return Status.FAILURE;
+        }
+      } else {
+        return Status.FAILURE;
+      }
+
+
+
+    } else if (newRel == RelationEnum.BLOCKED){
+      const document = await admin.firestore()
+      .collection("Profiles")
+      .where("userId", "==", userID)
+      .get();
+
+      if (document){
+        const details = document.docs[0].data()["accountDetails"];
+
+        details.update({
+          friends: admin.firestore.FieldValue.arrayRemove(otherUserID),
+          blockedUsers: admin.firestore.FieldValue.arrayUnion(otherUserID)
+        })
+
+        if (details){
+          return Status.SUCCESS;
+        } else {
+          return Status.FAILURE;
+        }
+      } else {
+        return Status.FAILURE;
+      }
+    } else{
+      const document = await admin.firestore()
+      .collection("Profiles")
+      .where("userId", "==", userID)
+      .get();
+
+      if (document){
+        const details = document.docs[0].data()["accountDetails"];
+
+        details.update({
+          blockedUsers: admin.firestore.FieldValue.arrayRemove(otherUserID),
+          friends: admin.firestore.FieldValue.arrayRemove(otherUserID)
+        })
+
+        if (details){
+          return Status.SUCCESS;
+        } else {
+          return Status.FAILURE;
+        }
+      } else {
+        return Status.FAILURE;
+      }
+    }
 
 
   }
@@ -189,6 +292,5 @@ export class ProfilesRepository {
     } else {
       return Discipline.MUSIC;
     }
-
   }
 }
