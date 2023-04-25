@@ -25,6 +25,7 @@ export class CheckRelationshipHandler implements ICommandHandler<CheckRelationsh
         // Call the function to get the data from the DB (need to pass in the list of filters to determine query to make)
         const checkRelationshipDoc = await this.repository.checkRelationship(relationship);
 
+
         // // Some logic to determine if any posts were returned
         // let flag = false;
         // if (postsDoc.data.length != 0){

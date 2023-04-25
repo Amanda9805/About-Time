@@ -69,18 +69,17 @@ export class FeedOpenComponent {
 
   ngOnInit() {
     this.startTime = Date.now();
-
     this.setPost(this.posts.list?.at(this.currentPostIndex) as Post);
   }
 
-  ngOnDestroy() {
-    console.log("DESTROYED");
+  async ngOnDestroy() {
     this.endTime = Date.now();
     this.store.dispatch(new SetUserTimeModification({ time: -(this.endTime - this.startTime), userID: this.store.selectSnapshot(AuthState).user.uid }));
     this.updatePostTime.emit({
       postID: this.posts.list?.at(this.currentPostIndex)?.id as string,
       time: this.endTime - this.startTime,
     });
+    console.log("DESTROYEDDDDDDD");
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -7,3 +7,4 @@ export * from './delete-account.handler';
 export * from './update-password.handler';
 export * from './get-privacy-settings.handler';
 export * from './update-privacy-settings.handler';
+export * from './fetch-profile.handler';

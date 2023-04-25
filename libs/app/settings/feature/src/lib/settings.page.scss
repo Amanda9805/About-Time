@@ -5,6 +5,7 @@ $vibrantGreen: #0E8C00;
   --background: #0E8C00;
   --color: white;
 }
+
 ion-header {
   --ion-background-color: #242423;
   ion-toolbar {
@@ -22,19 +23,24 @@ ion-content {
     ion-item {
       ion-label {
         color: $vibrantGreen;
+
         &.textColor {
           color: $vibrantGreen;
         }
+
         &.italic {
           font-style: italic;
         }
+
         &.bold {
           font-weight: bold;
         }
+
         &.underline {
           text-decoration: underline;
         }
       }
+
       ion-toggle {
         color: $vibrantGreen;
       }
@@ -48,7 +54,18 @@ ion-content {
   --ion-background-color: $backgroundColor;
 }
 
-.my-toggle {
-  --background-checked: #0E8C00; // set the background color when the toggle is checked to vibrant green
-  --border-color-checked: #0E8C00; // set the border color when the toggle is checked to vibrant green
+.spaced-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ion-button {
+  text-transform: none
 }

@@ -8,9 +8,9 @@ import {
   signInWithPopup,
   FacebookAuthProvider,
   sendPasswordResetEmail,
-  confirmPasswordReset
+  confirmPasswordReset,
 } from '@angular/fire/auth';
-import { signOut } from '@firebase/auth';
+import { signOut, deleteUser, getAuth } from '@firebase/auth';
 
 @Injectable()
 export class AuthApi {
@@ -35,6 +35,11 @@ export class AuthApi {
 
   async logout() {
     return await signOut(this.auth);
+  }
+
+  async deleteUser() {
+    const auth = getAuth();
+    const user = auth?.currentUser;
   }
 
   async continueWithFacebook() {

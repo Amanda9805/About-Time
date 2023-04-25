@@ -1,52 +1,77 @@
 <ion-header>
   <ion-toolbar>
-    <ion-button class = "cust_button_var1" (click)="goBack()"><</ion-button>
+    <ion-button class="cust_button_var1" (click)="goBack()"><ion-icon
+        name="chevron-back-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
-  
-  <ion-content>
-    <ion-list>
 
-      <ion-item>
+<ion-content>
+  <ion-accordion-group>
+    <ion-accordion value="privacy">
+      <ion-item slot="header" color="light">
         <ion-label>Privacy</ion-label>
-        <ion-toggle class = "my-toggle" aria-label="Primary toggle" [(ngModel)]= "privacy" (ionChange)="onToggleChange($event)" [checked]="true"></ion-toggle>
       </ion-item>
-
-      <!-- <ion-item>
+      <div class="ion-padding" slot="content">
+        <div class="spaced-div">
+          <span class="smalltext">Display your profile to other users?</span>
+          <span class="ios-circle"><ion-toggle>Default Toggle</ion-toggle></span>
+        </div>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="update-profile">
+      <ion-item slot="header" color="light">
         <ion-label>Update Profile</ion-label>
-        <ion-button class = "cust_button_var1" [disabled]="false" [routerLink] = "['/profile']">></ion-button>
-      </ion-item> -->
-  
-      <!-- <ion-item>
-        <ion-label>Update Information</ion-label>
-        <ion-button class = "cust_button_var1" [disabled]="false" [routerLink] = "['/account-details']">></ion-button>
-      </ion-item> -->
-
-      <ion-item>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Username</ion-label>
+            <ion-input placeholder="Enter text"></ion-input>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="update-password">
+      <ion-item slot="header" color="light">
         <ion-label>Update Password</ion-label>
-        <ion-button class = "cust_button_var1" [disabled]="false" [routerLink] = "['/forgot']">></ion-button>
       </ion-item>
-
-      <ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-button expand="block" (click)="navigate('fp')">Update your password</ion-button>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="delete-account">
+      <ion-item slot="header" color="light">
         <ion-label>Delete Account</ion-label>
-        <ion-button class = "cust_button_var1" expand="block" (click)="presentAlert()">></ion-button>
       </ion-item>
-
-      <ion-item>
+      <div class="ion-padding" slot="content">
+        <p>Are you sure you want to delete your account?</p>
+        <ion-text color="danger">You will loose all your data if you do so!</ion-text>
+        <ion-button id="open-modal" expand="block">Delete Account</ion-button>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="terms-of-service">
+      <ion-item slot="header" color="light">
         <ion-label>Terms of Service</ion-label>
-        <ion-button class = "cust_button_var1" [disabled]="false" [routerLink] = "['/tos']">></ion-button>
       </ion-item>
-
-      <ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-button expand="block" (click)="navigate('tos')">View our Terms of Service</ion-button>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="privacy-policy">
+      <ion-item slot="header" color="light">
         <ion-label>Privacy Policy</ion-label>
-        <ion-button class = "cust_button_var1" [disabled]="false" [routerLink] = "['/privacy']">></ion-button>
       </ion-item>
-
-      <!-- <ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-button expand="block" (click)="navigate('pp')">View our Privacy Policy</ion-button>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="version">
+      <ion-item slot="header" color="light">
         <ion-label>Version</ion-label>
-        <ion-button class = "cust_button_var1" [disabled]="false" [routerLink] = "['/version']">></ion-button>
-      </ion-item> -->
-      
-    </ion-list>
-  </ion-content>
-  
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ms-version-component></ms-version-component>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>

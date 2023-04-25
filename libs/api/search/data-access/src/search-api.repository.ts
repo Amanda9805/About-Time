@@ -11,44 +11,21 @@ export class SearchRepository {
 
     async search(user : string){
         
-
-        
     const document = await admin.firestore()
     .collection("Profiles")
     .get();
 
+    const toReturn: { username: string | undefined; imageURL: string; }[] = []; 
 
     const profileIDs = new Map<string, string>();
     document.forEach((doc) =>{
         const data = doc.data();
         if (data["accountDetails"]["userName"].includes(user)){
-            profileIDs.set(data["userId"], data["accountDetails"]["userName"])
+            toReturn.push({username : data["accountDetails"]["userName"], imageURL:data["photoURL"]});
         }
     })
 
-    const idAndImage = new Map<string, string>();
-  
+    return {data: toReturn}; 
 
-    const userImageDocument = await admin.firestore()
-    .collection("UserPhotos")
-    .where("userId", "in", profileIDs.keys())
-    .get().then((userImageList) =>  {
-      userImageList.forEach((userImage) => {
-        const data = userImage.data();
-        idAndImage.set(data["userId"], data["image"])
-      })
-    });
-
-    const toReturn: { username: string | undefined; imageURL: string; }[] = []; 
-
-    idAndImage.forEach((value, key) => {
-        toReturn.push({
-            imageURL: value,
-            username : profileIDs.get(key)
-        })
-    })
-        
-        return {data: toReturn};
-    }
-
+}
 }

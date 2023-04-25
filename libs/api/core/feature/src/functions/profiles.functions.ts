@@ -1,6 +1,5 @@
 import { ProfilesService } from '@mp/api/profiles/feature';
 import {
-
   IDeleteAccountRequest,
   IDeleteAccountResponse,
   IGetPrivacySettingsRequest,
@@ -9,16 +8,16 @@ import {
   IUpdatePasswordResponse,
   IUpdatePrivacySettingsRequest,
   IUpdatePrivacySettingsResponse,
-
   FetchUserPostsRequest,
   ICheckRelationshipRequest,
   ICheckRelationshipResponse,
+  IFetchProfileRequest,
+  IFetchProfileResponse,
   IFetchUserPostsResponse,
   IUpdateAccountDetailsRequest,
   IUpdateAccountDetailsResponse,
   IUpdateRelationRequest,
   IUpdateRelationResponse,
-
 } from '@mp/api/profiles/util';
 import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
@@ -33,8 +32,6 @@ export const updateAccountDetails = functions.https.onCall(
     return service.updateAccountDetails(request);
   }
 );
-
-
 
 export const deleteAccount = functions.https.onCall(
   async (
@@ -102,6 +99,15 @@ export const updateRelation = functions.https.onCall(
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(ProfilesService);
     return service.updateRelation(request);
+  }
+);
 
+export const fetchProfile = functions.https.onCall(
+  async (
+    request: IFetchProfileRequest
+  ): Promise<IFetchProfileResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(ProfilesService);
+    return service.fetchProfile(request);
   }
 );

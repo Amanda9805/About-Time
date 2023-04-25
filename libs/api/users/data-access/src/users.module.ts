@@ -5,4 +5,4 @@ import { UsersRepository } from './users.repository';
   providers: [UsersRepository],
   exports: [UsersRepository],
 })
-export class UsersModule {}
+export class UsersModule { }

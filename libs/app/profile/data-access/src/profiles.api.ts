@@ -3,6 +3,10 @@ import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { FetchPostsRequest, FetchPostsResponse } from '@mp/api/feed/util';
 import {
+  FetchUserPostsRequest,
+  IFetchProfileRequest,
+    IFetchProfileResponse,
+    IFetchUserPostsResponse,
     IProfile,
     IUpdateAccountDetailsRequest,
     IUpdateAccountDetailsResponse,
@@ -118,6 +122,26 @@ export class ProfilesApi {
     >(
       this.functions,
       'updateOccupationDetails'
+    )(request);
+  }
+
+  async fetchUserPosts(request: FetchUserPostsRequest) {
+    return await httpsCallable<
+      FetchUserPostsRequest,
+      IFetchUserPostsResponse
+    >(
+      this.functions, 
+      'fetchUserPosts'
+    )(request);
+  }
+
+  async fetchProfile(request: IFetchProfileRequest) {
+    return await httpsCallable<
+      IFetchProfileRequest,
+      IFetchProfileResponse
+    >(
+      this.functions, 
+      'fetchProfile'
     )(request);
   }
 }

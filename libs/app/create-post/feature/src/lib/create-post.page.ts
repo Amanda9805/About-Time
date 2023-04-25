@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PostService } from './post.service'; // Example service for handling post submission
 import { Location } from '@angular/common';
 import { CreatePost } from '@mp/app/create-post/util';
 import { Select, Store } from '@ngxs/store';
@@ -82,27 +81,38 @@ export class CreatePostPage {
 
   }
 
-  submitForm() {
+  async submitForm() {
 
     if (!this.validateForm()) {
-      return;
-    }
+    //   return;
+    // }
 
-    const formData = new FormData();
-    formData.append('title', this.post.title);
-    formData.append('description', this.post.description);
-    formData.append('caption', this.post.content);
-    formData.append('discipline', this.post.discipline);
-    if (this.image) {
-      formData.append('image', this.post.image);
+    // const formData = new FormData();
+    // formData.append('title', this.post.title);
+    // formData.append('description', this.post.description);
+    // formData.append('caption', this.post.content);
+    // formData.append('discipline', this.post.discipline);
+    // if (this.image) {
+    //   formData.append('image', this.post.image);
+    // }
+    //  this.store.dispatch(new CreatePost(formData,this.sendfile));
+    
+    if (this.validateForm()) {
+      try {
+        await this.store.dispatch(new CreatePost(this.post, this.sendfile));
+        this.store.dispatch(new SetSuccess("Your post has been created successfully."));
+        this.location.back();
+      } catch (error) {
+        this.store.dispatch(new SetError("An error occurred while creating the post"));
+      }
     }
-    //this.store.dispatch(new CreatePost(formData));
   }
+}
 
 
   onFileChange(event: any) {
     if (event.target.files && event.target.files.length) {
-      this.image = event.target.files[0];
+      //this.image = event.target.files[0];
     }
   }
 
