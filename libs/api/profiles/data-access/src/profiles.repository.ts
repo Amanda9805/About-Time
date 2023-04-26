@@ -311,7 +311,7 @@ export class ProfilesRepository {
 
 
   async fetchProfile(user: IUser): Promise<IProfile> {
-    // Use user email to get profile from the db
+    // Use user id to get profile from the db
     const uid = user.id;
     console.log("uid: " + uid);
 

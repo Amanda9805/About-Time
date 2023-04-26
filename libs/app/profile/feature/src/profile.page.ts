@@ -4,7 +4,7 @@ import { IBadge, IMeter, IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { SetProfile } from '../../util/src/profile.actions';
+import { SetPosts, SetProfile } from '../../util/src/profile.actions';
 
 @Component({
   selector: 'ms-profile-page',
@@ -116,6 +116,8 @@ export class ProfilePage {
       this.meters = profile?.accountDetails?.meters!;
     })
 
+
+    this.store.dispatch(new SetPosts());
     // Get the user's posts from the state
     this.store.select(ProfileState.posts).subscribe((posts) => {
       this.posts = posts?.list?.map((post) => {
