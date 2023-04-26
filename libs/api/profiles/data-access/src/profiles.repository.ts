@@ -4,12 +4,8 @@ import { IPasswordSettings } from '@mp/api/profiles/util';
 import * as admin from 'firebase-admin';
 import { IRelationship } from '@mp/api/profiles/util'
 import { Discipline } from '@mp/api/profiles/util'
-
 import { RelationshipUpdate } from '@mp/api/profiles/util';
-
-import { IRelation } from '@mp/api/profiles/util';
 import { IUser } from '@mp/api/users/util';
-
 
 @Injectable()
 export class ProfilesRepository {
@@ -45,16 +41,11 @@ export class ProfilesRepository {
       .set(profile, { merge: true });
   }
 
-
-
-
   // Pertaining to the settings
-
   // Not super important
   async updatePassword(user: IPasswordSettings) {
     return Status.SUCCESS;
   }
-
 
   async updatePrivacySettings(user: IProfile, newPrivacy: PrivacyStatus) {
     const userID = user.userId;
@@ -66,7 +57,7 @@ export class ProfilesRepository {
     const isPrivate = isNowPrivate;
 
     const doc = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -86,14 +77,13 @@ export class ProfilesRepository {
       return Status.FAILURE;
     }
 
-
   }
 
   async getPrivacySettings(user: IProfile) {
     const userID = user.userId;
 
     const doc = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -108,25 +98,31 @@ export class ProfilesRepository {
     } else {
       return PrivacyStatus.PRIVATE;
     }
-
-
   }
 
   async deleteAccount(profile: IProfile) {
-
     const userId = profile.userId;
-
-    const ref = await admin.firestore().collection("Profiles")
-      .where("userId", "==", userId).get();
+    const ref = await admin.firestore().collection("profiles").where("userId", "==", userId).get();
 
     if (ref) {
       const delRef = ref.docs[0].ref.delete();
-      return Status.SUCCESS;
+
+
+      const postsRef = await admin.firestore().collection("profiles")
+        .where("userId", "==", userId).get();
+
+      if (postsRef) {
+        postsRef.forEach((post) => {
+          post.ref.delete()
+        });
+        return Status.SUCCESS;
+      } else {
+        return Status.FAILURE;
+      }
+
     } else {
       return Status.FAILURE;
     }
-
-
   }
 
   async checkRelationship(relationship: IRelationship) {
@@ -134,7 +130,7 @@ export class ProfilesRepository {
     const otherUserID = relationship.otherUser?.userId;
 
     const documents = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -163,8 +159,6 @@ export class ProfilesRepository {
     } else {
       return { "exists": false, "type": "Not-Friend" }
     }
-
-
   }
 
   async fetchUserPosts(userProfile: IProfile) {
@@ -198,12 +192,11 @@ export class ProfilesRepository {
         });
       })
     }
-
+    
     return {
       "postsFound": true,
       "list": toReturn
     }
-
   }
 
   async updateRelation(newRelation: RelationshipUpdate) {
@@ -216,7 +209,7 @@ export class ProfilesRepository {
 
     if (newRel == RelationEnum.FRIEND) {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -236,12 +229,9 @@ export class ProfilesRepository {
       } else {
         return Status.FAILURE;
       }
-
-
-
     } else if (newRel == RelationEnum.BLOCKED) {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -263,7 +253,7 @@ export class ProfilesRepository {
       }
     } else {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -284,10 +274,7 @@ export class ProfilesRepository {
         return Status.FAILURE;
       }
     }
-
-
   }
-
 
   interpretDiscipline(disciplineStr: string) {
     if (disciplineStr.toLowerCase() == "art") {
@@ -309,21 +296,18 @@ export class ProfilesRepository {
     }
   }
 
-
   async fetchProfile(user: IUser): Promise<IProfile> {
-    // Use user id to get profile from the db
+    // Use user email to get profile from the db
     const uid = user.id;
     console.log("uid: " + uid);
 
     const documents = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", uid)
       .get();
 
-    console.log("documents: " + documents);
     if (documents) {
       if (documents.empty) {
-        console.log("documents empty");
         return { userId: "Profile not found" };
       }
       else {
@@ -331,11 +315,8 @@ export class ProfilesRepository {
         return (userData as IProfile);
       }
     } else {
-      console.log("documents null");
       return { userId: "Profile not found" };
     }
-
-
 
     //return {
     // userId: user.id,

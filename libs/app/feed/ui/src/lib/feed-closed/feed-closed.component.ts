@@ -26,21 +26,42 @@ export class FeedClosedComponent {
       FilterType.MOST_POPULAR,
       FilterType.SCIENCE_FILTER,
       FilterType.ART_FILTER,
-      FilterType.NEWS_FILTER,
-      FilterType.SPORT_FILTER,
       FilterType.FOOD_FILTER,
+      FilterType.SPORT_FILTER,
+      FilterType.NEWS_FILTER,
+      FilterType.TRAVEL_FILTER,
+      FilterType.MUSIC_FILTER,
       FilterType.GAMING_FILTER)
   }
 
   @Output() filterChanged = new EventEmitter<FilterType>();
   @Output() setCurrentPost = new EventEmitter<Post>();
 
-
   onSetFilters(data: FilterType) {
     this.filterChanged.emit(data);
+    const myElement = document.getElementById(data);
+    if(myElement != null)
+    {
+      if(myElement.style.background != "green")
+      {
+        myElement.style.background = "green";
+      }
+      else{
+          myElement.style.background = "black";
+      }
+    }
   }
 
   setPost(data: Post) {
     this.setCurrentPost.emit(data);
+  }
+
+  handleRefresh(event: any) {
+    // const target = event.target as HTMLTextAreaElement;
+    setTimeout(() => {
+      // Any calls to load data go here
+      event.target.complete();
+    }, 2000);
+    console.log("refreshing of data");
   }
 }

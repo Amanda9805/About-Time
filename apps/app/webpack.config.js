@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-
 function getClientEnvironment(configuration) {
   // Grab NODE_ENV and NX_* environment variables and prepare them to be
   // injected into the application via DefinePlugin in webpack configuration.

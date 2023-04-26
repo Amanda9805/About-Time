@@ -1,6 +1,5 @@
 import { ProfilesService } from '@mp/api/profiles/feature';
 import {
-
   IDeleteAccountRequest,
   IDeleteAccountResponse,
   IGetPrivacySettingsRequest,
@@ -9,7 +8,6 @@ import {
   IUpdatePasswordResponse,
   IUpdatePrivacySettingsRequest,
   IUpdatePrivacySettingsResponse,
-
   FetchUserPostsRequest,
   ICheckRelationshipRequest,
   ICheckRelationshipResponse,
@@ -20,7 +18,6 @@ import {
   IUpdateAccountDetailsResponse,
   IUpdateRelationRequest,
   IUpdateRelationResponse,
-
 } from '@mp/api/profiles/util';
 import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
@@ -102,7 +99,6 @@ export const updateRelation = functions.https.onCall(
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(ProfilesService);
     return service.updateRelation(request);
-
   }
 );
 

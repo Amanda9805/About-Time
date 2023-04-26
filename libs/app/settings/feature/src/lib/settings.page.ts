@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Location } from '@angular/common';
+import { IonModal } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
+import { Router, NavigationExtras } from '@angular/router';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
@@ -10,21 +14,40 @@ export class SettingsPage {
 
   privacy = false;
   sliderValue = 50;
+  @ViewChild(IonModal)
+  modal!: IonModal;
   public alertButtons = ['Yes', 'No'];
+  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name!: string;
 
-  constructor(public alertController: AlertController,  private location: Location) { }
+  constructor(public alertController: AlertController, private location: Location, private router: Router) {
+
+  }
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss(this.name, 'confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      this.message = `Hello, ${ev.detail.data}!`;
+    }
+  }
+
   goBack() {
     this.location.back();
   }
-  
 
   onToggleChange(event: any) {
-    // Handle toggle change
     console.log('Toggle changed', event.detail.checked);
   }
 
   onSliderChange(event: any) {
-    // Handle slider change
     console.log('Slider changed', event.detail.value);
   }
 
@@ -46,5 +69,28 @@ export class SettingsPage {
     // this.storage.set('sliderValue', this.sliderValue);
 
     console.log('Settings saved');
+  }
+
+  navigate(to: string) {
+    switch (to) {
+      case 'pp': {
+        this.router.navigate(['/privacy']);
+        break;
+      }
+      case 'tos': {
+        this.router.navigate(['/tos']);
+        break;
+      }
+      case 'fp': {
+        const navigationExtras: NavigationExtras = {
+          state: {
+            title: "Change your password"
+          }
+        };
+        this.router.navigate(['/forgot'], navigationExtras);
+        break;
+      }
+    }
+    return;
   }
 }

@@ -1,12 +1,11 @@
 import { Component } from "@angular/core";
 import { FormBuilder, Validators } from '@angular/forms';
-import {
-    ActionsExecuting,
-    actionsExecuting
-} from '@ngxs-labs/actions-executing';
+import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { ForgotPassword, SendConfirmCode } from '@mp/app/forgot/util';
+import { Router, } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'ms-forget-page',
@@ -15,6 +14,7 @@ import { ForgotPassword, SendConfirmCode } from '@mp/app/forgot/util';
 })
 
 export class ForgotPage {
+    title: string = "Forgot Password";
     @Select(actionsExecuting([ForgotPassword, SendConfirmCode])) busy$!: Observable<ActionsExecuting>;
 
     forgotForm = this.fb.group({
@@ -66,11 +66,12 @@ export class ForgotPage {
         return 'Code is invalid';
     }
 
-    constructor(
-        private readonly fb: FormBuilder,
-        private readonly fb2: FormBuilder,
-        private readonly store: Store
-    ) { }
+    constructor(private readonly fb: FormBuilder, private readonly fb2: FormBuilder, private readonly store: Store, private router: Router, private location: Location) {
+        console.log("FORGOT", this.router.getCurrentNavigation());
+        if (this.router.getCurrentNavigation()?.extras?.state?.["title"]) {
+            this.title = this.router.getCurrentNavigation()?.extras?.state?.["title"];
+        }
+    }
 
     sendForget() {
         console.log("send code");
@@ -84,6 +85,10 @@ export class ForgotPage {
         // if (this.confirmForm.valid) {
         //     this.store.dispatch(new SendConfirmCode());
         // }
+    }
+
+    goBack() {
+        this.location.back();
     }
 
 }

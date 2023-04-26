@@ -64,7 +64,11 @@ ion-grid {
   align-items: center;
   overflow-x: scroll;
   white-space: nowrap;
-  background-color: #1D2A1C;
+  background-color: black;
+
+  border-top-color: #0E8C00;
+  border-top-width: 1px;
+  border-top-style: solid;
 }
 
 .filter {
@@ -74,6 +78,82 @@ ion-grid {
 }
 
 ion-chip {
-  --background: #0E8C00;
+  --background: black;
+  background: black;
   --color: white;
+  border-color: #0E8C00;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Travel
+{
+  --background: black;
+  background: black;
+  border-color: #6405e0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#News
+{
+  --background: black;
+  background: black;
+  border-color: silver;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Science
+{
+  --background: black;
+  background: black;
+  border-color: #038a8f;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Art
+{
+  --background: black;
+  background: black;
+  border-color: #a12797;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Gaming
+{
+  --background: black;
+  background: black;
+  border-color: red;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Food
+{
+  --background: black;
+  background: black;
+  border-color: #ff9100;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Music
+{
+  --background: black;
+  background: black;
+  border-color: #0039b3;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Sport
+{
+  --background: black;
+  background: black;
+  border-color: #c7c409;
+  border-width: 1px;
+  border-style: solid;
 }
