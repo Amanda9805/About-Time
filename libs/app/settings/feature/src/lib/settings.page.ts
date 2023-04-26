@@ -5,9 +5,19 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Router, NavigationExtras } from '@angular/router';
 import { ProfilesRepository } from '@mp/api/profiles/data-access';
-import { PrivacyStatus, Status } from '@mp/api/profiles/util';
+import { IFetchProfileRequest, PrivacyStatus, Status } from '@mp/api/profiles/util';
+import { ProfileState } from '@mp/app/profile/data-access';
 import { getPrivacySettings } from '@mp/api/core/feature';
+import { ProfilesApi } from '@mp/app/profile/data-access';
 import { current } from 'immer';
+import { Store } from '@ngxs/store';
+import { profile } from 'console';
+import { authState } from '@angular/fire/auth';
+import { IUser } from '@mp/api/users/util';
+import { IProfile } from '@mp/api/profiles/util';
+import { AuthState } from '@mp/app/auth/data-access';
+import { OtherUserApi } from '@mp/app/other-user/data-access'
+
 
 
 @Component({
@@ -18,18 +28,13 @@ import { current } from 'immer';
 export class SettingsPage {
   profileRepo = new ProfilesRepository();
   toggle = document.getElementById('my-toggle');
-
-//const user=; //ask how to get the current user
- // currentPrivacy: PrivacyStatus;
-  sliderValue = 50;
   @ViewChild(IonModal)
   modal!: IonModal;
   public alertButtons = ['Yes', 'No'];
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
 
-  constructor(public alertController: AlertController, private location: Location, private router: Router) {
-    //const user=; //ask how to get the current user
+  constructor(public alertController: AlertController, private location: Location, private router: Router, private store: Store,private readonly profilesApi:ProfilesApi, private readonly otherUserApi:OtherUserApi) {
   }
 
   cancel() {
@@ -47,33 +52,31 @@ export class SettingsPage {
     }
   }
 
-  // async ngOnInit() {
-  //   this.currentPrivacy = await this.profileRepo.getPrivacySettings(user);
-  //   if (this.currentPrivacy === PrivacyStatus.PRIVATE) {
-  //     this.toggle?.ariaChecked;
-  //   }
-  // }
+  async deleteAccount(){
+    const userID = this.store.selectSnapshot(AuthState).user.uid;
+    const request: IFetchProfileRequest = {
+      user: {
+        id: userID,
+    }
+    }
+    
+    // First call the api fetchUserPosts function
+    const responseRef = await this.otherUserApi.fetchProfile(request);
+    const response = responseRef.data;
+    const result = this.profileRepo.deleteAccount(response.profile);//figure out how to get the users profile
+      if(await result === Status.SUCCESS)
+      {
+        console.log("Account deletion sucessful.")
+        this.router.navigate(['/welcome']);
+      }
+      else{
+        console.log("Account deletetion failed.")
+        alert('Failed to delete account');
 
-  deleteAccount(){
-    // try{
-    //   //const profileRepo = new ProfilesRepository();
-    //   const result = this.profileRepo.deleteAccount();//figure out how to get the users profile
-    //   if(result == Status.SUCCESS)
-    //   {
-    //     console.log("Account deletion sucessful.")
-    //     this.router.navigate(['/welcome']);
-    //   }
-    //   else{
-    //     console.log("Account deletetion failed.")
-    //     alert('Failed to delete account');
+      }
+    }
 
-    //   }
-    // }
-    // catch(error){
-    //   console.error(error)
-    //   alert('Failed to delete account');
-    // }
-  }
+
   goBack() {
     this.location.back();
   }
@@ -82,8 +85,21 @@ export class SettingsPage {
     console.log('Toggle changed', event.detail.checked);
   }
 
-  toggleProfileVisibility(){
+  async toggleProfileVisibility(){
     //Need to get the user and then the function should be done but It still needs to be tested;
+    // Create the request using the passed in user
+ 
+    const userID = this.store.selectSnapshot(AuthState).user.uid;
+    const request: IFetchProfileRequest = {
+      user: {
+        id: userID,
+    }
+    }
+    
+    // First call the api fetchUserPosts function
+    const responseRef = await this.otherUserApi.fetchProfile(request);
+    const response = responseRef.data;
+    
     let newPrivacy;  
     if(this.toggle?.ariaChecked)
     {
@@ -92,7 +108,7 @@ export class SettingsPage {
     else{
       newPrivacy = PrivacyStatus.PUBLIC;
     }
-    const result = this.profileRepo.updatePrivacySettings(this.user,newPrivacy)
+    const result = this.profileRepo.updatePrivacySettings(response.profile,newPrivacy);
     console.log(result);
   }
 
