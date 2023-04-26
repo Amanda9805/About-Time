@@ -33,7 +33,9 @@
         <!-- Message Button --><!-- Friend Button - Dropdown? / perhaps ion-action-sheet -->
         <ion-list>
             <!-- <ion-button shape="small">Message</ion-button> -->
-            <ion-button shape="small">Friend</ion-button>
+            <ion-button shape="small" *ngIf="!user.friends" (click)="manageFriend('FRIEND')">Add Friend</ion-button>
+            <ion-button shape="small" *ngIf="!user.friends" (click)="manageFriend('NOTFRIEND')">Unfriend</ion-button>
+            <ion-button shape="small" (click)="manageFriend('BLOCKED')">Block</ion-button>
         </ion-list>
     </div>
 </ion-header>

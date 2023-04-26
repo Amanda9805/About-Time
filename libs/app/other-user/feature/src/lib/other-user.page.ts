@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IBadge, IMeter, IProfile, RelationEnum } from '@mp/api/profiles/util';
 import { OtherUserState } from '@mp/app/other-user/data-access';
 import { AuthState } from '@mp/app/auth/data-access';
-import { SetOtherProfile, SetRelation } from '@mp/app/other-user/util';
+import { SetOtherProfile, SetRelation, UpdateRelation } from '@mp/app/other-user/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -149,6 +149,10 @@ export class OtherUserPage {
         return {caption: post.title, imagePath: post.image}
       })!;
     })
+  }
+
+  manageFriend(newRelation: string) {
+    this.store.dispatch(new UpdateRelation(newRelation));
   }
 
 }
