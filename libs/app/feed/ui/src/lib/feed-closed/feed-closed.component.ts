@@ -26,7 +26,7 @@ export class FeedClosedComponent {
       FilterType.MOST_POPULAR,
       FilterType.SCIENCE_FILTER,
       FilterType.ART_FILTER,
-      FilterType.NEWS_FILTER,
+      FilterType.FOOD_FILTER,
       FilterType.SPORT_FILTER,
       FilterType.NEWS_FILTER,
       FilterType.TRAVEL_FILTER,

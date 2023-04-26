@@ -5,7 +5,7 @@
 <mp-timer></mp-timer>
 
 <div id="filters-container">
-  <ion-chip class="filter" *ngFor="let filter of filters.list" (click)="onSetFilters(filter)">{{filter}}</ion-chip>
+  <ion-chip class="filter" id="{{filter}}" *ngFor="let filter of filters.list" (click)="onSetFilters(filter)">{{filter}}</ion-chip>
 </div>
 
 
