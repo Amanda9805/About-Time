@@ -32,6 +32,7 @@ export class ProfilePage {
     private: true
   }
 
+  hasPosts: boolean = false;
   posts: any[] = [
     {
       caption: 'I know nothing',
@@ -55,47 +56,47 @@ export class ProfilePage {
     },
   ];
 
-  badges: IBadge[] = [
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-  ]
+  // badges: IBadge[] = [
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  // ]
 
-  meters: IMeter[] = [
-    {
-      discipline: 'Science',
-      time_accumulated: 60,
-    },
-    {
-      discipline: 'Music',
-      time_accumulated: 70,
-    },
-    {
-      discipline: 'Food',
-      time_accumulated: 50,
-    },
-  ]
+  // meters: IMeter[] = [
+  //   {
+  //     discipline: 'Science',
+  //     time_accumulated: 60,
+  //   },
+  //   {
+  //     discipline: 'Music',
+  //     time_accumulated: 70,
+  //   },
+  //   {
+  //     discipline: 'Food',
+  //     time_accumulated: 50,
+  //   },
+  // ]
 
   ngOnInit() {
     console.log('Profile page loaded');
@@ -112,14 +113,17 @@ export class ProfilePage {
       this.user.pfp = profile?.accountDetails?.photoURL;
       this.user.title = profile?.accountDetails?.title;
       this.user.time = profile?.time;
-      this.badges = profile?.accountDetails?.badgesReceived!;
-      this.meters = profile?.accountDetails?.meters!;
+      // this.badges = profile?.accountDetails?.badgesReceived!;
+      // this.meters = profile?.accountDetails?.meters!;
     })
 
 
     this.store.dispatch(new SetPosts());
     // Get the user's posts from the state
     this.store.select(ProfileState.posts).subscribe((posts) => {
+      if (posts?.list?.length! > 0) {
+        this.hasPosts = true;
+      }
       this.posts = posts?.list?.map((post) => {
         return {caption: post.title, imagePath: post.image}
       })!;
