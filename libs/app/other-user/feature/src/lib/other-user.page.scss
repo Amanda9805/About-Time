@@ -1,19 +1,32 @@
 .deus {
     //background-color: rgb(216, 205, 106);
-    background-image: url(https://i.imgur.com/yED5AQc.png);
+    background-image: url(https://i.imgur.com/boU03a0.png);
     background-repeat: no-repeat;
-    width: 380px;
+    background-position: center bottom;
+    width: auto;
     height: auto;
     margin: 0;
     padding: 0;
 }
 
 .dead {
-    background-color: rgb(213, 94, 94);
+  background-image: url(https://i.imgur.com/rVqAPC3.png);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
 }
 
 .normal {
-    background-color: rgb(97, 218, 97);
+  background-image: url(https://i.imgur.com/r9dudXq.png);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
 }
 
 ion-header {
@@ -174,9 +187,4 @@ ion-segment-button::part(indicator-background) {
   
    --background: black;
    --color: white;
-}
-
-.container{
-
-  
 }

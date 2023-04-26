@@ -57,7 +57,7 @@ export class ProfilesRepository {
     const isPrivate = isNowPrivate;
 
     const doc = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -83,7 +83,7 @@ export class ProfilesRepository {
     const userID = user.userId;
 
     const doc = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -102,13 +102,13 @@ export class ProfilesRepository {
 
   async deleteAccount(profile: IProfile) {
     const userId = profile.userId;
-    const ref = await admin.firestore().collection("Profiles").where("userId", "==", userId).get();
+    const ref = await admin.firestore().collection("profiles").where("userId", "==", userId).get();
 
     if (ref) {
       const delRef = ref.docs[0].ref.delete();
 
 
-      const postsRef = await admin.firestore().collection("Profiles")
+      const postsRef = await admin.firestore().collection("profiles")
         .where("userId", "==", userId).get();
 
       if (postsRef) {
@@ -130,7 +130,7 @@ export class ProfilesRepository {
     const otherUserID = relationship.otherUser?.userId;
 
     const documents = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -209,7 +209,7 @@ export class ProfilesRepository {
 
     if (newRel == RelationEnum.FRIEND) {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -231,7 +231,7 @@ export class ProfilesRepository {
       }
     } else if (newRel == RelationEnum.BLOCKED) {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -253,7 +253,7 @@ export class ProfilesRepository {
       }
     } else {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -301,7 +301,7 @@ export class ProfilesRepository {
     const uid = user.id;
 
     const documents = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", uid)
       .get();
 
