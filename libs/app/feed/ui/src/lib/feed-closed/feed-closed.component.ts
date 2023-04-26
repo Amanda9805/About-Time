@@ -28,7 +28,9 @@ export class FeedClosedComponent {
       FilterType.ART_FILTER,
       FilterType.NEWS_FILTER,
       FilterType.SPORT_FILTER,
-      FilterType.FOOD_FILTER,
+      FilterType.NEWS_FILTER,
+      FilterType.TRAVEL_FILTER,
+      FilterType.MUSIC_FILTER,
       FilterType.GAMING_FILTER)
   }
 
