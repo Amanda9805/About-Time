@@ -12,7 +12,7 @@ export class SearchRepository {
     async search(user : string){
         
     const document = await admin.firestore()
-    .collection("Profiles")
+    .collection("profiles")
     .get();
 
     const toReturn: { username: string | undefined; imageURL: string; }[] = []; 
