@@ -39,6 +39,17 @@ export class FeedClosedComponent {
 
   onSetFilters(data: FilterType) {
     this.filterChanged.emit(data);
+    const myElement = document.getElementById(data);
+    if(myElement != null)
+    {
+      if(myElement.style.background != "green")
+      {
+        myElement.style.background = "green";
+      }
+      else{
+          myElement.style.background = "black";
+      }
+    }
   }
 
   setPost(data: Post) {
