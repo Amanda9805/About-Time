@@ -14,7 +14,7 @@
       <div class="ion-padding" slot="content">
         <div class="spaced-div">
           <span class="smalltext">Display your profile to other users?</span>
-          <span class="ios-circle"><ion-toggle>Default Toggle</ion-toggle></span>
+          <span class="ios-circle" id = "my-toggle" (ionChange) ="toggleProfileVisibility()"><ion-toggle>Default Toggle</ion-toggle></span>
         </div>
       </div>
     </ion-accordion>
@@ -46,7 +46,7 @@
       <div class="ion-padding" slot="content">
         <p>Are you sure you want to delete your account?</p>
         <ion-text color="danger">You will loose all your data if you do so!</ion-text>
-        <ion-button id="open-modal" expand="block">Delete Account</ion-button>
+        <ion-button id="open-modal" expand="block" (click)="deleteAccount()">Delete Account</ion-button>
       </div>
     </ion-accordion>
     <ion-accordion value="terms-of-service">
