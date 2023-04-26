@@ -130,6 +130,18 @@ ion-segment {
     border-radius: 0%;
 }
 
+.posts-toolbar {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  --background: black;
+  color: white;
+  border-radius: 0%;
+  border-bottom-color: #0E8C00;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
 ion-segment-button::part(indicator-background) {
     background: #041303;
     border-top-color: #0E8C00;
@@ -187,4 +199,10 @@ ion-segment-button::part(indicator-background) {
   
    --background: black;
    --color: white;
+}
+
+.content-section ion-text {
+  // margin: 10px;
+  padding: 10px;
+  text-align: center;
 }

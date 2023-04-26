@@ -26,6 +26,7 @@ export class OtherUserPage {
   friends: boolean = true;
   deus: boolean = true;
   dead: boolean = false;
+  hasPosts: boolean = false;
 
   user: any = {
     name: 'Jon Snow',
@@ -61,54 +62,54 @@ export class OtherUserPage {
     },
   ];
 
-  badges: IBadge[] = [
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-  ]
+  // badges: IBadge[] = [
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  // ]
 
-  meters: IMeter[] = [
-    {
-      discipline: 'Science',
-      time_accumulated: 60,
-    },
-    {
-      discipline: 'Music',
-      time_accumulated: 70,
-    },
-    {
-      discipline: 'Food',
-      time_accumulated: 50,
-    },
-  ]
+  // meters: IMeter[] = [
+  //   {
+  //     discipline: 'Science',
+  //     time_accumulated: 60,
+  //   },
+  //   {
+  //     discipline: 'Music',
+  //     time_accumulated: 70,
+  //   },
+  //   {
+  //     discipline: 'Food',
+  //     time_accumulated: 50,
+  //   },
+  // ]
 
-  NgOnInit() {
+  ngOnInit() {
     // Set the profile in the state -- passed in mock data
-    this.store.dispatch(new SetOtherProfile({id: '1'}));
+    this.store.dispatch(new SetOtherProfile({id: "We6LGonYEPaJ3KrDZlmyLYrUpHCQ"}));
 
-    // Determine the relation between the users
-    this.store.dispatch(new SetRelation());
+    // // Determine the relation between the users
+    // this.store.dispatch(new SetRelation());
 
     // Get the profile from the state
     this.store.select(OtherUserState.profile).subscribe((profile) => {
@@ -118,9 +119,9 @@ export class OtherUserPage {
       this.user.title = profile?.accountDetails?.title!;
       this.user.time = profile?.time!;
 
-      // Added:
-      this.badges = profile?.accountDetails?.badgesReceived!;
-      this.meters = profile?.accountDetails?.meters!;
+      // // Added:
+      // this.badges = profile?.accountDetails?.badgesReceived!;
+      // this.meters = profile?.accountDetails?.meters!;
 
       // Determine privacy
       if (profile?.accountDetails?.private) {
@@ -132,19 +133,22 @@ export class OtherUserPage {
       }
     })
 
-    // Get the relation from the state and determine if the users are friends
-    this.store.select(OtherUserState.relation).subscribe((relation) => {
-      if (relation?.type === RelationEnum.FRIEND) {
-        this.friends = true;
-      }
-      else
-      {
-        this.friends == false;
-      }
-    })
+    // // Get the relation from the state and determine if the users are friends
+    // this.store.select(OtherUserState.relation).subscribe((relation) => {
+    //   if (relation?.type === RelationEnum.FRIEND) {
+    //     this.friends = true;
+    //   }
+    //   else
+    //   {
+    //     this.friends == false;
+    //   }
+    // })
 
     // Get the user's posts from the state
     this.store.select(OtherUserState.posts).subscribe((posts) => {
+      if (posts?.list?.length! > 0) {
+        this.hasPosts = true;
+      }
       this.posts = posts?.list?.map((post) => {
         return {caption: post.title, imagePath: post.image}
       })!;

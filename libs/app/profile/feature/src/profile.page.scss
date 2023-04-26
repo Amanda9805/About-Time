@@ -148,6 +148,12 @@ ion-segment-button::part(indicator-background) {
   border-bottom-style: solid;
 }
 
+.content-section ion-text {
+  // margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
+
 /* Material Design styles */
 ion-segment-button.md::part(native) {
   color: white;
