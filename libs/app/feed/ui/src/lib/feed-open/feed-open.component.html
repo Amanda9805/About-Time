@@ -12,7 +12,7 @@
         <img src={{posts.list?.at(currentPostIndex)?.image}} alt="">
         <ion-col class="timer-container">
           <div class="timer-col-containers">
-            <ion-chip>{{posts.list?.at(currentPostIndex)?.author}}</ion-chip><ion-chip>{{hours}} : {{minutes}} : {{seconds}}</ion-chip>
+            <ion-chip>{{authorName}}</ion-chip><ion-chip>{{hours}} : {{minutes}} : {{seconds}}</ion-chip>
           </div>
           <div class="timer-col-containers">
             <mp-timer id="timer" [feedOpen]="feedOpen"></mp-timer>

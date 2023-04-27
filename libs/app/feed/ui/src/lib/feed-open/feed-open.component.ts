@@ -8,6 +8,8 @@ import { start } from 'repl';
 import { doc, docSnapshots, Firestore, collection, collectionChanges } from '@angular/fire/firestore';
 import {Observable, map} from 'rxjs';
 import { liveUpdatePostTime } from '@mp/app/feed/util';
+import { ProfilesApi } from '@mp/app/profile/data-access';
+import { IFetchProfileRequest } from '@mp/api/profiles/util';
 
 @Component({
   selector: 'mp-feed-open',
@@ -29,48 +31,17 @@ export class FeedOpenComponent {
   hours = 0;
   minutes = 0;
   seconds = 0;
+  authorName = '';
 
   @Input() currentPost = 0;
   feedOpen = true;
-  constructor(private readonly firestore : Firestore, private store: Store) {
+  constructor(private readonly firestore : Firestore, private store: Store, private readonly profileAPI: ProfilesApi) {
     this.store.select(FeedState.post).subscribe((post) => {
       if (post != null)
         this.totalPostTime = post.model.time as number;
     })
   }
 
-  // posts : PostList = {
-  //   postsFound : false,
-  //   list : [
-  //     {
-  //       id : "post 1",
-  //       title : "Title 1",
-  //       author : null,
-  //       description : "description 1",
-  //       content : "content 1",
-  //       discipline : Discipline.SCIENCE,
-  //       time : 0,
-  //   },
-  //   {
-  //     id : "post 2",
-  //     title : "Title 2",
-  //     author : null,
-  //     description : "description 2",
-  //     content : "content 2",
-  //     discipline : Discipline.SCIENCE,
-  //     time : 0,
-  // },
-  // {
-  //   id : "post 3",
-  //   title : "Title 3",
-  //   author : null,
-  //   description : "description 3",
-  //   content : "content 3",
-  //   discipline : Discipline.SCIENCE,
-  //   time : 0,
-  // }
-  //   ],
-  // };
 
   startTime = 0;
   endTime = 0;
@@ -95,10 +66,20 @@ export class FeedOpenComponent {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges) {
     if (changes['currentPost']) {
       this.currentPostIndex = changes['currentPost'].currentValue;
     }
+
+    const fetchProfileRequest = {
+      user: {
+        id:  this.posts.list?.at(this.currentPostIndex)?.author as string,
+      }
+    } as IFetchProfileRequest;
+
+    const authorProfile = (await this.profileAPI.fetchProfile(fetchProfileRequest));
+    this.authorName = authorProfile.data.profile.accountDetails?.userName as string;
+    console.log('authorName: ', this.authorName);
     this.startTimer();
 
   ///////////////////////
