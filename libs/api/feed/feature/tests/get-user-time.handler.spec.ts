@@ -1,7 +1,7 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 
 import { Test } from '@nestjs/testing';
-import { GetUserTimeCommand, GetUserTimeResponse, UserTime, Status } from '@mp/api/feed/util';
+import { GetUserTimeCommand, GetUserTimeResponse } from '@mp/api/feed/util';
 import { FeedRepository } from '@mp/api/feed/data-access';
 import { GetUserTimeHandler } from '../src/commands';
 import { IUser } from '../../../users/util/src/interfaces/user.interface';
