@@ -106,7 +106,7 @@ export class OtherUserPage {
 
   ngOnInit() {
     // Set the profile in the state -- passed in mock data
-    this.store.dispatch(new SetOtherProfile({id: "We6LGonYEPaJ3KrDZlmyLYrUpHCQ"}));
+    // this.store.dispatch(new SetOtherProfile({id: "We6LGonYEPaJ3KrDZlmyLYrUpHCQ"}));
 
     // // Determine the relation between the users
     // this.store.dispatch(new SetRelation());
