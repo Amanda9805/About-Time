@@ -1,4 +1,4 @@
-import { IProfile, Post, Status, PrivacyStatus, RelationEnum } from '@mp/api/profiles/util';
+import { IProfile, Post, Status, PrivacyStatus, RelationEnum, ProfileImageUpdate } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import { IPasswordSettings } from '@mp/api/profiles/util';
 import * as admin from 'firebase-admin';
@@ -62,7 +62,7 @@ export class ProfilesRepository {
       .get();
 
     if (doc) {
-      const ref = doc.docs[0].data()["accountDetails"]["private"];
+      const ref = doc.docs[0].data()["accountDetails"];
       const updateRef = ref.update({
         private: isPrivate,
       });
@@ -339,7 +339,48 @@ export class ProfilesRepository {
     //   userId: user.id,
     // }
   }
+
+
+  async updateProfileImage(update: ProfileImageUpdate) {
+    const userID = update.userId;
+    const newURL = update.newImageURL;
+  
+  
+    const doc = await admin.firestore()
+      .collection("profiles")
+      .where("userId", "==", userID)
+      .get();
+  
+    if (doc) {
+      const ref = doc.docs[0].ref;
+      const updateRef = ref.update({
+        photoURL: newURL,
+      });
+  
+      if (ref) {
+        return Status.SUCCESS;
+      } else {
+        return Status.FAILURE;
+      }
+  
+    } else {
+      return Status.FAILURE;
+    }
+  
+  }
+
+
+
+
 }
+
+
+
+
+
+
+
+
 
 // email?: string | null | undefined;
 //   photoURL?: string | null | undefined;
