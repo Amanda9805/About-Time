@@ -4,7 +4,8 @@ import { FilterList, FilterType, Post, PostList } from '@mp/api/feed/util';
 import { Store } from '@ngxs/store';
 import { AuthState } from '@mp/app/auth/data-access';
 import { getFirestore } from 'firebase-admin/firestore';
-
+import { doc, docSnapshots, Firestore, collection, collectionSnapshots, collectionChanges } from '@angular/fire/firestore';
+import {Observable, map} from 'rxjs';
 import { onSnapshot } from "firebase/firestore";
 
 
@@ -27,7 +28,7 @@ export class FeedClosedComponent{
 
 
 
-  constructor( private store: Store) {
+  constructor(private readonly firestore : Firestore, private store: Store) {
     this.filters.list?.push(
       FilterType.MOST_RECENT,
       FilterType.MOST_POPULAR,
@@ -43,15 +44,25 @@ export class FeedClosedComponent{
       //const app = firestore.app;
   }
 
-//   async getUserEventSummary() {
-//     try{
-// //
-//     }catch(e){
-//       console.log(e);
-//       return null;
-//     }
-//   }
+  loadOnce = false;
 
+  ngOnInit() {
+    const ref = collection(this.firestore, 'Posts');
+
+      const doc$ = collectionChanges(ref).pipe(map(data => data.at(0)?.doc.data() as Post));
+
+      doc$?.subscribe(data => {
+        if (data != undefined){
+          if(this.loadOnce)
+          this.posts.list?.unshift(data);
+        // console.log("dispatch time: ", data['timeWat']);
+        }
+      });
+
+
+    this.loadOnce = true;
+
+  }
 
 
   @Output() filterChanged = new EventEmitter<FilterType>();
