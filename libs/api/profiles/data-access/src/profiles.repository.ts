@@ -1,4 +1,4 @@
-import { IProfile, Post, Status, PrivacyStatus, RelationEnum } from '@mp/api/profiles/util';
+import { IProfile, Post, Status, PrivacyStatus, RelationEnum, ProfileImageUpdate } from '@mp/api/profiles/util';
 import { Injectable } from '@nestjs/common';
 import { IPasswordSettings } from '@mp/api/profiles/util';
 import * as admin from 'firebase-admin';
@@ -57,12 +57,12 @@ export class ProfilesRepository {
     const isPrivate = isNowPrivate;
 
     const doc = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
     if (doc) {
-      const ref = doc.docs[0].data()["accountDetails"]["private"];
+      const ref = doc.docs[0].data()["accountDetails"];
       const updateRef = ref.update({
         private: isPrivate,
       });
@@ -83,7 +83,7 @@ export class ProfilesRepository {
     const userID = user.userId;
 
     const doc = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -102,13 +102,13 @@ export class ProfilesRepository {
 
   async deleteAccount(profile: IProfile) {
     const userId = profile.userId;
-    const ref = await admin.firestore().collection("Profiles").where("userId", "==", userId).get();
+    const ref = await admin.firestore().collection("profiles").where("userId", "==", userId).get();
 
     if (ref) {
       const delRef = ref.docs[0].ref.delete();
 
 
-      const postsRef = await admin.firestore().collection("Profiles")
+      const postsRef = await admin.firestore().collection("profiles")
         .where("userId", "==", userId).get();
 
       if (postsRef) {
@@ -130,7 +130,7 @@ export class ProfilesRepository {
     const otherUserID = relationship.otherUser?.userId;
 
     const documents = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", userID)
       .get();
 
@@ -192,7 +192,7 @@ export class ProfilesRepository {
         });
       })
     }
-
+    
     return {
       "postsFound": true,
       "list": toReturn
@@ -209,7 +209,7 @@ export class ProfilesRepository {
 
     if (newRel == RelationEnum.FRIEND) {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -231,7 +231,7 @@ export class ProfilesRepository {
       }
     } else if (newRel == RelationEnum.BLOCKED) {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -253,7 +253,7 @@ export class ProfilesRepository {
       }
     } else {
       const document = await admin.firestore()
-        .collection("Profiles")
+        .collection("profiles")
         .where("userId", "==", userID)
         .get();
 
@@ -299,9 +299,10 @@ export class ProfilesRepository {
   async fetchProfile(user: IUser): Promise<IProfile> {
     // Use user email to get profile from the db
     const uid = user.id;
+    console.log("uid: " + uid);
 
     const documents = await admin.firestore()
-      .collection("Profiles")
+      .collection("profiles")
       .where("userId", "==", uid)
       .get();
 
@@ -338,7 +339,48 @@ export class ProfilesRepository {
     //   userId: user.id,
     // }
   }
+
+
+  async updateProfileImage(update: ProfileImageUpdate) {
+    const userID = update.userId;
+    const newURL = update.newImageURL;
+  
+  
+    const doc = await admin.firestore()
+      .collection("profiles")
+      .where("userId", "==", userID)
+      .get();
+  
+    if (doc) {
+      const ref = doc.docs[0].ref;
+      const updateRef = ref.update({
+        photoURL: newURL,
+      });
+  
+      if (ref) {
+        return Status.SUCCESS;
+      } else {
+        return Status.FAILURE;
+      }
+  
+    } else {
+      return Status.FAILURE;
+    }
+  
+  }
+
+
+
+
 }
+
+
+
+
+
+
+
+
 
 // email?: string | null | undefined;
 //   photoURL?: string | null | undefined;

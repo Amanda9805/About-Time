@@ -26,9 +26,11 @@ export class FeedClosedComponent {
       FilterType.MOST_POPULAR,
       FilterType.SCIENCE_FILTER,
       FilterType.ART_FILTER,
-      FilterType.NEWS_FILTER,
-      FilterType.SPORT_FILTER,
       FilterType.FOOD_FILTER,
+      FilterType.SPORT_FILTER,
+      FilterType.NEWS_FILTER,
+      FilterType.TRAVEL_FILTER,
+      FilterType.MUSIC_FILTER,
       FilterType.GAMING_FILTER)
   }
 
@@ -37,6 +39,17 @@ export class FeedClosedComponent {
 
   onSetFilters(data: FilterType) {
     this.filterChanged.emit(data);
+    const myElement = document.getElementById(data);
+    if(myElement != null)
+    {
+      if(myElement.style.background != "green")
+      {
+        myElement.style.background = "green";
+      }
+      else{
+          myElement.style.background = "black";
+      }
+    }
   }
 
   setPost(data: Post) {
