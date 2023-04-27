@@ -18,6 +18,8 @@ import {
   IUpdateAccountDetailsResponse,
   IUpdateRelationRequest,
   IUpdateRelationResponse,
+  ProfileImageUpdateRequest,
+  ProfileImageUpdateResponse
 } from '@mp/api/profiles/util';
 import { NestFactory } from '@nestjs/core';
 import * as functions from 'firebase-functions';
@@ -109,5 +111,16 @@ export const fetchProfile = functions.https.onCall(
     const app = await NestFactory.createApplicationContext(CoreModule);
     const service = app.get(ProfilesService);
     return service.fetchProfile(request);
+  }
+);
+
+
+export const updateProfileImage = functions.https.onCall(
+  async (
+    request: ProfileImageUpdateRequest
+  ): Promise<ProfileImageUpdateResponse> => {
+    const app = await NestFactory.createApplicationContext(CoreModule);
+    const service = app.get(ProfilesService);
+    return service.updateProfileImage(request);
   }
 );
