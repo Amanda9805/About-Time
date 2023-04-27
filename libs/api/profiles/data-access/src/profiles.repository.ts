@@ -192,7 +192,7 @@ export class ProfilesRepository {
         });
       })
     }
-    
+
     return {
       "postsFound": true,
       "list": toReturn
@@ -344,29 +344,29 @@ export class ProfilesRepository {
   async updateProfileImage(update: ProfileImageUpdate) {
     const userID = update.userId;
     const newURL = update.newImageURL;
-  
-  
+
+
     const doc = await admin.firestore()
       .collection("profiles")
       .where("userId", "==", userID)
       .get();
-  
+
     if (doc) {
       const ref = doc.docs[0].ref;
       const updateRef = ref.update({
         photoURL: newURL,
       });
-  
+
       if (ref) {
         return Status.SUCCESS;
       } else {
         return Status.FAILURE;
       }
-  
+
     } else {
       return Status.FAILURE;
     }
-  
+
   }
 
 
