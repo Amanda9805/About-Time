@@ -27,7 +27,7 @@ export class SearchPage {
 
   ngOnInit() {
 
-    this.store.dispatch(new SetProfilesList({ username: '' }));
+    // this.store.dispatch(new SetProfilesList({ username: '' }));
 
     this.store.select(SearchState.profilesList).subscribe((profiles) => {
       if (profiles.model.list != null) {

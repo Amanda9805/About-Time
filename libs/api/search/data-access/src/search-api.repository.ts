@@ -20,7 +20,7 @@ export class SearchRepository {
         const profileIDs = new Map<string, string>();
         document.forEach((doc) => {
             const data = doc.data();
-            if (data["accountDetails"]["userName"].includes(user)) {
+            if (data["accountDetails"].userName != null && data["accountDetails"].userName?.includes(user)) {
                 toReturn.push({ userId: data["userId"], username: data["accountDetails"]["userName"], imageURL: data["photoURL"] });
             }
         })
