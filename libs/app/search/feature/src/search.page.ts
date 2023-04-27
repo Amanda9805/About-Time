@@ -45,7 +45,6 @@ export class SearchPage {
   search(event : any){
     this.profilesData.list = [];//reset the list
     this.store.dispatch(new SetProfilesList({username: event.target.value}));
-
   }
 
   selectProfile(data : any){
