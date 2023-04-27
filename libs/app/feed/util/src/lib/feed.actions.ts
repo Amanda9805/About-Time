@@ -24,3 +24,8 @@ export class AddToPostList {
   static readonly type = '[Feed] AddToPostList';
   constructor(public payload: { post: Post }) { }
 }
+
+export class liveUpdatePostTime {
+  static readonly type = '[Feed] liveUpdatePostTime';
+  constructor(public payload: { time: number }) { }
+}

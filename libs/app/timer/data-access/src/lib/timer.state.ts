@@ -4,6 +4,7 @@ import produce from 'immer';
 import {
   SetUserTime,
   SetUserTimeModification,
+  liveUpdateTime,
 } from '@mp/app/timer/util';
 
 
@@ -94,16 +95,6 @@ export class TimerState {
     console.log(userTimeRqst);
 
     const userTime = await this.feedApi.getUserTime$(userTimeRqst);
-    // console.log(userTime, "GET UFCEEEEEEEDEDEDEEDED");
-    // comment out below and uncomment above to test with real data
-    // const userTime = {
-    //   data: {
-    //     userTime: {
-    //       timeRemaining: true,
-    //       timeAmount: 52345,
-    //     }
-    //   }
-    // }
 
     console.log('userTime: ', userTime);
     ctx.setState(
@@ -121,6 +112,27 @@ export class TimerState {
       })
     )
   }
+
+  @Action(liveUpdateTime)
+  async liveUpdateTime(ctx: StateContext<TimerStateModel>
+    , { payload }: liveUpdateTime
+    ) {
+    ctx.setState(
+      await produce((draft) => {
+        draft.userTime = {
+          timeRemaining: true,
+          timeAmount: payload.time,
+        }
+        draft.UserTime = {
+          model: {
+            timeRemaining: true,
+            timeAmount: payload.time,
+          }, dirty: false, status: '', errors: {}
+        };
+      })
+    )
+  }
+
 
   @Action(SetUserTimeModification)
   async setUserTimeModification(ctx: StateContext<TimerStateModel>, { payload }: SetUserTimeModification) {

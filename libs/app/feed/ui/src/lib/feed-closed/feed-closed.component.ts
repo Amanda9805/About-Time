@@ -1,9 +1,13 @@
 import { Component, EventEmitter, Output, Input, ChangeDetectorRef, SimpleChanges, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FilterList, FilterType, Post, PostList } from '@mp/api/feed/util';
-import { doc, docSnapshots, Firestore, collection, collectionChanges } from '@angular/fire/firestore';
-import {map} from 'rxjs';
+
 import { Store } from '@ngxs/store';
 import { AuthState } from '@mp/app/auth/data-access';
+import { getFirestore } from 'firebase-admin/firestore';
+
+import { onSnapshot } from "firebase/firestore";
+
+
 
 @Component({
   selector: 'mp-feed-closed',
@@ -23,7 +27,7 @@ export class FeedClosedComponent{
 
 
 
-  constructor(private readonly firestore : Firestore, private store: Store) {
+  constructor( private store: Store) {
     this.filters.list?.push(
       FilterType.MOST_RECENT,
       FilterType.MOST_POPULAR,
@@ -36,39 +40,19 @@ export class FeedClosedComponent{
       FilterType.MUSIC_FILTER,
       FilterType.GAMING_FILTER)
 
-
-
-
       //const app = firestore.app;
   }
 
-  async getUserEventSummary() {
-    try{
-      const user = this.store.selectSnapshot(AuthState).user.uid;
-
-      const ref = doc(this.firestore, 'profiles/', user);//fix path
-      console.log(ref.path);
-      console.log(docSnapshots(ref));
-      return docSnapshots(ref).pipe(map(data => data.data()));
-    }catch(e){
-      console.log(e);
-    }
-    return;
-  }
-
-  async test(){
-    const items = collection(this.firestore, 'profiles');
-    collectionChanges(items).subscribe(data => {
-      console.log(data);
-    });
+//   async getUserEventSummary() {
+//     try{
+// //
+//     }catch(e){
+//       console.log(e);
+//       return null;
+//     }
+//   }
 
 
-    const doc$ = await this.getUserEventSummary();
-
-    doc$?.subscribe(data => {
-      console.log(data);
-    });
-  }
 
   @Output() filterChanged = new EventEmitter<FilterType>();
   @Output() setCurrentPost = new EventEmitter<Post>();

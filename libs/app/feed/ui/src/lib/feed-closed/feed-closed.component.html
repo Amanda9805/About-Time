@@ -2,11 +2,8 @@
   <ion-refresher-content></ion-refresher-content>
 </ion-refresher>
 
-<mp-timer></mp-timer>
+<mp-timer [feedOpen]="false"></mp-timer>
 
-<button (click)="test()">
-  click
-</button>
 
 <div id="filters-container">
   <ion-chip class="filter" id="{{filter}}" *ngFor="let filter of filters.list" (click)="onSetFilters(filter)">{{filter}}</ion-chip>

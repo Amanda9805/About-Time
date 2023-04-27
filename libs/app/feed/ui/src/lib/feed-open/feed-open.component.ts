@@ -3,7 +3,11 @@ import { Discipline, FilterType, Post, PostList, TimeModification } from '@mp/ap
 import { AuthState } from '@mp/app/auth/data-access';
 import { FeedState } from '@mp/app/feed/data-access';
 import { SetUserTimeModification } from '@mp/app/timer/util';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
+import { start } from 'repl';
+import { doc, docSnapshots, Firestore, collection, collectionChanges } from '@angular/fire/firestore';
+import {Observable, map} from 'rxjs';
+import { liveUpdatePostTime } from '@mp/app/feed/util';
 
 @Component({
   selector: 'mp-feed-open',
@@ -14,15 +18,25 @@ export class FeedOpenComponent {
 
   image = 'https://ionicframework.com/docs/img/demos/thumbnail.svg';
 
+  @Select(FeedState.post) post$!: Observable<Post>;
+
   @Input() posts: PostList = {
     postsFound: false,
     list: [],
   };
 
+  totalPostTime = 0;
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
+
   @Input() currentPost = 0;
   feedOpen = true;
-  constructor(private store: Store) {
-    //
+  constructor(private readonly firestore : Firestore, private store: Store) {
+    this.store.select(FeedState.post).subscribe((post) => {
+      if (post != null)
+        this.totalPostTime = post.model.time as number;
+    })
   }
 
   // posts : PostList = {
@@ -79,13 +93,46 @@ export class FeedOpenComponent {
       postID: this.posts.list?.at(this.currentPostIndex)?.id as string,
       time: this.endTime - this.startTime,
     });
-    console.log("DESTROYEDDDDDDD");
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['currentPost']) {
       this.currentPostIndex = changes['currentPost'].currentValue;
     }
+    this.startTimer();
+
+  ///////////////////////
+    const postID = this.posts.list?.at(this.currentPostIndex)?.id as string;
+    console.log("postID: ", postID);
+    const ref = doc(this.firestore, 'Posts', postID);
+
+    const doc$ = docSnapshots(ref).pipe(map(data => data.data()));
+
+    doc$?.subscribe(data => {
+
+      if (data != undefined){
+      //   console.log("data: ", data);
+      // console.log("dispatch time: ", data['timeWat']);
+      this.store.dispatch(new liveUpdatePostTime({time: data['timeWatched']}))
+      }
+    });
+
+
+
+  }
+
+  startTimer() {
+    this.totalPostTime = this.posts.list?.at(this.currentPostIndex)?.time as number;
+    setInterval(() => {
+      this.totalPostTime++;
+      this.setTime();
+    }, 1000);
+  }
+
+  setTime() {
+    this.hours = Math.floor(this.totalPostTime / 3600);
+    this.minutes = Math.floor((this.totalPostTime % 3600) / 60);
+    this.seconds = this.totalPostTime % 60;
   }
 
   setPost(data: Post) {
@@ -163,5 +210,8 @@ export class FeedOpenComponent {
         this.tEnd = 0;
       }
   }
+
+
+
 
 }
