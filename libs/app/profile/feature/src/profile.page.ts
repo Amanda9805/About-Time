@@ -113,6 +113,20 @@ export class ProfilePage {
       this.user.pfp = profile?.accountDetails?.photoURL;
       this.user.title = profile?.accountDetails?.title;
       this.user.time = profile?.time;
+
+      // Determine the title/status
+      if (profile?.time === 0)
+      {
+        this.user.title = 'Dead';
+      }
+      else if (this.user.time < 24*3600) 
+      {
+        this.user.title = 'Normal';
+      }
+      else
+      {
+        this.user.title = 'Deus';
+      }
       // this.badges = profile?.accountDetails?.badgesReceived!;
       // this.meters = profile?.accountDetails?.meters!;
     })
