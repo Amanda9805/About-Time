@@ -14,6 +14,7 @@ export interface SearchStateModel {
 
   MinimizedProfile : {
     model: {
+      userId: string | null;
       username: string | null;
       imageUrl: string | null;
     };
@@ -41,6 +42,7 @@ export interface SearchStateModel {
 
     MinimizedProfile: {
       model: {
+        userId: null,
         username: null,
         imageUrl: null,
       },
@@ -90,6 +92,7 @@ export class SearchState{
     if(listOfProfiles.data.profiles?.userFound){
       listOfProfiles.data.profiles?.list?.forEach((profile) => {
         arrOfProfiles.push({
+          userId: profile.userId,
           username: profile.username,
           imageURL: profile.imageURL,
         });

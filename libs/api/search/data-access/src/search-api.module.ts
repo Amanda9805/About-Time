@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SearchRepository } from './search.repository';
+import { SearchRepository } from './search-api.repository';
 
 @Module({
     providers: [SearchRepository],

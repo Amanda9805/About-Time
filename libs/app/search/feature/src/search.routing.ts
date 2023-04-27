@@ -7,6 +7,13 @@ const routes: Routes = [
         path: '',
         pathMatch:'full',
         component: SearchPage,
+        children: [
+          {
+            path: 'other-user',
+            loadChildren: () =>
+              import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
+          },
+        ],
     },
 ];
 

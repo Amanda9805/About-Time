@@ -4,6 +4,7 @@ import { SetProfilesList } from '@mp/app/search/util';
 import { SearchState } from '@mp/app/search/data-access';
 import { ProfilesList } from '@mp/api/search/util';
 import { Observable } from 'rxjs';
+import { SetOtherProfile } from '@mp/app/other-user/util';
 
 @Component({
   selector: 'mp-search',
@@ -42,7 +43,13 @@ export class SearchPage {
 
 
   search(event : any){
-     this.store.dispatch(new SetProfilesList({username: event.target.value}));
+    this.profilesData.list = [];//reset the list
+    this.store.dispatch(new SetProfilesList({username: event.target.value}));
+
+  }
+
+  selectProfile(data : any){
+    this.store.dispatch(new SetOtherProfile({id: data.userId}));
   }
 
 
