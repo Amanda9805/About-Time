@@ -4,6 +4,10 @@
 
 <mp-timer></mp-timer>
 
+<button (click)="test()">
+  click
+</button>
+
 <div id="filters-container">
   <ion-chip class="filter" id="{{filter}}" *ngFor="let filter of filters.list" (click)="onSetFilters(filter)">{{filter}}</ion-chip>
 </div>
