@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
 // import { UserList } from '@mp/api/search/util';
 import { IUser } from '@mp/api/users/util';
-import { Status } from '@mp/api/search/util';
+import { MinimizedProfile, Status } from '@mp/api/search/util';
 
 @Injectable()
 export class SearchRepository {
@@ -14,17 +14,17 @@ export class SearchRepository {
     .collection("profiles")
     .get();
 
-    const toReturn: { username: string | undefined; imageURL: string; }[] = [];
+    const toReturn: { userId: string | null, username: string | undefined; imageURL: string; }[] = [];
 
     const profileIDs = new Map<string, string>();
     document.forEach((doc) =>{
         const data = doc.data();
         if (data["accountDetails"]["userName"].includes(user)){
-            toReturn.push({username : data["accountDetails"]["userName"], imageURL:data["photoURL"]});
+            toReturn.push({userId: data["userId"], username : data["accountDetails"]["userName"], imageURL:data["photoURL"]});
         }
     })
 
-    return {data: toReturn};
+    return {data: toReturn as MinimizedProfile[]};
 
 }
 }
