@@ -18,7 +18,7 @@ export class FriendsRepository {
 
         if (UserId != null) {
             documents = await admin.firestore()
-                .collection('Profiles')
+                .collection('profiles')
                 .where('userId', '==', UserId)  //finding the Profile for the user in question
                 .get();
                 
@@ -46,7 +46,7 @@ export class FriendsRepository {
         const toReturn: { id: string; username: string; image: string; }[] = []; //return the list of friends minimised profile 
 
         const friendProfilesDocuments = await admin.firestore()
-            .collection("Profiles")
+            .collection("profiles")
             .where("userId", "in", friendIDs)
             .get();
             
@@ -71,7 +71,7 @@ export class FriendsRepository {
         const friendName = miniProfile.username;
 
         const documents = await admin.firestore()
-            .collection("Profiles")
+            .collection("profiles")
             .where("userId", "==", userId)
             .get();
 

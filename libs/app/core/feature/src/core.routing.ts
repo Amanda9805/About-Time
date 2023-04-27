@@ -146,12 +146,12 @@ const routes: Routes = [
   //   loadChildren: () =>
   //     import ('@mp/app/create-post/feature').then((m)=>m.CreatePostModule),
   // },
-  // {
-  //   path: 'other-user',
-  //   pathMatch: 'full',
-  //   loadChildren: () =>
-  //     import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
-  // },
+  {
+    path: 'other-user',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
+  },
 
 ];
 
