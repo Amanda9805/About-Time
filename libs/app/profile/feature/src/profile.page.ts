@@ -33,6 +33,9 @@ export class ProfilePage {
   }
 
   hasPosts: boolean = false;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
   posts: any[] = [
     {
       caption: 'I know nothing',
@@ -129,6 +132,8 @@ export class ProfilePage {
       }
       // this.badges = profile?.accountDetails?.badgesReceived!;
       // this.meters = profile?.accountDetails?.meters!;
+
+      this.setTime();
     })
 
 
@@ -144,5 +149,10 @@ export class ProfilePage {
     })
   }
 
+  setTime() {
+    this.hours = Math.floor(this.user.time / 3600);
+    this.minutes = Math.floor((this.user.time  % 3600) / 60);
+    this.seconds = this.user.time  % 60;
+  }
 
 }

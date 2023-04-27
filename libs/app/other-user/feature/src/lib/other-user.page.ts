@@ -27,6 +27,9 @@ export class OtherUserPage {
   deus: boolean = true;
   dead: boolean = false;
   hasPosts: boolean = false;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
 
   user: any = {
     name: 'Jon Snow',
@@ -145,6 +148,8 @@ export class OtherUserPage {
       {
         this.private = false;
       }
+
+      this.setTime();
     })
 
     // // Get the relation from the state and determine if the users are friends
@@ -169,8 +174,14 @@ export class OtherUserPage {
     })
   }
 
-  manageFriend(newRelation: string) {
-    this.store.dispatch(new UpdateRelation(newRelation));
+
+  setTime() {
+    this.hours = Math.floor(this.user.time / 3600);
+    this.minutes = Math.floor((this.user.time  % 3600) / 60);
+    this.seconds = this.user.time  % 60;
   }
+  // manageFriend(newRelation: string) {
+  //   this.store.dispatch(new UpdateRelation(newRelation));
+  // }
 
 }

@@ -3,6 +3,9 @@
  <!-- Title Background == Style background of header with conditional css classes -->
  <!-- [ngClass]="{'deus': deus, 'normal': !deus && !dead, 'dead': dead}" -->
 <ion-header [translucent]="false" [ngClass]="user.title | lowercase">
+    <ion-button  [routerLink] = "['/home/search']">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+    </ion-button>
     <div class="header-content">
 
         <!-- Profile pic & Name -->
@@ -25,7 +28,7 @@
         <!-- Time left -->
             <ion-text>
                 <!-- If not private OR if private and friends -->
-                <h2 *ngIf="!private" >{{user.time}}</h2>
+                <h2 *ngIf="!private" >{{hours}}:{{minutes}}:{{seconds}}</h2>
         
                 <!-- If user.private and not user.friends -->
                 <h2 *ngIf="private" >__:__:__</h2>

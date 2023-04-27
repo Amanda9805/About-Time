@@ -60,7 +60,7 @@
 
       <!-- Time left -->
           <ion-text>
-              <h2>{{user.time}}</h2>
+              <h2>{{hours}}:{{minutes}}:{{seconds}}</h2>
           </ion-text>
       <!-- Message Button --><!-- Friend Button - Dropdown? / perhaps ion-action-sheet -->
       <ion-list>
@@ -114,7 +114,8 @@
       <!-- POSTS -->
       <ion-content>
           <ion-text *ngIf="!hasPosts">
-            <h3>This user does not have any posts :O</h3>
+            <h3>No posts yet :O</h3>
+            <p>Go have fun...create some</p>
           </ion-text>
 
           <ion-grid *ngIf="hasPosts">
