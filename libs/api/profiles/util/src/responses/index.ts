@@ -16,3 +16,4 @@ export * from './fetch-user-posts.response';
 export * from './update-relation.response';
 export * from './fetch-profile.response';
 
+export * from "./update-profile-image.response"

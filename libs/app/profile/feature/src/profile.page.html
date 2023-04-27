@@ -42,7 +42,7 @@
 
  <!-- Title Background == Style background of header with conditional css classes -->
  <!-- [ngClass]="{'deus': deus, 'normal': !deus && !dead, 'dead': dead}" -->
- <ion-header [translucent]="false" [ngClass]="user.status | lowercase">
+ <ion-header [translucent]="false" [ngClass]="user.title | lowercase">
   <div class="header-content">
 
       <!-- Profile pic & Name -->
@@ -55,64 +55,70 @@
       
       <!-- Title -->
           <ion-text >
-              <h5 class="status-text">{{user.status}}</h5>
+              <h5 class="status-text">{{user.title}}</h5>
           </ion-text>
 
       <!-- Time left -->
           <ion-text>
-              <h2>{{user.time}}</h2>
+              <h2>{{hours}}:{{minutes}}:{{seconds}}</h2>
           </ion-text>
       <!-- Message Button --><!-- Friend Button - Dropdown? / perhaps ion-action-sheet -->
       <ion-list>
-          <ion-button shape="small" [routerLink] = "['/settings']">Settings</ion-button>
+          <ion-button shape="small" [routerLink] = "['/home/settings']">Settings</ion-button>
           <!-- <ion-button shape="small">Friend</ion-button> -->
       </ion-list>
   </div>
 </ion-header>
 
+<ion-toolbar class="posts-toolbar">
+  <ion-title>
+    Posts
+  </ion-title>
+</ion-toolbar>
 <ion-content class="content-section">
   <!-- <ion-toolbar> -->
       <!-- Meters --><!-- Badges --><!-- Posts -->
-      <ion-segment value="meters" #toolbarSegment>
-          <ion-segment-button value="meters">Meters</ion-segment-button>
-          <ion-segment-button value="badges">Badges</ion-segment-button>
-          <ion-segment-button value="posts">Posts</ion-segment-button>
-      </ion-segment>
+      <!-- <ion-segment value="posts" #toolbarSegment> -->
+          <!-- <ion-segment-button value="meters">Meters</ion-segment-button> -->
+          <!-- <ion-segment-button value="badges">Badges</ion-segment-button> -->
+          <!-- <ion-segment-button value="posts">Posts</ion-segment-button>
+      </ion-segment> -->
 
-  <!-- If user not private OR if user is private and they are friends -->
-  <ion-content >
+     
+
+  <!-- <ion-content > -->
       <!-- METERS -->
-      <ion-content *ngIf="toolbarSegment.value === 'meters'">
+      <!-- <ion-content *ngIf="toolbarSegment.value === 'meters'"> -->
           <!-- ngFor to display all the meters -->
           <!-- Meter title -->
           <!-- Progress bar -->
           <!-- Meter value -->
           <!-- <h3>Meters works!</h3> -->
-          <mp-meter *ngFor="let meter of meters" [meter]="meter"></mp-meter>
-      </ion-content>
+          <!-- <mp-meter *ngFor="let meter of meters" [meter]="meter"></mp-meter> -->
+      <!-- </ion-content> -->
       
       <!-- BADGES -->
-      <ion-content *ngIf="toolbarSegment.value === 'badges'">
+      <!-- <ion-content *ngIf="toolbarSegment.value === 'badges'"> -->
           <!-- ngFor to display all disciplines where the user has badges -->
           <!-- within discipline ngFor to display badge icons -->
           <!-- <h3>Badges works!</h3> -->
-          <ion-grid>
+          <!-- <ion-grid>
               <ion-row>
                   <ion-col  *ngFor="let badge of badges" size="4" >
                       <mp-badge [badge]="badge"></mp-badge>
                   </ion-col>
               </ion-row>
-          </ion-grid>
-      </ion-content>
+          </ion-grid> -->
+      <!-- </ion-content> -->
       
       <!-- POSTS -->
-      <ion-content *ngIf="toolbarSegment.value === 'posts'">
-          <!-- <h3>Posts works!</h3> -->
-          <!-- <ion-grid> -->
-              <!-- ngFors to loop through number of posts -->
-              <!-- User ngIfs to limit number of cols per row -->
-          <!-- </ion-grid> -->
-          <ion-grid>
+      <ion-content>
+          <ion-text *ngIf="!hasPosts">
+            <h3>No posts yet :O</h3>
+            <p>Go have fun...create some</p>
+          </ion-text>
+
+          <ion-grid *ngIf="hasPosts">
               <ion-row>
                   <ion-col *ngFor="let post of posts" size="4">
                       <mp-post [post]="post"></mp-post>
@@ -120,7 +126,7 @@
               </ion-row>
           </ion-grid>
       </ion-content>
-  </ion-content>
+  <!-- </ion-content> -->
 </ion-content>
 
 

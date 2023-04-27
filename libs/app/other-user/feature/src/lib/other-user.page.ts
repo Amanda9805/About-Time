@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IBadge, IMeter, IProfile, RelationEnum } from '@mp/api/profiles/util';
 import { OtherUserState } from '@mp/app/other-user/data-access';
 import { AuthState } from '@mp/app/auth/data-access';
-import { SetOtherProfile, SetRelation } from '@mp/app/other-user/util';
+import { SetOtherProfile, SetRelation, UpdateRelation } from '@mp/app/other-user/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 
@@ -26,6 +26,10 @@ export class OtherUserPage {
   friends: boolean = true;
   deus: boolean = true;
   dead: boolean = false;
+  hasPosts: boolean = false;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
 
   user: any = {
     name: 'Jon Snow',
@@ -61,54 +65,54 @@ export class OtherUserPage {
     },
   ];
 
-  badges: IBadge[] = [
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-  ]
+  // badges: IBadge[] = [
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  // ]
 
-  meters: IMeter[] = [
-    {
-      discipline: 'Science',
-      time_accumulated: 60,
-    },
-    {
-      discipline: 'Music',
-      time_accumulated: 70,
-    },
-    {
-      discipline: 'Food',
-      time_accumulated: 50,
-    },
-  ]
+  // meters: IMeter[] = [
+  //   {
+  //     discipline: 'Science',
+  //     time_accumulated: 60,
+  //   },
+  //   {
+  //     discipline: 'Music',
+  //     time_accumulated: 70,
+  //   },
+  //   {
+  //     discipline: 'Food',
+  //     time_accumulated: 50,
+  //   },
+  // ]
 
-  NgOnInit() {
+  ngOnInit() {
     // Set the profile in the state -- passed in mock data
-    this.store.dispatch(new SetOtherProfile({id: '1'}));
+    // this.store.dispatch(new SetOtherProfile({id: "We6LGonYEPaJ3KrDZlmyLYrUpHCQ"}));
 
-    // Determine the relation between the users
-    this.store.dispatch(new SetRelation());
+    // // Determine the relation between the users
+    // this.store.dispatch(new SetRelation());
 
     // Get the profile from the state
     this.store.select(OtherUserState.profile).subscribe((profile) => {
@@ -118,9 +122,23 @@ export class OtherUserPage {
       this.user.title = profile?.accountDetails?.title!;
       this.user.time = profile?.time!;
 
-      // Added:
-      this.badges = profile?.accountDetails?.badgesReceived!;
-      this.meters = profile?.accountDetails?.meters!;
+      // Determine the title/status
+      if (profile?.time === 0)
+      {
+        this.user.title = 'Dead';
+      }
+      else if (this.user.time < 24*3600) 
+      {
+        this.user.title = 'Normal';
+      }
+      else
+      {
+        this.user.title = 'Deus';
+      }
+
+      // // Added:
+      // this.badges = profile?.accountDetails?.badgesReceived!;
+      // this.meters = profile?.accountDetails?.meters!;
 
       // Determine privacy
       if (profile?.accountDetails?.private) {
@@ -130,25 +148,40 @@ export class OtherUserPage {
       {
         this.private = false;
       }
+
+      this.setTime();
     })
 
-    // Get the relation from the state and determine if the users are friends
-    this.store.select(OtherUserState.relation).subscribe((relation) => {
-      if (relation?.type === RelationEnum.FRIEND) {
-        this.friends = true;
-      }
-      else
-      {
-        this.friends == false;
-      }
-    })
+    // // Get the relation from the state and determine if the users are friends
+    // this.store.select(OtherUserState.relation).subscribe((relation) => {
+    //   if (relation?.type === RelationEnum.FRIEND) {
+    //     this.friends = true;
+    //   }
+    //   else
+    //   {
+    //     this.friends == false;
+    //   }
+    // })
 
     // Get the user's posts from the state
     this.store.select(OtherUserState.posts).subscribe((posts) => {
+      if (posts?.list?.length! > 0) {
+        this.hasPosts = true;
+      }
       this.posts = posts?.list?.map((post) => {
         return {caption: post.title, imagePath: post.image}
       })!;
     })
   }
+
+
+  setTime() {
+    this.hours = Math.floor(this.user.time / 3600);
+    this.minutes = Math.floor((this.user.time  % 3600) / 60);
+    this.seconds = this.user.time  % 60;
+  }
+  // manageFriend(newRelation: string) {
+  //   this.store.dispatch(new UpdateRelation(newRelation));
+  // }
 
 }

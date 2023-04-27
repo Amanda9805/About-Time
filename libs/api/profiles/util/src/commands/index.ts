@@ -16,3 +16,4 @@ export * from './fetch-user-posts.command';
 export * from './update-relation.command';
 export * from './fetch-profile.command';
 
+export * from "./update-profile-image.command"

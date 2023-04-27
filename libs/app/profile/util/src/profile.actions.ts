@@ -35,5 +35,5 @@ export class UpdatePersonalDetails {
 
 export class SetPosts {
   static readonly type = '[Profile] SetPosts';
-  constructor(public readonly profile: IProfile | null) {}
+  // constructor(public readonly profile: IProfile | null) {}
 }

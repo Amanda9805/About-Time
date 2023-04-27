@@ -4,7 +4,7 @@ import { IBadge, IMeter, IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { SetProfile } from '../../util/src/profile.actions';
+import { SetPosts, SetProfile } from '../../util/src/profile.actions';
 
 @Component({
   selector: 'ms-profile-page',
@@ -32,6 +32,10 @@ export class ProfilePage {
     private: true
   }
 
+  hasPosts: boolean = false;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
   posts: any[] = [
     {
       caption: 'I know nothing',
@@ -55,47 +59,47 @@ export class ProfilePage {
     },
   ];
 
-  badges: IBadge[] = [
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Rockstar',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Einstein',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      name: 'Ramsy',
-      iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-  ]
+  // badges: IBadge[] = [
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Rockstar',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Einstein',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  //   {
+  //     name: 'Ramsy',
+  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
+  //   },
+  // ]
 
-  meters: IMeter[] = [
-    {
-      discipline: 'Science',
-      time_accumulated: 60,
-    },
-    {
-      discipline: 'Music',
-      time_accumulated: 70,
-    },
-    {
-      discipline: 'Food',
-      time_accumulated: 50,
-    },
-  ]
+  // meters: IMeter[] = [
+  //   {
+  //     discipline: 'Science',
+  //     time_accumulated: 60,
+  //   },
+  //   {
+  //     discipline: 'Music',
+  //     time_accumulated: 70,
+  //   },
+  //   {
+  //     discipline: 'Food',
+  //     time_accumulated: 50,
+  //   },
+  // ]
 
   ngOnInit() {
     console.log('Profile page loaded');
@@ -112,17 +116,43 @@ export class ProfilePage {
       this.user.pfp = profile?.accountDetails?.photoURL;
       this.user.title = profile?.accountDetails?.title;
       this.user.time = profile?.time;
-      this.badges = profile?.accountDetails?.badgesReceived!;
-      this.meters = profile?.accountDetails?.meters!;
+
+      // Determine the title/status
+      if (profile?.time === 0)
+      {
+        this.user.title = 'Dead';
+      }
+      else if (this.user.time < 24*3600) 
+      {
+        this.user.title = 'Normal';
+      }
+      else
+      {
+        this.user.title = 'Deus';
+      }
+      // this.badges = profile?.accountDetails?.badgesReceived!;
+      // this.meters = profile?.accountDetails?.meters!;
+
+      this.setTime();
     })
 
+
+    this.store.dispatch(new SetPosts());
     // Get the user's posts from the state
     this.store.select(ProfileState.posts).subscribe((posts) => {
+      if (posts?.list?.length! > 0) {
+        this.hasPosts = true;
+      }
       this.posts = posts?.list?.map((post) => {
         return {caption: post.title, imagePath: post.image}
       })!;
     })
   }
 
+  setTime() {
+    this.hours = Math.floor(this.user.time / 3600);
+    this.minutes = Math.floor((this.user.time  % 3600) / 60);
+    this.seconds = this.user.time  % 60;
+  }
 
 }
