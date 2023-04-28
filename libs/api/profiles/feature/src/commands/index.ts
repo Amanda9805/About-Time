@@ -8,3 +8,4 @@ export * from './update-password.handler';
 export * from './get-privacy-settings.handler';
 export * from './update-privacy-settings.handler';
 export * from './fetch-profile.handler';
+export * from "./fetch-user-posts.handler"
