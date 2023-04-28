@@ -5,7 +5,7 @@ import {CreatePostRepository } from '@mp/api/createpost/data-access';
 import { CreatePostHandler } from '../src/commands/';
 import { CreatePostRequest } from '../../util/src/requests/create-post.request';
 
-describe('Test for the add-posts\' handler:', () => {
+describe('Test for the create-post\' handler:', () => {
   let createPostHandler: CreatePostHandler;
   let createPostRepository:CreatePostRepository;
 
@@ -30,7 +30,7 @@ describe('Test for the add-posts\' handler:', () => {
     expect(createPostHandler).toBeDefined();
   });
 
-  it('2. createPostResponse object, should be returned.', async () => {
+  it('2. CreatePostResponse object, should be returned.', async () => {
     const request: CreatePostRequest = {
         post: {
             title : "title",
