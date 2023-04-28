@@ -18,10 +18,10 @@
           required></ion-input>
       </ion-item>
 
-    <ion-item>
-      <ion-label>Caption</ion-label>
-      <ion-input type="text" [(ngModel)]="post.caption" name="caption"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label>Content</ion-label>
+        <ion-input type="text" formControlName="content" [(ngModel)]="post.content" name="content" required></ion-input>
+      </ion-item>
 
     <ion-item>
       <ion-label>Discipline</ion-label>
