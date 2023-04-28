@@ -33,6 +33,11 @@ const routes: Routes = [
           import('@mp/app/create-post/feature').then((m) => m.CreatePostModule),
       },
       {
+        path: 'other-user',
+        loadChildren: () =>
+          import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: '/home/feed',

@@ -18,4 +18,4 @@ export * from './relationship-update.interface'
 export * from './meter.interface';
 export * from './badge.interface';
 
-
+export * from "./profile-image-update.interface";

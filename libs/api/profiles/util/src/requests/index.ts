@@ -15,3 +15,5 @@ export * from './check-relationship.request';
 export * from './fetch-user-posts.request';
 export * from './update-relation.request';
 export * from './fetch-profile.request';
+
+export * from "./update-profile-image.request"

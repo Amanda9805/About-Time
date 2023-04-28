@@ -14,7 +14,7 @@
       <ion-row>
         <ion-searchbar class="search" show-clear-button="focus" (search)="search($event)"></ion-searchbar>
         <ion-list [inset]="true">
-          <ion-item *ngFor="let user of profilesData.list">
+          <ion-item *ngFor="let user of profilesData.list" (click)="selectProfile(user)" [routerLink] = "['/other-user']">
             <ion-thumbnail slot="start">
               <img alt="profile image" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
             </ion-thumbnail>
@@ -23,5 +23,8 @@
         </ion-list>
       </ion-row>
     </ion-grid>
+    <!-- <ion-button (click)="selectProfile({userId: 'testdIDDDD'})" [routerLink] = "['/home/other-user']">
+      Test link
+    </ion-button> -->
   </div>
 </ion-content>
