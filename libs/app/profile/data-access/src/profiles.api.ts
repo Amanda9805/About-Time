@@ -17,7 +17,14 @@ import {
     IUpdateOccupationDetailsRequest,
     IUpdateOccupationDetailsResponse,
     IUpdatePersonalDetailsRequest,
-    IUpdatePersonalDetailsResponse
+    IUpdatePersonalDetailsResponse,
+    ProfileImageUpdateRequest,
+    ProfileImageUpdateResponse,
+    IDeleteAccountRequest,
+    IDeleteAccountResponse,
+    IUpdatePrivacySettingsRequest,
+    IUpdatePrivacySettingsResponse
+
 } from '@mp/api/profiles/util';
 
 //for friends api call
@@ -144,4 +151,42 @@ export class ProfilesApi {
       'fetchProfile'
     )(request);
   }
+
+
+  async updateProfileImage(request: ProfileImageUpdateRequest) {
+    return await httpsCallable<
+      ProfileImageUpdateRequest,
+      ProfileImageUpdateResponse
+    >(
+      this.functions, 
+      'updateProfileImage'
+    )(request);
+  }
+
+  async updatePrivacySetting(request: IUpdatePrivacySettingsRequest) {
+    return await httpsCallable<
+      IUpdatePrivacySettingsRequest,
+      IUpdatePrivacySettingsResponse
+    >(
+      this.functions, 
+      'updatePrivacySettings'
+    )(request);
+  }
+
+  async deleteAccount(request: IDeleteAccountRequest) {
+    return await httpsCallable<
+      IDeleteAccountRequest,
+      IDeleteAccountResponse
+    >(
+      this.functions, 
+      'deleteAccount'
+    )(request);
+  }
+
+
+
+
+
+
+
 }
