@@ -5,7 +5,7 @@ import { ProfilesRepository } from '@mp/api/profiles/data-access';
 import { UpdatePrivacySettingsHandler } from '../src/commands/';
 import { IUpdatePrivacySettingsRequest } from '../../util/src/requests/update-privacy-settings.request';
 
-describe('Test for the fetch-profile\' handler:', () => {
+describe('Test for the update-privacy-settings\' handler:', () => {
   let updatePrivacySettingsHandler: UpdatePrivacySettingsHandler;
   let profilesRepository: ProfilesRepository;
 
@@ -30,7 +30,7 @@ describe('Test for the fetch-profile\' handler:', () => {
     expect(UpdatePrivacySettingsHandler).toBeDefined();
   });
 
-  it('2. FetchProfileResponse object, should be returned.', async () => {
+  it('2. IUpdatePrivacySettingsResponse object, should be returned.', async () => {
     const request: IUpdatePrivacySettingsRequest = {
         privacySettings : {
             newStatus: PrivacyStatus.PRIVATE,

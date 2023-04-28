@@ -6,7 +6,7 @@ import { FetchUserPostsHandler } from '../src/commands/';
 import { FetchUserPostsRequest } from '../../util/src/requests/fetch-user-posts.request';
 import {Discipline} from '@mp/api/feed/util';
 
-describe('Test for the add-posts\' handler:', () => {
+describe('Test for the fetch-user-posts\' handler:', () => {
   let fetchUserPostsHandler: FetchUserPostsHandler;
   let profilesRepository: ProfilesRepository;
 
