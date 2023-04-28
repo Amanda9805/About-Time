@@ -2,7 +2,8 @@
   <ion-refresher-content></ion-refresher-content>
 </ion-refresher>
 
-<mp-timer></mp-timer>
+<mp-timer [feedOpen]="false"></mp-timer>
+
 
 <div id="filters-container">
   <ion-chip class="filter" id="{{filter}}" *ngFor="let filter of filters.list" (click)="onSetFilters(filter)">{{filter}}</ion-chip>
@@ -27,7 +28,7 @@
   </ion-row>
   </ion-grid> -->
   <ion-card class="post-preview" id="{{post.discipline}}">
-    <img alt="Silhouette of mountains" src={{post.image}} />
+    <img alt="image not loading" src={{post.image}} />
     <ion-card-header>
       <ion-card-title>{{post.title}}</ion-card-title>
       <ion-card-subtitle>{{post.description}}</ion-card-subtitle>

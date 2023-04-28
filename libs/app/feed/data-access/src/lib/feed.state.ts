@@ -6,7 +6,8 @@ import {
   SetPost,
   SetPostList,
   SetTimeModification,
-  AddToPostList
+  AddToPostList,
+  liveUpdatePostTime
 } from '@mp/app/feed/util';
 import { SetUserTimeModification } from '@mp/app/timer/util'
 import {
@@ -171,6 +172,11 @@ export class FeedState {
   }
 
   @Selector()
+  static post(state: FeedStateModel) {
+    return state.Post;
+  }
+
+  @Selector()
   static userTime(state: FeedStateModel) {
     return state.UserTime;
   }
@@ -283,6 +289,19 @@ export class FeedState {
       }
       return;
 
+    } catch (error) {
+      return ctx.dispatch(new SetError((error as Error).message));
+    }
+  }
+
+  @Action(liveUpdatePostTime)
+  async liveUpdatePostTime(ctx: StateContext<FeedStateModel>, { payload }: liveUpdatePostTime) {
+    try {
+      ctx.setState(
+        produce((draft) => {
+          draft.Post = { model: { ...draft.Post.model, time: payload.time }, dirty: false, status: '', errors: {} };
+          }));
+      return;
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
