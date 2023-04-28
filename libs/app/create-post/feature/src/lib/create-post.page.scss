@@ -1,6 +1,11 @@
 $backgroundColor: #242423;
 $vibrantGreen: #0E8C00;
 
+.cust_button_var1 {
+  --background: #0E8C00;
+  --color: black;
+}
+
 // Custom styles for ion-header
 ion-header {
   ion-toolbar { 

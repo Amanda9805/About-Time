@@ -113,15 +113,15 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/loading/feature').then((m) => m.LoadingModule),
   },
-  // {
-  //   path: 'settings',
+  {
+    path: 'settings',
 
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import ('@mp/app/settings/feature').then((m)=>m.SettingsModule),
-  // },
+    pathMatch: 'full',
+    // canActivate: [AuthGuard],
+    // data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import ('@mp/app/settings/feature').then((m)=>m.SettingsModule),
+  },
   // {
   //   path: 'death-screen',
   //   pathMatch: 'full',

@@ -8,66 +8,66 @@
 <ion-content>
   <ion-accordion-group>
     <ion-accordion value="privacy">
-      <ion-item slot="header" color="light">
-        <ion-label>Privacy</ion-label>
+      <ion-item slot="header">
+        <ion-label color="light">Privacy</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <div class="spaced-div">
           <span class="smalltext">Display your profile to other users?</span>
-          <span class="ios-circle"><ion-toggle>Default Toggle</ion-toggle></span>
+          <span class="ios-circle"><ion-toggle color="success">Default Toggle</ion-toggle></span>
         </div>
       </div>
     </ion-accordion>
     <ion-accordion value="update-profile">
-      <ion-item slot="header" color="light">
-        <ion-label>Update Profile</ion-label>
+      <ion-item slot="header">
+        <ion-label color="light">Update Profile</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-list>
           <ion-item>
-            <ion-label position="stacked">Username</ion-label>
-            <ion-input placeholder="Enter text"></ion-input>
+            <ion-label color="light" position="stacked">Username</ion-label>
+            <ion-input color="light" placeholder="Enter text"></ion-input>
           </ion-item>
         </ion-list>
       </div>
     </ion-accordion>
     <ion-accordion value="update-password">
-      <ion-item slot="header" color="light">
-        <ion-label>Update Password</ion-label>
+      <ion-item slot="header">
+        <ion-label color="light">Update Password</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-button expand="block" (click)="navigate('fp')">Update your password</ion-button>
       </div>
     </ion-accordion>
     <ion-accordion value="delete-account">
-      <ion-item slot="header" color="light">
-        <ion-label>Delete Account</ion-label>
+      <ion-item slot="header">
+        <ion-label color="light">Delete Account</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <p>Are you sure you want to delete your account?</p>
+        <p color="light">Are you sure you want to delete your account?</p>
         <ion-text color="danger">You will loose all your data if you do so!</ion-text>
         <ion-button id="open-modal" expand="block">Delete Account</ion-button>
       </div>
     </ion-accordion>
     <ion-accordion value="terms-of-service">
-      <ion-item slot="header" color="light">
-        <ion-label>Terms of Service</ion-label>
+      <ion-item slot="header">
+        <ion-label color="light">Terms of Service</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-button expand="block" (click)="navigate('tos')">View our Terms of Service</ion-button>
       </div>
     </ion-accordion>
     <ion-accordion value="privacy-policy">
-      <ion-item slot="header" color="light">
-        <ion-label>Privacy Policy</ion-label>
+      <ion-item slot="header">
+        <ion-label color="light">Privacy Policy</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-button expand="block" (click)="navigate('pp')">View our Privacy Policy</ion-button>
       </div>
     </ion-accordion>
     <ion-accordion value="version">
-      <ion-item slot="header" color="light">
-        <ion-label>Version</ion-label>
+      <ion-item slot="header">
+        <ion-label color="light">Version</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <ms-version-component></ms-version-component>

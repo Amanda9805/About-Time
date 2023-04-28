@@ -9,7 +9,7 @@
     <ion-row>
       <ion-card>
         <!-- <img src={{posts.list?.at(currentPostIndex)?.image}} alt="not loading"> -->
-        <img src={{posts.list?.at(currentPostIndex)?.image}} alt="">
+        <img id = "{{posts.list?.at(currentPostIndex)?.discipline}}"src={{posts.list?.at(currentPostIndex)?.image}} alt="">
         <ion-col class="timer-container">
           <div class="timer-col-containers">
             <ion-chip>{{posts.list?.at(currentPostIndex)?.author}}</ion-chip><ion-chip>{{posts.list?.at(currentPostIndex)?.time}}</ion-chip>

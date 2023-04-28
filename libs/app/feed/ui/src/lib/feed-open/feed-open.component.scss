@@ -3,6 +3,12 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  border-top: #0E8C00;
+  border-top-width: 1px;
+  border-top-style:solid;
+  border-radius: 0px;
+  
 }
 
 ion-button{
@@ -25,7 +31,7 @@ ion-card{
   height: fit-content;
   display: grid;
   place-items: center;
-  --background: #1D2A1C;
+  --background: #000000;
   --color: white;
 }
 
@@ -33,6 +39,10 @@ img{
   width: 100%;
   height: auto;
   position: relative;
+  border: #0E8C00;
+  border-width: 1px;
+  border-style:solid;
+  border-radius: 0px;
 }
 
 .timer-container{
@@ -124,4 +134,68 @@ ion-row{
     --background: transparent;
 
   }
+}
+
+#Travel
+{
+  border-color: #6405e0;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+}
+
+#News
+{
+  border-color: silver;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+}
+
+#Science
+{
+  border-color: #038a8f;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0%;
+}
+
+#Art
+{
+  border-color: #a12797;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+}
+
+#Gaming
+{
+  border-color: red;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+}
+
+#Food
+{
+  border-color: #ff9100;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+}
+
+#Music
+{
+  border-color: #0039b3;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
+}
+
+#Sport
+{
+  border-color: #c7c409;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0px;
 }

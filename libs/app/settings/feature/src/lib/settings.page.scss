@@ -2,24 +2,30 @@ $backgroundColor: #242423;
 $vibrantGreen: #0E8C00;
 
 .cust_button_var1 {
-  --background: #0E8C00;
-  --color: white;
+  background: #0E8C00;
+  --color: black;
 }
 
-ion-header {
+ion-header { 
+  color: black;
   ion-toolbar {
+   
     ion-title {
-      font-size: 3rem;
-      color: $vibrantGreen;
+      background-color: black;
+      color: rgb(0, 0, 0);
     }
   }
 }
 
 ion-content {
+  --ion-background-color: black;
+  border-top: #0E8C00;
+  border-top-width: thin;
+  border-top-style:solid;
   ion-list {
     ion-item {
       ion-label {
-        color: $vibrantGreen;
+        color: white;
 
         &.textColor {
           color: $vibrantGreen;
@@ -55,6 +61,7 @@ ion-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: white;
 }
 
 .modal-toolbar {
@@ -64,5 +71,23 @@ ion-content {
 }
 
 ion-button {
-  text-transform: none
+  --background: black;
+  --color: white;
+  border-bottom: #0E8C00;
+  border-bottom-width: thin;
+  border-bottom-style:solid;
+  border-right: #0E8C00;
+  border-right-width: thin;
+  border-right-style:solid;
+  border-left: #0E8C00;
+  border-left-width: thin;
+  border-left-style:solid;
+  border-top: #0E8C00;
+  border-top-width: thin;
+  border-top-style:solid;
+  border-radius: 1px;
+}
+
+p{
+  color: white;
 }
