@@ -9,3 +9,4 @@ export * from './get-privacy-settings.handler';
 export * from './update-privacy-settings.handler';
 export * from './fetch-profile.handler';
 export * from "./fetch-user-posts.handler"
+export * from "./update-profile-image.handler"
