@@ -5,7 +5,7 @@ import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Router, NavigationExtras } from '@angular/router';
 import { ProfilesRepository } from '@mp/api/profiles/data-access';
-import { IFetchProfileRequest, PrivacyStatus, Status } from '@mp/api/profiles/util';
+import { IDeleteAccountRequest, IFetchProfileRequest, PrivacyStatus, Status, IUpdatePrivacySettingsRequest } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { getPrivacySettings } from '@mp/api/core/feature';
 import { ProfilesApi } from '@mp/app/profile/data-access';
@@ -26,7 +26,7 @@ import { OtherUserApi } from '@mp/app/other-user/data-access'
   styleUrls: ['./settings.page.scss']
 })
 export class SettingsPage {
-  profileRepo = new ProfilesRepository();
+  // profileRepo = new ProfilesRepository();
   toggle = document.getElementById('my-toggle');
   @ViewChild(IonModal)
   modal!: IonModal;
@@ -59,12 +59,18 @@ export class SettingsPage {
         id: userID,
     }
     }
-    
+
     // First call the api fetchUserPosts function
     const responseRef = await this.otherUserApi.fetchProfile(request);
     const response = responseRef.data;
-    const result = this.profileRepo.deleteAccount(response.profile);//figure out how to get the users profile
-      if(await result === Status.SUCCESS)
+
+    const deleteAccountRequest = {
+      deleteAccount: response.profile as IProfile
+    } as IDeleteAccountRequest;
+
+    const result = await this.profilesApi.deleteAccount(deleteAccountRequest);
+
+      if( result.data.status === Status.SUCCESS)
       {
         console.log("Account deletion sucessful.")
         this.router.navigate(['/welcome']);
@@ -88,19 +94,19 @@ export class SettingsPage {
   async toggleProfileVisibility(){
     //Need to get the user and then the function should be done but It still needs to be tested;
     // Create the request using the passed in user
- 
+
     const userID = this.store.selectSnapshot(AuthState).user.uid;
     const request: IFetchProfileRequest = {
       user: {
         id: userID,
     }
     }
-    
+
     // First call the api fetchUserPosts function
     const responseRef = await this.otherUserApi.fetchProfile(request);
     const response = responseRef.data;
-    
-    let newPrivacy;  
+
+    let newPrivacy;
     if(this.toggle?.ariaChecked)
     {
       newPrivacy = PrivacyStatus.PRIVATE
@@ -108,7 +114,15 @@ export class SettingsPage {
     else{
       newPrivacy = PrivacyStatus.PUBLIC;
     }
-    const result = this.profileRepo.updatePrivacySettings(response.profile,newPrivacy);
+
+    const updateRequest = {
+      privacySettings : {
+        newStatus: newPrivacy,
+        profile: response.profile,
+      }
+    } as IUpdatePrivacySettingsRequest;
+
+    const result = this.profilesApi.updatePrivacySetting(updateRequest);
     console.log(result);
   }
 
