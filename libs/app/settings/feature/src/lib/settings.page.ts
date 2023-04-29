@@ -11,14 +11,11 @@ import { getPrivacySettings } from '@mp/api/core/feature';
 import { ProfilesApi } from '@mp/app/profile/data-access';
 import { current } from 'immer';
 import { Store } from '@ngxs/store';
-import { profile } from 'console';
-import { authState } from '@angular/fire/auth';
-import { IUser } from '@mp/api/users/util';
 import { IProfile } from '@mp/api/profiles/util';
 import { AuthState } from '@mp/app/auth/data-access';
-import { OtherUserApi } from '@mp/app/other-user/data-access'
-
-
+import { OtherUserApi } from '@mp/app/other-user/data-access';
+import { SetError } from '@mp/app/errors/util';
+import { SettingsApi } from '@mp/app/settings/data-access';
 
 @Component({
   selector: 'app-settings',
@@ -34,8 +31,10 @@ export class SettingsPage {
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
 
-  constructor(public alertController: AlertController, private location: Location, private router: Router, private store: Store,private readonly profilesApi:ProfilesApi, private readonly otherUserApi:OtherUserApi) {
+  constructor(public alertController: AlertController, private location: Location, private router: Router, private store: Store, private readonly profilesApi: ProfilesApi, private readonly otherUserApi: OtherUserApi, private api: SettingsApi) {
   }
+
+  private sendfile: any;
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -52,12 +51,12 @@ export class SettingsPage {
     }
   }
 
-  async deleteAccount(){
+  async deleteAccount() {
     const userID = this.store.selectSnapshot(AuthState).user.uid;
     const request: IFetchProfileRequest = {
       user: {
         id: userID,
-    }
+      }
     }
 
     // First call the api fetchUserPosts function
@@ -70,18 +69,37 @@ export class SettingsPage {
 
     const result = await this.profilesApi.deleteAccount(deleteAccountRequest);
 
-      if( result.data.status === Status.SUCCESS)
-      {
-        console.log("Account deletion sucessful.")
-        this.router.navigate(['/welcome']);
-      }
-      else{
-        console.log("Account deletetion failed.")
-        alert('Failed to delete account');
-
-      }
+    if (result.data.status === Status.SUCCESS) {
+      console.log("Account deletion sucessful.")
+      this.router.navigate(['/welcome']);
     }
+    else {
+      console.log("Account deletetion failed.")
+      alert('Failed to delete account');
 
+    }
+  }
+
+  async changeUsername() {
+
+  }
+
+  async handlePicture(event: any) {
+    if (event.target.files && event.target.files.length) {
+      this.sendfile = event.target.files[0];
+    }
+  }
+
+  async updateProfilePicture() {
+    if (!this.sendfile) {
+      return this.store.dispatch(new SetError("You are missing a profile picture"));
+    } else {
+      const image = await this.api.uploadPicture(this.sendfile);
+      console.log(image);
+      return;
+      // return this.store.dispatch(new UpdateProfilePicture(image));
+    }
+  }
 
   goBack() {
     this.location.back();
@@ -91,7 +109,7 @@ export class SettingsPage {
     console.log('Toggle changed', event.detail.checked);
   }
 
-  async toggleProfileVisibility(){
+  async toggleProfileVisibility() {
     //Need to get the user and then the function should be done but It still needs to be tested;
     // Create the request using the passed in user
 
@@ -99,7 +117,7 @@ export class SettingsPage {
     const request: IFetchProfileRequest = {
       user: {
         id: userID,
-    }
+      }
     }
 
     // First call the api fetchUserPosts function
@@ -107,16 +125,15 @@ export class SettingsPage {
     const response = responseRef.data;
 
     let newPrivacy;
-    if(this.toggle?.ariaChecked)
-    {
+    if (this.toggle?.ariaChecked) {
       newPrivacy = PrivacyStatus.PRIVATE
     }
-    else{
+    else {
       newPrivacy = PrivacyStatus.PUBLIC;
     }
 
     const updateRequest = {
-      privacySettings : {
+      privacySettings: {
         newStatus: newPrivacy,
         profile: response.profile,
       }

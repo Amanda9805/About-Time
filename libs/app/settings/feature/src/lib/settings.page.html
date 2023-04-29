@@ -1,26 +1,33 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
+    <ion-button (click)="goBack()"><ion-icon name="chevron-back-outline"></ion-icon></ion-button>
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-toolbar>
+  <ion-buttons slot="start">
     <ion-button class="cust_button_var1" (click)="goBack()"><ion-icon
         name="chevron-back-outline"></ion-icon></ion-button>
-  </ion-toolbar>
-</ion-header>
+  </ion-buttons>
+  <ion-title>Settings</ion-title>
+</ion-toolbar>
 
 <ion-content>
   <ion-accordion-group>
     <ion-accordion value="privacy">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="dark">
         <ion-label>Privacy</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <div class="spaced-div">
           <span class="smalltext">Display your profile to other users?</span>
-          <span class="ios-circle" id="my-toggle" (ionChange)="toggleProfileVisibility()"><ion-toggle>Default
-              Toggle</ion-toggle></span>
+          <span (ionChange)="toggleProfileVisibility()"><ion-toggle color="success">Default Toggle</ion-toggle></span>
         </div>
       </div>
     </ion-accordion>
     <ion-accordion value="update-profile">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="dark">
         <ion-label>Update Profile</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
@@ -29,24 +36,26 @@
             <ion-label position="stacked">Username</ion-label>
             <ion-input placeholder="Enter text"></ion-input>
           </ion-item>
+          <ion-button expand="block" (click)="navigate('fp')">Update your username</ion-button>
         </ion-list>
       </div>
     </ion-accordion>
-    <!-- <ion-accordion value="update-picture">
-      <ion-item slot="header" color="light">
+    <ion-accordion value="update-picture">
+      <ion-item slot="header" color="dark">
         <ion-label>Update Profile Picture</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <ion-list>
+        <form (submit)="updateProfilePicture()">
           <ion-item>
             <ion-label></ion-label>
-            <input type="file" (change)="onFileChange($event)">
+            <input type="file" (change)="handlePicture($event)">
           </ion-item>
-        </ion-list>
+          <ion-button expand="block" type="submit">Update your profile picture</ion-button>
+        </form>
       </div>
-    </ion-accordion> -->
+    </ion-accordion>
     <ion-accordion value="update-password">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="dark">
         <ion-label>Update Password</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
@@ -54,17 +63,17 @@
       </div>
     </ion-accordion>
     <ion-accordion value="delete-account">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="dark">
         <ion-label>Delete Account</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <p>Are you sure you want to delete your account?</p>
-        <ion-text color="danger">You will loose all your data if you do so!</ion-text>
+        <ion-text color="danger">Are you sure you want to delete your account? You will loose all your data if you do
+          so!</ion-text>
         <ion-button id="open-modal" expand="block" (click)="deleteAccount()">Delete Account</ion-button>
       </div>
     </ion-accordion>
     <ion-accordion value="terms-of-service">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="dark">
         <ion-label>Terms of Service</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
@@ -72,7 +81,7 @@
       </div>
     </ion-accordion>
     <ion-accordion value="privacy-policy">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="dark">
         <ion-label>Privacy Policy</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
@@ -80,7 +89,7 @@
       </div>
     </ion-accordion>
     <ion-accordion value="version">
-      <ion-item slot="header" color="light">
+      <ion-item slot="header" color="dark">
         <ion-label>Version</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">

@@ -16,13 +16,15 @@ import { ProfilesSagas } from './profiles.sagas';
 import { ProfilesService } from './profiles.service';
 import { FetchUserPostsHandler } from './commands/fetch-user-posts.handler';
 import { UpdateRelationHandler } from './commands/update-relation.handler';
+import { UpdateProfileImageHandler } from './commands/update-profile-image.handler';
 export const CommandHandlers = [
   CreateProfileHandler,
   UpdateAccountDetailsHandler,
   UpdateProfileStatusHandler,
   FetchProfileHandler,
   FetchUserPostsHandler,
-  UpdateRelationHandler
+  UpdateRelationHandler,
+  UpdateProfileImageHandler
 ];
 export const EventHandlers = [
   ProfileCreatedHandler,
