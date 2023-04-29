@@ -3,66 +3,132 @@ $vibrantGreen: #0E8C00;
 
 // Custom styles for ion-header
 ion-header {
-  ion-toolbar { 
+  --ion-background-color: black;
 
+  ion-toolbar {
     ion-title {
-      // Custom styles for ion-title
-      background-color: black;
       color: white;
     }
   }
+}
+
+.label {
+  font-size: 24px;
+  color: white;
+}
+
+.file-input {
+  margin-top: 10px;
+  color: white;
+}
+
+ion-item {
+  --background: #242423;
+}
+
+.item {
+  border-radius: 4px;
+}
+
+ion-input,
+ion-textarea {
+  color: white;
+}
+
+select {
+  color: white;
+  --color: white;
+}
+
+.item-interactive.item-has-focus,
+.item-interactive.ion-focused,
+.item-interactive.ion-focused {
+  color: #edede9 !important;
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  margin: 10px;
 }
 
 // Custom styles for ion-content
 ion-content {
   border-top: #0E8C00;
   border-top-width: thin;
-  border-top-style:solid;
+  border-top-style: solid;
   --ion-background-color: black;
-  form {
-   
-    ion-item {
-
-      ion-label {
-        // Custom styles for ion-label
-        color: white;
-        
-      }
-
-      ion-input {
-        // Custom styles for ion-input
-        --border-color:#0E8C00;
-        color:#dfdbdb;
-      }
-
-      ion-select {
-        // Custom styles for ion-select
-        border-color: $vibrantGreen;
-        color: rgb(231, 231, 231);
-      }
-
-      input[type="file"] {
-        // Custom styles for input[type="file"]
-        color: white;
-      }
-    }
-  }
 }
 
-ion-button{
-  --background: black;
-  --color: white;
-  border-bottom: #0E8C00;
-  border-bottom-width: thin;
-  border-bottom-style:solid;
-  border-right: #0E8C00;
-  border-right-width: thin;
-  border-right-style:solid;
-  border-left: #0E8C00;
-  border-left-width: thin;
-  border-left-style:solid;
-  border-top: #0E8C00;
-  border-top-width: thin;
-  border-top-style:solid;
-  border-radius: 1px;
+// ion-button {
+//   --background: black;
+//   --color: white;
+//   border: #0E8C00 solid 2px;
+//   border-radius: 5px;
+// }
+
+ion-button {
+  margin-top: 10px;
+  --background: #242423;
+  color: #0E8C00;
+  border: #0E8C00 solid 3px;
+  border-radius: 6px;
+}
+
+ion-alert {
+
+  //background color
+  .alert-wrapper.sc-ion-alert-md {
+    background-color: #f8f4aa;
+    --background: linear-gradient(to right,
+        rgba(255, 0, 0, 0),
+        rgba(255, 0, 0, 1));
+    box-shadow: inset 0 0 75px rgba(255, 210, 0, 0.3),
+      inset 0 0 20px rgba(255, 210, 0, 0.4),
+      inset 0 0 30px rgba(220, 120, 0, 0.8);
+  }
+
+  // Header Text
+  .alert-title.sc-ion-alert-md {
+    font-size: 25px;
+    font-weight: 600;
+    font-family: "AustralisProSwash-Italic";
+    color: var(--ion-text-color, #00000080);
+  }
+
+  // checkbox border color
+  [aria-checked="true"].sc-ion-alert-md .alert-radio-icon.sc-ion-alert-md {
+    border-color: #00000080;
+  }
+
+  // checkbox or radio button color
+  .alert-radio-inner.sc-ion-alert-md {
+    background-color: #00000080 !important;
+  }
+
+  // wrap the text
+  .alert-radio-label.sc-ion-alert-md {
+    white-space: pre-line !important;
+    font-family: "AustralisProSwash-Italic";
+    color: var(--ion-text-color, #000000b3);
+    font-weight: bold;
+  }
+
+  // Height of text
+  .alert-tappable.sc-ion-alert-md {
+    height: 77px !important;
+  }
+
+  // Checked text color
+  [aria-checked="true"].sc-ion-alert-md .alert-radio-label.sc-ion-alert-md {
+    color: var(--ion-color-step-850, #262626);
+  }
+
+  // Button color
+  .alert-button-inner.sc-ion-alert-md {
+    color: #00000080;
+    font-weight: bold;
+    font-size: larger;
+  }
 }

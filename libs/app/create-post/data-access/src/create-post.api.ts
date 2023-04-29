@@ -1,27 +1,21 @@
-import { Injectable, inject } from "@angular/core";
-import { doc, docData, Firestore } from '@angular/fire/firestore';
+import { Injectable } from "@angular/core";
 import { Functions, httpsCallable } from '@angular/fire/functions';
 import { NewPost as INewPost, CreatePostRequest as ICreatePostRequest, CreatePostResponse as ICreatePostResponse, NewPost, CreatePostRequest } from '@mp/api/createpost/util';
-import { Storage, getStorage, ref, uploadBytesResumable, uploadString, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 import { getAuth } from "@angular/fire/auth";
 import cuid from 'cuid';
-import { AddToPostList } from '@mp/app/feed/util';
+import { Router } from "@angular/router";
 
 @Injectable()
 export class CreatePostApi {
     constructor(
-        private readonly firestore: Firestore,
         private readonly functions: Functions,
-        private readonly storage: Storage,
-        // private progress: number,
+        private router: Router
     ) { }
-
-    private progress: number = 0;
 
     async createPost(request: ICreatePostRequest) {
         const response = await httpsCallable<ICreatePostRequest, ICreatePostResponse>(this.functions, 'createPost')(request);
-        console.log(response);
-
+        this.router.navigate(['/home/feed']);
         return response;
     }
 
@@ -29,28 +23,11 @@ export class CreatePostApi {
         const file = input;
         const name = cuid();
         const storage = getStorage();
-        const storageRef = ref(storage, name);
+        const storageRef = ref(storage, `posts/${name}`);
 
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on('state_changed',
             (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes);
-                this.progress = progress;
-                if (this.progress == 1) {
-                    this.progress = 0.9;
-                    setInterval(() => {
-                        this.progress += 0.01;
-                    }, 300);
-                }
-
-                switch (snapshot.state) {
-                    case 'paused':
-                        // console.log('Upload is paused');
-                        break;
-                    case 'running':
-                        // console.log('Upload is running');
-                        break;
-                }
             },
             (error) => {
                 // Handle unsuccessful uploads
@@ -62,7 +39,7 @@ export class CreatePostApi {
                     newPost.image = downloadURL as string;
                     const CPRequest: CreatePostRequest = { post: newPost };
                     const response = await this.createPost(CPRequest);
-                    console.log(response);
+                    return response;
                 });
             }
         );
