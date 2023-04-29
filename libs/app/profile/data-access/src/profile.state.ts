@@ -57,17 +57,17 @@ export interface ProfileStateModel {
   //   }
   // }
 
-  accountDetailsForm: {
-    model: {
-      userName: string | null;
-      email: string | null;
-      photoURL: string | null;
-      password: string | null;
-    };
-    dirty: false;
-    status: string;
-    errors: object;
-  };
+  // accountDetailsForm: {
+  //   model: {
+  //     userName: string | null;
+  //     email: string | null;
+  //     photoURL: string | null;
+  //     password: string | null;
+  //   };
+  //   dirty: false;
+  //   status: string;
+  //   errors: object;
+  // };
 }
 
 @State<ProfileStateModel>({
@@ -96,17 +96,17 @@ export interface ProfileStateModel {
     //   errors: {},
     // },
     posts: null,
-    accountDetailsForm: {
-      model: {
-        userName: null,
-        email: null,
-        photoURL: null,
-        password: null,
-      },
-      dirty: false,
-      status: '',
-      errors: {},
-    },
+    // accountDetailsForm: {
+    //   model: {
+    //     userName: null,
+    //     email: null,
+    //     photoURL: null,
+    //     password: null,
+    //   },
+    //   dirty: false,
+    //   status: '',
+    //   errors: {},
+    // },
   },
 })
 @Injectable()
