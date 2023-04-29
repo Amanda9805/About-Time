@@ -18,6 +18,7 @@ import {
   SubscribeToProfile,
   UpdateAccountDetails,
   UpdateProfilePicture,
+  UpdateUsername,
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
@@ -203,6 +204,16 @@ async updateProfilePicture(ctx: StateContext<ProfileStateModel>, image: UpdatePr
   );
 }
 
+@Action(UpdateUsername)
+async updateUsername(ctx: StateContext<ProfileStateModel>, username: UpdateUsername) {
+  // Change the username in the state profile
+  return ctx.setState(
+    produce((draft) => {
+      if (draft.profile?.accountDetails)
+      draft.profile.accountDetails.userName = username.username;
+    })
+  );
+}
 
   // @Action(UpdateAccountDetails)
   // async updateAccountDetails(ctx: StateContext<ProfileStateModel>) {
