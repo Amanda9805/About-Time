@@ -8,40 +8,46 @@
 
   <ion-content>
     <form [formGroup]="createPostForm" (submit)="submitForm()" ngxsForm="createPostForm">
-      <ion-item>
-        <ion-label>Title</ion-label>
-        <ion-input type="text" formControlName="title" [(ngModel)]="post.title" required></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>Description</ion-label>
-        <ion-input type="text" formControlName="description" [(ngModel)]="post.description" name="description"
-          required></ion-input>
+      <ion-item class="item">
+        <ion-label position="stacked" class="label">Title</ion-label>
+        <ion-input type="text" formControlName="title" [(ngModel)]="post.title" required
+          placeholder="Post title goes here"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label>Content</ion-label>
-        <ion-input type="text" formControlName="content" [(ngModel)]="post.content" name="content" required></ion-input>
+      <ion-item class="item">
+        <ion-label position="stacked" class="label">Description</ion-label>
+        <ion-input type="text" formControlName="description" [(ngModel)]="post.description" name="description" required
+          placeholder="Post description goes here"></ion-input>
       </ion-item>
 
-    <ion-item>
-      <ion-label>Discipline</ion-label>
-      <ion-select name="tag" (ionChange)="handleSelect($event)">
-        <ion-select-option value="food">Food</ion-select-option>
-        <ion-select-option value="travel">Travel</ion-select-option>
-        <ion-select-option value="fitness">Sports</ion-select-option>
-        <ion-select-option value="science">Science</ion-select-option>
-        <ion-select-option value="art">Gaming</ion-select-option>
-        <ion-select-option value="fitness">News</ion-select-option>
-        <ion-select-option value="science">Music</ion-select-option>
-        <ion-select-option value="art">Art</ion-select-option>
-      </ion-select>
-    </ion-item>
-      <ion-item>
-        <ion-label></ion-label>
-        <input type="file" (change)="onFileChange($event)">
+      <ion-item class="item">
+        <ion-label position="stacked" class="label">Content</ion-label>
+        <ion-textarea placeholder="Post content goes here" [autoGrow]="true" formControlName="content"
+          [(ngModel)]="post.content" required>
+        </ion-textarea>
       </ion-item>
 
-      <ion-button class="cust_button_var1" type="submit">Submit</ion-button>
+      <ion-item class="item">
+        <ion-label position="stacked" class="label">Discipline</ion-label>
+        <ion-select name="tag" (ionChange)="handleSelect($event)" class="select-menu">
+          <ion-select-option class="select-option" value="food">Food</ion-select-option>
+          <ion-select-option value="travel">Travel</ion-select-option>
+          <ion-select-option value="fitness">Sports</ion-select-option>
+          <ion-select-option value="science">Science</ion-select-option>
+          <ion-select-option value="art">Gaming</ion-select-option>
+          <ion-select-option value="fitness">News</ion-select-option>
+          <ion-select-option value="science">Music</ion-select-option>
+          <ion-select-option value="art">Art</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item class="item">
+        <ion-label position="stacked" class="label">Image</ion-label>
+        <input type="file" (change)="onFileChange($event)" class="file-input">
+      </ion-item>
+
+      <ion-button expand="block" type="submit">Add post</ion-button>
     </form>
   </ion-content>
 </ng-container>

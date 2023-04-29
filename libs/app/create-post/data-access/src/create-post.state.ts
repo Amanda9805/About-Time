@@ -1,12 +1,9 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { CreatePost, CreatePostSuccess, CreatePostFailure } from '@mp/app/create-post/util';
-import { IUser } from '@mp/api/users/util';
-import { Discipline } from '@mp/api/feed/util';
-// import { PostService } from './post.service'; // Import the PostService from your application
+import { CreatePost } from '@mp/app/create-post/util';
+import { Discipline, Status } from '@mp/api/feed/util';
 import { CreatePostApi } from './create-post.api';
-import { NewPost as INewPost, CreatePostRequest, CreatePostResponse } from '@mp/api/createpost/util';
 import { Injectable } from '@angular/core';
-import { AuthState } from '@mp/app/auth/data-access';
+
 
 export interface CreatePostStateModel {
   post: {
@@ -58,7 +55,6 @@ export class CreatePostState {
   @Action(CreatePost)
   async createPost(ctx: StateContext<CreatePostStateModel>, action: CreatePost) {
     // const user = {"id": ctx.selectSnapshot(AuthState).user.uid};
-    console.log("boom boom boom");
 
     const { post, file } = action;
 
@@ -66,53 +62,6 @@ export class CreatePostState {
 
     console.log("FINISHING HERE", res);
 
-    return [];
-
-
-
-    const postData: INewPost = {
-      title: "title",
-      description: "description",
-      author: "author",
-      content: "content",
-      discipline: "ddd",
-      image: "image"
-    }
-
-    const sendPost: CreatePostRequest = {
-      post: postData
-    }
-
-    const response = await this.postApi.createPost(sendPost);
-
-    // return await httpsCallable<CreatePostRequest, CreatePostResponse>(this.functions, 'createPost')(request);
-
-    console.log("Post Created: ", response);
-
-    return response;
-
-    // Call the postService to create the post
-    // return this.postService.createPost(post, file)
-    //   .subscribe(
-    //     (response: any) => {
-    //       // Handle successful response from API
-    //       const postId = response.id; // Update with the actual response property name
-    //       ctx.dispatch(new CreatePostSuccess(postId));
-    //     },
-    //     (error: any) => {
-    //       // Handle error from API
-    //       ctx.dispatch(new CreatePostFailure(error.message));
-    //     }
-    //   );
+    return Status.SUCCESS;
   }
-
-  // @Action(CreatePostSuccess)
-  // createPostSuccess(ctx: StateContext<CreatePostStateModel>, action: CreatePostSuccess) {
-  //   ctx.patchState({ postId: action.postId, error: null });
-  // }
-
-  // @Action(CreatePostFailure)
-  // createPostFailure(ctx: StateContext<CreatePostStateModel>, action: CreatePostFailure) {
-  //   ctx.patchState({ postId: null, error: action.error });
-  // }
 }
