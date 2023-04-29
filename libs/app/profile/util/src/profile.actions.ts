@@ -42,3 +42,8 @@ export class UpdateProfilePicture {
   static readonly type = '[Profile] UpdateProfilePicture';
   constructor(public readonly imageURL: string | null) {}
 }
+
+export class UpdateUsername {
+  static readonly type = '[Profile] UpdateUsername';
+  constructor(public readonly username: string | null) {}
+}
