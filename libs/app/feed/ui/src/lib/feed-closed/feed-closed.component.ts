@@ -44,7 +44,7 @@ export class FeedClosedComponent{
       //const app = firestore.app;
   }
 
-  loadOnce = false;
+  alreadyAdded = false;
 
   ngOnInit() {
     const ref = collection(this.firestore, 'Posts');
@@ -53,14 +53,23 @@ export class FeedClosedComponent{
 
       doc$?.subscribe(data => {
         if (data != undefined){
-          if(this.loadOnce)
-          this.posts.list?.unshift(data);
+          this.posts.list?.forEach(element => {
+            if(element.id == data.id)
+            {
+              this.alreadyAdded = true;
+            }
+          });
+          if(!this.alreadyAdded){
+            this.posts.list?.unshift(data);
+          }
+          this.alreadyAdded = false;
+
         // console.log("dispatch time: ", data['timeWat']);
         }
       });
 
 
-    this.loadOnce = true;
+
 
   }
 
