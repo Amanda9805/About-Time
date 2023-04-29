@@ -17,6 +17,7 @@ import {
   SetProfile,
   SubscribeToProfile,
   UpdateAccountDetails,
+  UpdateProfilePicture,
 } from '@mp/app/profile/util';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
@@ -190,6 +191,18 @@ export class ProfileState {
       })
     );
   }
+  
+@Action(UpdateProfilePicture)
+async updateProfilePicture(ctx: StateContext<ProfileStateModel>, image: UpdateProfilePicture) {
+  // Change the profile picture in the state profile
+  return ctx.setState(
+    produce((draft) => {
+      if (draft.profile?.accountDetails)
+      draft.profile.accountDetails.photoURL = image.imageURL;
+    })
+  );
+}
+
 
   // @Action(UpdateAccountDetails)
   // async updateAccountDetails(ctx: StateContext<ProfileStateModel>) {

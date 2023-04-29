@@ -37,3 +37,8 @@ export class SetPosts {
   static readonly type = '[Profile] SetPosts';
   // constructor(public readonly profile: IProfile | null) {}
 }
+
+export class UpdateProfilePicture {
+  static readonly type = '[Profile] UpdateProfilePicture';
+  constructor(public readonly imageURL: string | null) {}
+}
