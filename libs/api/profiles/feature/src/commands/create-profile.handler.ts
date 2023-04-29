@@ -248,7 +248,7 @@ export class CreateProfileHandler
     const userId = request.user.id;
     const userName = animal[Math.floor(Math.random() * animal.length)];;
     const email = request.user.email;
-    const photoURL = request.user.photoURL;
+    const photoURL = "https://ionicframework.com/docs/img/demos/avatar.svg";
 
     const data: IProfile = {
       userId,
