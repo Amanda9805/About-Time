@@ -115,10 +115,12 @@ export class OtherUserState {
     const request: FetchUserPostsRequest = {
       userProfile: ctx.getState().otherUser!,
     }
+    console.log("SetPosts: Other user's profile", request.userProfile);
     
     // First call the api fetchUserPosts function
     const responseRef = await this.otherUserApi.fetchUserPosts(request);
     const response = responseRef.data;
+    console.log("Set:Posts: Other user's posts:", response.posts);
 
     // then set the posts in the state
     return ctx.setState(

@@ -21,7 +21,7 @@ export class SetRelation {
 
 export class SetPosts {
   static readonly type = '[OtherUser] SetPosts';
-  constructor(public readonly profile: IProfile | null) {}
+  // constructor(public readonly profile: IProfile | null) {}
 }
 
 export class SetOtherProfile {
