@@ -31,13 +31,13 @@
         <ion-label>Update Profile</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <ion-list>
+        <form (submit)="changeUsername()">
           <ion-item>
             <ion-label position="stacked">Username</ion-label>
-            <ion-input placeholder="Enter text"></ion-input>
+            <ion-input placeholder="Enter text" (change)="onUsernameChange($event)"></ion-input>
           </ion-item>
-          <ion-button expand="block" (click)="navigate('fp')">Update your username</ion-button>
-        </ion-list>
+          <ion-button expand="block" type="submit">Update your username</ion-button>
+        </form>
       </div>
     </ion-accordion>
     <ion-accordion value="update-picture">

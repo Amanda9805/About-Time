@@ -4,12 +4,8 @@ import { Location } from '@angular/common';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Router, NavigationExtras } from '@angular/router';
-import { ProfilesRepository } from '@mp/api/profiles/data-access';
 import { IDeleteAccountRequest, IFetchProfileRequest, PrivacyStatus, Status, IUpdatePrivacySettingsRequest } from '@mp/api/profiles/util';
-import { ProfileState } from '@mp/app/profile/data-access';
-import { getPrivacySettings } from '@mp/api/core/feature';
 import { ProfilesApi } from '@mp/app/profile/data-access';
-import { current } from 'immer';
 import { Store } from '@ngxs/store';
 import { IProfile } from '@mp/api/profiles/util';
 import { AuthState } from '@mp/app/auth/data-access';
@@ -30,6 +26,7 @@ export class SettingsPage {
   public alertButtons = ['Yes', 'No'];
   message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
   name!: string;
+  username!: string;
 
   constructor(public alertController: AlertController, private location: Location, private router: Router, private store: Store, private readonly profilesApi: ProfilesApi, private readonly otherUserApi: OtherUserApi, private api: SettingsApi) {
   }
@@ -52,36 +49,41 @@ export class SettingsPage {
   }
 
   async deleteAccount() {
-    const userID = this.store.selectSnapshot(AuthState).user.uid;
-    const request: IFetchProfileRequest = {
-      user: {
-        id: userID,
-      }
-    }
+    // const userID = this.store.selectSnapshot(AuthState).user.uid;
+    // const request: IFetchProfileRequest = {
+    //   user: {
+    //     id: userID,
+    //   }
+    // }
 
-    // First call the api fetchUserPosts function
-    const responseRef = await this.otherUserApi.fetchProfile(request);
-    const response = responseRef.data;
+    // // First call the api fetchUserPosts function
+    // const responseRef = await this.otherUserApi.fetchProfile(request);
+    // const response = responseRef.data;
 
-    const deleteAccountRequest = {
-      deleteAccount: response.profile as IProfile
-    } as IDeleteAccountRequest;
+    // const deleteAccountRequest = {
+    //   deleteAccount: response.profile as IProfile
+    // } as IDeleteAccountRequest;
 
-    const result = await this.profilesApi.deleteAccount(deleteAccountRequest);
+    // const result = await this.profilesApi.deleteAccount(deleteAccountRequest);
 
-    if (result.data.status === Status.SUCCESS) {
-      console.log("Account deletion sucessful.")
-      this.router.navigate(['/welcome']);
-    }
-    else {
-      console.log("Account deletetion failed.")
-      alert('Failed to delete account');
+    // if (result.data.status === Status.SUCCESS) {
+    //   console.log("Account deletion sucessful.")
+    //   this.router.navigate(['/welcome']);
+    // }
+    // else {
+    //   console.log("Account deletetion failed.")
+    //   alert('Failed to delete account');
 
-    }
+    // }
+    this.api.deleteAccount();
   }
 
   async changeUsername() {
-
+    if (!this.username) {
+      this.store.dispatch(new SetError("You are missing a new username"));
+    } else {
+      await this.api.updateUsername(this.username);
+    }
   }
 
   async handlePicture(event: any) {
@@ -92,12 +94,9 @@ export class SettingsPage {
 
   async updateProfilePicture() {
     if (!this.sendfile) {
-      return this.store.dispatch(new SetError("You are missing a profile picture"));
+      this.store.dispatch(new SetError("You are missing a profile picture"));
     } else {
-      const image = await this.api.uploadPicture(this.sendfile);
-      console.log(image);
-      return;
-      // return this.store.dispatch(new UpdateProfilePicture(image));
+      await this.api.uploadPicture(this.sendfile);
     }
   }
 
@@ -107,6 +106,10 @@ export class SettingsPage {
 
   onToggleChange(event: any) {
     console.log('Toggle changed', event.detail.checked);
+  }
+
+  onUsernameChange(event: any) {
+    this.username = event.target.value as string;
   }
 
   async toggleProfileVisibility() {

@@ -1,9 +1,8 @@
 import { ProfilesModule as ProfilesDataAccessModule } from '@mp/api/profiles/data-access';
-import { Module } from '@nestjs/common';
+import { Delete, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
   CreateProfileHandler,
-  DeleteAccountHandler,
   FetchProfileHandler,
   GetPrivacySettingsHandler,
   UpdateAccountDetailsHandler,
@@ -21,6 +20,8 @@ import { ProfilesSagas } from './profiles.sagas';
 import { ProfilesService } from './profiles.service';
 import { FetchUserPostsHandler } from './commands/fetch-user-posts.handler';
 import { UpdateRelationHandler } from './commands/update-relation.handler';
+import { DeleteAccountHandler } from './commands';
+
 export const CommandHandlers = [
   CreateProfileHandler,
   UpdateAccountDetailsHandler,
@@ -28,12 +29,13 @@ export const CommandHandlers = [
   FetchProfileHandler,
   FetchUserPostsHandler,
   UpdateRelationHandler,
-  DeleteAccountHandler,
   GetPrivacySettingsHandler,
   UpdatePasswordHandler,
   UpdatePrivacySettingsHandler,
-  UpdateProfileImageHandler
+  UpdateProfileImageHandler,
+  DeleteAccountHandler
 ];
+
 export const EventHandlers = [
   ProfileCreatedHandler,
   AccountDetailsUpdatedHandler,

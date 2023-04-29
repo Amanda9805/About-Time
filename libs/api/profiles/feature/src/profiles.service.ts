@@ -1,16 +1,13 @@
 import {
-
   DeleteAccountCommand,
   GetPrivacySettingsCommand,
   IDeleteAccountRequest,
   IDeleteAccountResponse,
   IGetPrivacySettingsRequest,
   IGetPrivacySettingsResponse,
-
   CheckRelationshipCommand,
   ICheckRelationshipResponse,
   ICheckRelationshipRequest,
-
   IUpdateAccountDetailsRequest,
   IUpdateAccountDetailsResponse,
   IUpdateAddressDetailsRequest,
@@ -29,10 +26,8 @@ import {
   UpdateAddressDetailsCommand,
   UpdateContactDetailsCommand,
   UpdateOccupationDetailsCommand,
-
   UpdatePasswordCommand,
   UpdatePrivacySettingsCommand,
-
   UpdatePersonalDetailsCommand,
   FetchUserPostsCommand,
   IFetchUserPostsResponse,

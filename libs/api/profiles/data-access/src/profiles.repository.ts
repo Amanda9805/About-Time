@@ -102,27 +102,50 @@ export class ProfilesRepository {
 
   async deleteAccount(profile: IProfile) {
     const userId = profile.userId;
-    const ref = await admin.firestore().collection("profiles").where("userId", "==", userId).get();
+    const profileDB = await admin.firestore().collection("profiles").where("userId", "==", userId).get();
+    const userDB = await admin.firestore().collection("users").where("id", "==", userId).get();
+    const posts = await admin.firestore().collection("Posts").where("userId", "==", userId).get();
 
-    if (ref) {
-      const delRef = ref.docs[0].ref.delete();
+
+    const batch = admin.firestore().batch();
+
+    profileDB.forEach(doc => {
+      batch.delete(doc?.ref);
+    })
+
+    userDB.forEach(doc => {
+      batch.delete(doc?.ref);
+    })
+
+    posts.forEach(doc => {
+      batch.delete(doc?.ref);
+    })
+
+    await batch.commit();
+
+    admin.auth().deleteUser(userId);
+
+    return Status.SUCCESS;
+
+    // if (ref) {
+    //   const delRef = ref.docs[0].ref.delete();
 
 
-      const postsRef = await admin.firestore().collection("profiles")
-        .where("userId", "==", userId).get();
+    //   const postsRef = await admin.firestore().collection("profiles")
+    //     .where("userId", "==", userId).get();
 
-      if (postsRef) {
-        postsRef.forEach((post) => {
-          post.ref.delete()
-        });
-        return Status.SUCCESS;
-      } else {
-        return Status.FAILURE;
-      }
+    //   if (postsRef) {
+    //     postsRef.forEach((post) => {
+    //       post.ref.delete()
+    //     });
+    //     return Status.SUCCESS;
+    //   } else {
+    //     return Status.FAILURE;
+    //   }
 
-    } else {
-      return Status.FAILURE;
-    }
+    // } else {
+    //   return Status.FAILURE;
+    // }
   }
 
   async checkRelationship(relationship: IRelationship) {
