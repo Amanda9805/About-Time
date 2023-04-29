@@ -133,6 +133,11 @@ describe('Settins Page Test', () => {
         }); */ 
     });
 
+    // Version
+    it('Contains Version Tab', () => {
+        cy.get('ion-label').contains('Version').should('be.visible');
+    });
+
 
     // Delete Account Settings
     describe('Delete Account Setting Test', () => {
