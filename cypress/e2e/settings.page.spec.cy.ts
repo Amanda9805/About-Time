@@ -107,9 +107,11 @@ describe('Settins Page Test', () => {
             cy.url().should('include', '/tos')
         });
 
-        /*it('Navigates back to Settings Page', () => {
-            will do this later on
-        });*/
+        it('Navigates back to Settings Page', () => {
+            cy.get('ion-back-button').should('be.visible');
+            cy.get('ion-back-button').click();
+            cy.url().should('include', '/settings');
+        });
     });
 
     // Privacy Policy
