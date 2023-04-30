@@ -32,10 +32,10 @@ export class ProfilePage {
     private: true
   }
 
-  hasPosts: boolean = false;
-  hours: number = 0;
-  minutes: number = 0;
-  seconds: number = 0;
+  hasPosts = false;
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
   posts: any[] = [
     {
       caption: 'I know nothing',
@@ -138,6 +138,7 @@ export class ProfilePage {
     this.store.dispatch(new SetPosts());
     // Get the user's posts from the state
     this.store.select(ProfileState.posts).subscribe((posts) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       if (posts?.list?.length! > 0) {
         this.hasPosts = true;
       }

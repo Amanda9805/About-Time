@@ -28,13 +28,14 @@ export class CreatePostApi {
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on('state_changed',
             (snapshot) => {
+                console.log("update");
             },
             (error) => {
-                // Handle unsuccessful uploads
+                console.log(error);
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                    var newPost: NewPost = { ...post };
+                    let newPost: NewPost = { ...post };
                     newPost.author = getAuth().currentUser?.uid as string;
                     newPost.image = downloadURL as string;
                     const CPRequest: CreatePostRequest = { post: newPost };

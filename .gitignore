@@ -59,3 +59,4 @@ pubsub-debug.log
 .env.prod
 .vscode/*
 libs/app/core/feature/src/core.routing.ts
+hortlog -s

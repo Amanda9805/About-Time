@@ -1,5 +1,4 @@
-// import { RelationEnum } from "../enums/relations.enum";
-import { RelationEnum } from "@mp/api/profiles/util";
+import { RelationEnum } from "../enums/relations.enum";
 
 export interface IRelation {
   exists?: boolean | null | undefined;
