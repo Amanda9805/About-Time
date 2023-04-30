@@ -52,7 +52,7 @@
           <ion-text>
               <h1>{{user.name}}</h1>
           </ion-text>
-      
+
       <!-- Title -->
           <ion-text >
               <h5 class="status-text">{{user.title}}</h5>
@@ -84,7 +84,7 @@
           <!-- <ion-segment-button value="posts">Posts</ion-segment-button>
       </ion-segment> -->
 
-     
+
 
   <!-- <ion-content > -->
       <!-- METERS -->
@@ -96,7 +96,7 @@
           <!-- <h3>Meters works!</h3> -->
           <!-- <mp-meter *ngFor="let meter of meters" [meter]="meter"></mp-meter> -->
       <!-- </ion-content> -->
-      
+
       <!-- BADGES -->
       <!-- <ion-content *ngIf="toolbarSegment.value === 'badges'"> -->
           <!-- ngFor to display all disciplines where the user has badges -->
@@ -110,7 +110,7 @@
               </ion-row>
           </ion-grid> -->
       <!-- </ion-content> -->
-      
+
       <!-- POSTS -->
       <ion-content>
           <ion-text *ngIf="!hasPosts">
@@ -120,7 +120,7 @@
 
           <ion-grid *ngIf="hasPosts">
               <ion-row>
-                  <ion-col *ngFor="let post of posts" size="4">
+                  <ion-col *ngFor="let post of posts.list" size="4">
                       <mp-post [post]="post"></mp-post>
                   </ion-col>
               </ion-row>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component } from '@angular/core';
-import { IProfile } from '@mp/api/profiles/util';
+import { IPostList, IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -32,32 +32,15 @@ export class ProfilePage {
     private: true
   }
 
-  hasPosts = false;
-  hours = 0;
-  minutes = 0;
-  seconds = 0;
-  posts: any[] = [
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-  ];
+  hasPosts: boolean = false;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
+  posts: IPostList = {
+    postsFound: false,
+    list: [],
+
+  };
 
   // badges: IBadge[] = [
   //   {
@@ -116,7 +99,7 @@ export class ProfilePage {
       this.user.pfp = profile?.accountDetails?.photoURL;
       console.log("Profile picture URL: ", this.user.pfp);
       this.user.title = profile?.accountDetails?.title;
-      this.user.time = profile?.time;
+      this.user.time = profile?.time?.toFixed(0);
 
       // Determine the title/status
       if (profile?.time === 0) {
@@ -142,59 +125,13 @@ export class ProfilePage {
       if (posts && posts.list && posts?.list?.length > 0) {
         this.hasPosts = true;
       }
-      this.posts = posts?.list?.map((post) => { // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
-        return { caption: post.title, imagePath: post.image }
-      })!; // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
-    })
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+      this.posts = posts!;
+      // list?.map((post) => {
+      //   return {caption: post.title, imagePath: post.image}
+      // })!;
+    });
   }
-
-  // ngAfterViewInit() {
-  //   console.log('Profile page loaded');
-
-  //   this.store.dispatch(new SetProfile());
-  //   console.log('Profile = set!');
-
-  //   // Get the profile from the state
-  //   this.store.select(ProfileState.profile).subscribe((profile) => {
-  //     // const profile = profileObj?.model;
-
-  //     // Get the info for the user
-  //     this.user.name = profile?.accountDetails?.userName;
-  //     this.user.pfp = profile?.accountDetails?.photoURL;
-  //     this.user.title = profile?.accountDetails?.title;
-  //     this.user.time = profile?.time;
-
-  //     // Determine the title/status
-  //     if (profile?.time === 0)
-  //     {
-  //       this.user.title = 'Dead';
-  //     }
-  //     else if (this.user.time < 24*3600) 
-  //     {
-  //       this.user.title = 'Normal';
-  //     }
-  //     else
-  //     {
-  //       this.user.title = 'Deus';
-  //     }
-  //     // this.badges = profile?.accountDetails?.badgesReceived!;
-  //     // this.meters = profile?.accountDetails?.meters!;
-
-  //     this.setTime();
-  //   })
-
-
-  //   this.store.dispatch(new SetPosts());
-  //   // Get the user's posts from the state
-  //   this.store.select(ProfileState.posts).subscribe((posts) => {
-  //     if (posts?.list?.length! > 0) {
-  //       this.hasPosts = true;
-  //     }
-  //     this.posts = posts?.list?.map((post) => {
-  //       return {caption: post.title, imagePath: post.image}
-  //     })!;
-  //   })
-  // }
 
   setTime() {
     this.hours = Math.floor(this.user.time / 3600);

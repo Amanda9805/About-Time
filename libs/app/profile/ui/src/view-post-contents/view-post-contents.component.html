@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Viewing your post</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="wrapper">
+    <ion-grid class="grid-container">
+      <ion-row class="post-content-header">
+        <ion-card>
+          <ion-img src="{{post.image}}" alt="Post specific image"></ion-img>
+          <ion-row class="title-container">
+            <h1>{{post.title}}</h1>
+          </ion-row>
+        </ion-card>
+      </ion-row>
+      <ion-row class="post-content-row-container">
+        <ion-card class="post-content-container">
+          <ion-card-content>
+            <p>{{post.description}}</p>
+          </ion-card-content>
+          <ion-card-content>
+            <p>{{post.content}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

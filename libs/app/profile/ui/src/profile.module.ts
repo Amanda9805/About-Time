@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { AccountDetailsModule } from './account-details';
 import { ProfileStatusModule } from './profile-status';
+import { ViewPostContentsModule } from './view-post-contents';
 
 @NgModule({
   imports: [
@@ -10,10 +11,12 @@ import { ProfileStatusModule } from './profile-status';
     IonicModule,
     AccountDetailsModule,
     ProfileStatusModule,
+    ViewPostContentsModule
   ],
   exports: [
     AccountDetailsModule,
     ProfileStatusModule,
+    ViewPostContentsModule
   ],
 })
 export class ProfileModule { }
