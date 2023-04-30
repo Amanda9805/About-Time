@@ -7,6 +7,7 @@ import { NewPost } from '@mp/api/createpost/util';
 import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SetError } from '@mp/app/errors/util';
+import { SetSuccess } from '@mp/app/success/util';
 
 @Component({
   selector: 'mp-create-post',
@@ -83,6 +84,7 @@ export class CreatePostPage {
 
     if (this.validateForm()) {
       try {
+        this.store.dispatch(new SetSuccess("Your post is being created!"));
         this.store.dispatch(new CreatePost(this.post, this.sendfile));
         // this.store.dispatch(new SetSuccess("Your post has been created successfully."));
         // this.location.back();
