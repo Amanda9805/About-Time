@@ -7,6 +7,11 @@ https://drive.google.com/drive/folders/1vnTUvcu5YnYYerE79n9D17g6c74L0nJa?usp=sha
 ### Github Organisation
 https://github.com/COS301-MP-AboutTime
 
+### Branching Strategy
+main - Production code
+dev - Current development code
+-> <feature> branches are branched off of dev to develop a specific feature
+
 ### Group Members
 * Ettiene van Zyl
     * Primary Role: Project Manager
