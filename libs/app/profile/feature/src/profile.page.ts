@@ -142,9 +142,9 @@ export class ProfilePage {
       if (posts && posts.list && posts?.list?.length > 0) {
         this.hasPosts = true;
       }
-      this.posts = posts?.list?.map((post) => {
+      this.posts = posts?.list?.map((post) => { // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
         return { caption: post.title, imagePath: post.image }
-      })!;
+      })!; // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
     })
   }
 

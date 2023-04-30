@@ -100,12 +100,12 @@ export class OtherUserPage {
     this.store.dispatch(new SetPosts());
     // Get the user's posts from the state
     this.store.select(OtherUserState.posts).subscribe((posts) => {
-      if (posts?.list?.length! > 0) {
+      if (posts && posts.list && posts?.list?.length > 0) {
         this.hasPosts = true;
       }
-      this.posts = posts?.list?.map((post) => {
+      this.posts = posts?.list?.map((post) => { // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
         return { caption: post.title, imagePath: post.image }
-      })!;
+      })!; // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
     })
   }
 
@@ -127,7 +127,7 @@ export class OtherUserPage {
       this.user.name = profile?.accountDetails?.userName;
       this.user.pfp = profile?.accountDetails?.photoURL;
       this.user.title = profile?.accountDetails?.title;
-      this.user.time = profile?.time!;
+      this.user.time = profile?.time;
 
       // Determine the title/status
       if (profile?.time === 0) {
@@ -153,12 +153,12 @@ export class OtherUserPage {
 
     // Get the user's posts from the state
     this.store.select(OtherUserState.posts).subscribe((posts) => {
-      if (posts?.list?.length! > 0) {
+      if (posts && posts.list && posts?.list?.length > 0) {
         this.hasPosts = true;
       }
-      this.posts = posts?.list?.map((post) => {
+      this.posts = posts?.list?.map((post) => { // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
         return { caption: post.title, imagePath: post.image }
-      })!;
+      })!; // eslint-disable-line @typescript-eslint/no-non-null-asserted-optional-chain
     })
   }
 }
