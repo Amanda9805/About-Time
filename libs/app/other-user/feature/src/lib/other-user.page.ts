@@ -70,10 +70,10 @@ export class OtherUserPage {
     // Get the profile from the state
     this.store.select(OtherUserState.profile).subscribe((profile) => {
       // Get the info for the user
-      this.user.name = profile?.accountDetails?.userName!;
-      this.user.pfp = profile?.accountDetails?.photoURL!;
-      this.user.title = profile?.accountDetails?.title!;
-      this.user.time = profile?.time!;
+      this.user.name = profile?.accountDetails?.userName;
+      this.user.pfp = profile?.accountDetails?.photoURL;
+      this.user.title = profile?.accountDetails?.title;
+      this.user.time = profile?.time;
 
       // Determine the title/status
       if (profile?.time === 0) {
@@ -124,9 +124,9 @@ export class OtherUserPage {
     // Get the profile from the state
     this.store.select(OtherUserState.profile).subscribe((profile) => {
       // Get the info for the user
-      this.user.name = profile?.accountDetails?.userName!;
-      this.user.pfp = profile?.accountDetails?.photoURL!;
-      this.user.title = profile?.accountDetails?.title!;
+      this.user.name = profile?.accountDetails?.userName;
+      this.user.pfp = profile?.accountDetails?.photoURL;
+      this.user.title = profile?.accountDetails?.title;
       this.user.time = profile?.time!;
 
       // Determine the title/status
