@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ViewPostContentsComponent } from '../../../../../profile/ui/src/view-post-contents/view-post-contents.component';
+// import { ViewPostContentsComponent } from '../../../../../profile/ui/src/view-post-contents/view-post-contents.component';
+import { ViewPostContentsComponent } from '@mp/app/profile/ui';
 import { Discipline, Post } from '@mp/api/profiles/util';
 
 @Component({
@@ -21,12 +22,12 @@ export class PostComponent {
     image: '',
   };
 
-  constructor(private modalController: ModalController) {}
+  constructor(private modalController: ModalController) { }
 
   async presentModal(post: Post) {
     const modal = await this.modalController.create({
       component: ViewPostContentsComponent,
-      componentProps: {post: post}
+      componentProps: { post: post }
     });
     return await modal.present();
   }
