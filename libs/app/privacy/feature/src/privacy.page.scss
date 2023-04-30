@@ -1,0 +1,34 @@
+ion-toolbar {
+    --background: black;
+    --color: white;
+    border-bottom: #0E8C00;
+    border-bottom-width: thin;
+    border-bottom-style:solid;
+    border-radius: 10px;
+}
+
+ion-content {
+    --ion-background-color: black;
+}
+
+ion-card-title {
+    --color: white;
+}
+
+ion-card-content {
+    color: #edede9;
+}
+
+ion-card-content a {
+    color: #0E8C00;
+}
+
+ion-card {
+    --background: black;
+    border-bottom: 1px solid #333533;
+}
+
+ion-back-button{
+    color: white !important;
+    --color-hover: green;
+}

@@ -1,43 +1,48 @@
 import { ProfilesModule as ProfilesDataAccessModule } from '@mp/api/profiles/data-access';
-import { Module } from '@nestjs/common';
+import { Delete, Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import {
-    CreateProfileHandler,
-    UpdateAccountDetailsHandler,
-    UpdateAddressDetailsHandler,
-    UpdateContactDetailsHandler,
-    UpdateOccupationDetailsHandler,
-    UpdatePersonalDetailsHandler,
-    UpdateProfileStatusHandler
+  CreateProfileHandler,
+  FetchProfileHandler,
+  GetPrivacySettingsHandler,
+  UpdateAccountDetailsHandler,
+  UpdatePasswordHandler,
+  UpdatePrivacySettingsHandler,
+  UpdateProfileImageHandler,
+  UpdateProfileStatusHandler,
 } from './commands';
 import {
-    AccountDetailsUpdatedHandler,
-    AddressDetailsUpdatedHandler,
-    ContactDetailsUpdatedHandler,
-    OccupationDetailsUpdatedHandler,
-    PersonalDetailsUpdatedHandler,
-    ProfileCreatedHandler,
-    ProfileStatusUpdatedHandler
+  AccountDetailsUpdatedHandler,
+  ProfileCreatedHandler,
+  ProfileStatusUpdatedHandler
 } from './events';
 import { ProfilesSagas } from './profiles.sagas';
 import { ProfilesService } from './profiles.service';
+import { FetchUserPostsHandler } from './commands/fetch-user-posts.handler';
+import { UpdateRelationHandler } from './commands/update-relation.handler';
+import { DeleteAccountHandler } from './commands';
+
 export const CommandHandlers = [
   CreateProfileHandler,
-  UpdateContactDetailsHandler,
-  UpdateAddressDetailsHandler,
-  UpdatePersonalDetailsHandler,
-  UpdateOccupationDetailsHandler,
   UpdateAccountDetailsHandler,
   UpdateProfileStatusHandler,
+  FetchProfileHandler,
+  FetchUserPostsHandler,
+  UpdateRelationHandler,
+  GetPrivacySettingsHandler,
+  UpdatePasswordHandler,
+  UpdatePrivacySettingsHandler,
+  UpdateProfileImageHandler,
+  DeleteAccountHandler
 ];
+
 export const EventHandlers = [
   ProfileCreatedHandler,
-  ContactDetailsUpdatedHandler,
-  AddressDetailsUpdatedHandler,
-  PersonalDetailsUpdatedHandler,
-  OccupationDetailsUpdatedHandler,
   AccountDetailsUpdatedHandler,
   ProfileStatusUpdatedHandler,
+  FetchProfileHandler,
+  FetchUserPostsHandler,
+  UpdateRelationHandler
 ];
 
 @Module({
@@ -50,4 +55,4 @@ export const EventHandlers = [
   ],
   exports: [ProfilesService],
 })
-export class ProfilesModule {}
+export class ProfilesModule { }

@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { FetchPostsRequest, FetchPostsResponse } from '@mp/api/feed/util';
 import {
+  FetchUserPostsRequest,
+  IFetchProfileRequest,
+    IFetchProfileResponse,
+    IFetchUserPostsResponse,
     IProfile,
     IUpdateAccountDetailsRequest,
     IUpdateAccountDetailsResponse,
@@ -12,8 +17,19 @@ import {
     IUpdateOccupationDetailsRequest,
     IUpdateOccupationDetailsResponse,
     IUpdatePersonalDetailsRequest,
-    IUpdatePersonalDetailsResponse
+    IUpdatePersonalDetailsResponse,
+    ProfileImageUpdateRequest,
+    ProfileImageUpdateResponse,
+    IDeleteAccountRequest,
+    IDeleteAccountResponse,
+    IUpdatePrivacySettingsRequest,
+    IUpdatePrivacySettingsResponse
+
 } from '@mp/api/profiles/util';
+
+//for friends api call
+import { GetFriendsRequest, GetFriendsResponse } from '@mp/api/friends/util';
+import { RemoveFriendRequest, RemoveFriendResponse } from '@mp/api/friends/util';
 
 @Injectable()
 export class ProfilesApi {
@@ -44,6 +60,37 @@ export class ProfilesApi {
       'updateAccountDetails'
     )(request);
   }
+
+  async fetchPosts(request: FetchPostsRequest) {
+    return await httpsCallable<
+      FetchPostsRequest,
+      FetchPostsResponse
+    >(
+      this.functions, 
+      'fetchPosts'
+    )(request);
+  }
+
+  async getFriends(request: GetFriendsRequest) {
+    return await httpsCallable<
+      GetFriendsRequest,
+      GetFriendsResponse
+    >(
+      this.functions,
+      'getFriends'
+    )(request);
+  }
+
+  async removeFriend(request: RemoveFriendRequest) {
+    return await httpsCallable<
+      RemoveFriendRequest,
+      RemoveFriendResponse
+    >(
+      this.functions,
+      'removeFriend'
+    )(request);
+  }
+
 
   async updateContactDetails(request: IUpdateContactDetailsRequest) {
     return await httpsCallable<
@@ -84,4 +131,62 @@ export class ProfilesApi {
       'updateOccupationDetails'
     )(request);
   }
+
+  async fetchUserPosts(request: FetchUserPostsRequest) {
+    return await httpsCallable<
+      FetchUserPostsRequest,
+      IFetchUserPostsResponse
+    >(
+      this.functions, 
+      'fetchUserPosts'
+    )(request);
+  }
+
+  async fetchProfile(request: IFetchProfileRequest) {
+    return await httpsCallable<
+      IFetchProfileRequest,
+      IFetchProfileResponse
+    >(
+      this.functions, 
+      'fetchProfile'
+    )(request);
+  }
+
+
+  async updateProfileImage(request: ProfileImageUpdateRequest) {
+    return await httpsCallable<
+      ProfileImageUpdateRequest,
+      ProfileImageUpdateResponse
+    >(
+      this.functions, 
+      'updateProfileImage'
+    )(request);
+  }
+
+  async updatePrivacySetting(request: IUpdatePrivacySettingsRequest) {
+    return await httpsCallable<
+      IUpdatePrivacySettingsRequest,
+      IUpdatePrivacySettingsResponse
+    >(
+      this.functions, 
+      'updatePrivacySettings'
+    )(request);
+  }
+
+  async deleteAccount(request: IDeleteAccountRequest) {
+    return await httpsCallable<
+      IDeleteAccountRequest,
+      IDeleteAccountResponse
+    >(
+      this.functions, 
+      'deleteAccount'
+    )(request);
+  }
+
+
+
+
+
+
+
 }

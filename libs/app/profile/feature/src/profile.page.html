@@ -1,16 +1,10 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title class="ion-align-items-center">
       Profile
       <ng-container *ngIf="(profile$ | async) as profile;">
-        <ion-icon
-          *ngIf="profile.status == 'Incomplete'"
-          color="danger"
-          name="alert-circle-outline"></ion-icon>
-        <ion-icon
-          *ngIf="profile.status == 'Complete'"
-          color="success"
-          name="checkmark-circle-outline"></ion-icon>
+        <ion-icon *ngIf="profile.status == 'Incomplete'" color="danger" name="alert-circle-outline"></ion-icon>
+        <ion-icon *ngIf="profile.status == 'Complete'" color="success" name="checkmark-circle-outline"></ion-icon>
       </ng-container>
     </ion-title>
   </ion-toolbar>
@@ -21,36 +15,119 @@
       <ion-title size="large" class="ion-align-items-center">
         Profile
         <ng-container *ngIf="(profile$ | async) as profile;">
-          <ion-icon
-            *ngIf="profile.status == 'Incomplete'"
-            color="danger"
-            name="alert-circle-outline"></ion-icon>
-          <ion-icon
-            *ngIf="profile.status == 'Complete'"
-            color="success"
-            name="checkmark-circle-outline"></ion-icon>
+          <ion-icon *ngIf="profile.status == 'Incomplete'" color="danger" name="alert-circle-outline"></ion-icon>
+          <ion-icon *ngIf="profile.status == 'Complete'" color="success" name="checkmark-circle-outline"></ion-icon>
         </ng-container>
       </ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  <ng-container *ngIf="(profile$ | async) as profile; else noProfile">
-    <ms-profile-account-details-component></ms-profile-account-details-component>
-    <ms-profile-personal-details-component></ms-profile-personal-details-component>
+  <!-- <ng-container *ngIf="(profile$ | async) as profile; else noProfile">
+    <ms-profile-account-details-component></ms-profile-account-details-component> -->
+    <!-- <ms-profile-personal-details-component></ms-profile-personal-details-component>
     <ms-profile-contact-details-component></ms-profile-contact-details-component>
     <ms-profile-address-details-component></ms-profile-address-details-component>
-    <ms-profile-occupation-details-component></ms-profile-occupation-details-component>
-  </ng-container>
+    <ms-profile-occupation-details-component></ms-profile-occupation-details-component> -->
+  <!-- </ng-container>
   <ng-template #noProfile>
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ngx-skeleton-loader
-            count="5"
-            [theme]="{height: '150px'}"
-            appearance="line"></ngx-skeleton-loader>
+          <ngx-skeleton-loader count="5" [theme]="{height: '150px'}" appearance="line"></ngx-skeleton-loader>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ng-template>
+</ion-content> -->
+
+ <!-- Title Background == Style background of header with conditional css classes -->
+ <!-- [ngClass]="{'deus': deus, 'normal': !deus && !dead, 'dead': dead}" -->
+ <ion-header [translucent]="false" [ngClass]="user.title | lowercase">
+  <div class="header-content">
+
+      <!-- Profile pic & Name -->
+          <ion-avatar>
+              <img alt="User's profile picture" [src]=user.pfp />
+          </ion-avatar>
+          <ion-text>
+              <h1>{{user.name}}</h1>
+          </ion-text>
+
+      <!-- Title -->
+          <ion-text >
+              <h5 class="status-text">{{user.title}}</h5>
+          </ion-text>
+
+      <!-- Time left -->
+          <ion-text>
+              <h2>{{hours}}:{{minutes}}:{{seconds}}</h2>
+          </ion-text>
+      <!-- Message Button --><!-- Friend Button - Dropdown? / perhaps ion-action-sheet -->
+      <ion-list>
+          <ion-button shape="small" [routerLink] = "['/home/settings']">Settings</ion-button>
+          <!-- <ion-button shape="small">Friend</ion-button> -->
+      </ion-list>
+  </div>
+</ion-header>
+
+<ion-toolbar class="posts-toolbar">
+  <ion-title>
+    Posts
+  </ion-title>
+</ion-toolbar>
+<ion-content class="content-section">
+  <!-- <ion-toolbar> -->
+      <!-- Meters --><!-- Badges --><!-- Posts -->
+      <!-- <ion-segment value="posts" #toolbarSegment> -->
+          <!-- <ion-segment-button value="meters">Meters</ion-segment-button> -->
+          <!-- <ion-segment-button value="badges">Badges</ion-segment-button> -->
+          <!-- <ion-segment-button value="posts">Posts</ion-segment-button>
+      </ion-segment> -->
+
+
+
+  <!-- <ion-content > -->
+      <!-- METERS -->
+      <!-- <ion-content *ngIf="toolbarSegment.value === 'meters'"> -->
+          <!-- ngFor to display all the meters -->
+          <!-- Meter title -->
+          <!-- Progress bar -->
+          <!-- Meter value -->
+          <!-- <h3>Meters works!</h3> -->
+          <!-- <mp-meter *ngFor="let meter of meters" [meter]="meter"></mp-meter> -->
+      <!-- </ion-content> -->
+
+      <!-- BADGES -->
+      <!-- <ion-content *ngIf="toolbarSegment.value === 'badges'"> -->
+          <!-- ngFor to display all disciplines where the user has badges -->
+          <!-- within discipline ngFor to display badge icons -->
+          <!-- <h3>Badges works!</h3> -->
+          <!-- <ion-grid>
+              <ion-row>
+                  <ion-col  *ngFor="let badge of badges" size="4" >
+                      <mp-badge [badge]="badge"></mp-badge>
+                  </ion-col>
+              </ion-row>
+          </ion-grid> -->
+      <!-- </ion-content> -->
+
+      <!-- POSTS -->
+      <ion-content>
+          <ion-text *ngIf="!hasPosts">
+            <h3>No posts yet :O</h3>
+            <p>Go have fun...create some</p>
+          </ion-text>
+
+          <ion-grid *ngIf="hasPosts">
+              <ion-row>
+                  <ion-col *ngFor="let post of posts.list" size="4">
+                      <mp-post [post]="post"></mp-post>
+                  </ion-col>
+              </ion-row>
+          </ion-grid>
+      </ion-content>
+  <!-- </ion-content> -->
 </ion-content>
+
+
+<!-- No need to put footer = already on main component -->

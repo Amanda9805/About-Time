@@ -1,0 +1,90 @@
+$backgroundColor: #242423;
+$vibrantGreen: #0E8C00;
+
+.cust_button_var1 {
+  --background: #0E8C00;
+  --color: white;
+  border: none;
+}
+
+p {
+  color: red;
+}
+
+ion-toolbar {
+  --background: black;
+  color: white;
+}
+
+ion-content {
+  --ion-background-color: black;
+
+  ion-list {
+    ion-item {
+      ion-label {
+        color: $vibrantGreen;
+
+        &.textColor {
+          color: $vibrantGreen;
+        }
+
+        &.italic {
+          font-style: italic;
+        }
+
+        &.bold {
+          font-weight: bold;
+        }
+
+        &.underline {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+ion-input,
+input {
+  color: white;
+}
+
+ion-accordion {
+  --background: #242423;
+  color: white;
+}
+
+ion-accordion.accordion-expanding ion-item[slot="header"],
+ion-accordion.accordion-expanded ion-item[slot="header"] {
+  --background: #242423;
+  --color: white;
+}
+
+.center-container {
+  height: 100%;
+  display: flex;
+  --ion-background-color: $backgroundColor;
+}
+
+.spaced-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ion-button {
+  --background: black;
+  --color: white;
+  border: #0E8C00 solid 2px;
+  text-transform: none;
+}
+
+.smalltext {
+  color: white;
+}

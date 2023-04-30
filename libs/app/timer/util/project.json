@@ -1,0 +1,34 @@
+{
+  "name": "app-timer-util",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/app/timer/util/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/libs/app/timer/util",
+        "main": "libs/app/timer/util/src/index.ts",
+        "tsConfig": "libs/app/timer/util/tsconfig.lib.json",
+        "assets": [
+          "libs/app/timer/util/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/app/timer/util/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

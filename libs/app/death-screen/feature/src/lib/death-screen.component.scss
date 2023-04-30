@@ -1,0 +1,45 @@
+$backgroundColor: #242423;
+$vibrantGreen: #0E8C00;
+
+div{
+  height: 100vh;
+  width: 100vw;
+  background-color: $backgroundColor;
+  display: grid;
+  place-items: center;
+}
+
+h1{
+  color: $vibrantGreen;
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+// ion-button {
+//   &.custom-button {
+//     --background: $vibrantGreen;
+//     --color: white;
+//   }
+// }
+
+// ion-action-sheet {
+//   &.custom-action-sheet {
+//     //--ion-background-color: #242423;
+
+//     ion-toolbar {
+//       &.custom-header {
+//         font-size: 1.5rem;
+//         color: $vibrantGreen;
+//         font-weight: bold;
+//         text-align: center;
+//       }
+//     }
+//     ion-button {
+//       &.custom-button {
+//         --background: $vibrantGreen;
+//         --color: white;
+//       }
+//     }
+//   }
+// }

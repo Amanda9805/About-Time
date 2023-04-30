@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ContinueWithFacebook, ContinueWithGoogle } from '@mp/app/auth/util';
 import { Register } from '@mp/app/register/util';
 import {
-    ActionsExecuting,
-    actionsExecuting
+  ActionsExecuting,
+  actionsExecuting
 } from '@ngxs-labs/actions-executing';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -57,7 +58,7 @@ export class RegisterPage {
   constructor(
     private readonly fb: FormBuilder,
     private readonly store: Store
-  ) {}
+  ) { }
 
   register() {
     if (this.registerForm.valid) {
@@ -67,5 +68,13 @@ export class RegisterPage {
 
   toggleShowPassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  continueWithGoogle() {
+    this.store.dispatch(new ContinueWithGoogle());
+  }
+
+  continueWithFacebook() {
+    this.store.dispatch(new ContinueWithFacebook());
   }
 }

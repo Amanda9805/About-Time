@@ -1,0 +1,166 @@
+#timer-container{
+  display: grid;
+  place-items: center;
+  height: fit-content;
+  width: 100%;
+}
+
+ion-col {
+  display: flex;
+  place-items: center;
+  height: 100%;
+}
+
+ion-card {
+  padding: 0px;
+  margin: 0px;
+  // --background: #1D2A1C;
+  background: transparent;
+}
+
+ion-card-content {
+  overflow: hidden;
+}
+
+ion-row {
+  height: 100%;
+}
+
+#post-preview-content-container {
+  height: 100%;
+  // background-color: #1D2A1C;
+  width: 100%;
+}
+
+ion-card-title {
+  font-size: small;
+  --color: white;
+}
+
+ion-card-subtitle {
+  padding-top: 10px;
+  font-size: small;
+  --color: white;
+}
+
+// #post-preview-container {
+//   height: 250px;
+//   margin-top: 10px;
+//   border: #0E8C00 2px solid;
+// }
+
+.post-preview {
+  border: #0E8C00 2px solid;
+  margin: 10px;
+}
+
+.post-preview img {
+  filter: blur(1.5rem);
+}
+
+ion-grid {
+  height: 100%;
+}
+
+#filters-container {
+  height: 50px;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  overflow-x: scroll;
+  white-space: nowrap;
+  background-color: black;
+
+  border-top-color: #0E8C00;
+  border-top-width: 1px;
+  border-top-style: solid;
+}
+
+.filter {
+  min-width: fit-content;
+  position: relative;
+  white-space: nowrap;
+}
+
+ion-chip {
+  --background: black;
+  background: black;
+  --color: white;
+  border-color: #0E8C00;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Travel
+{
+  --background: black;
+  background: black;
+  border-color: #6405e0;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#News
+{
+  --background: black;
+  background: black;
+  border-color: silver;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Science
+{
+  --background: black;
+  background: black;
+  border-color: #038a8f;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Art
+{
+  --background: black;
+  background: black;
+  border-color: #a12797;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Gaming
+{
+  --background: black;
+  background: black;
+  border-color: red;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Food
+{
+  --background: black;
+  background: black;
+  border-color: #ff9100;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Music
+{
+  --background: black;
+  background: black;
+  border-color: #0039b3;
+  border-width: 1px;
+  border-style: solid;
+}
+
+#Sport
+{
+  --background: black;
+  background: black;
+  border-color: #c7c409;
+  border-width: 1px;
+  border-style: solid;
+}

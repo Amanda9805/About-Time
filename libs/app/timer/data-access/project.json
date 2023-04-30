@@ -1,0 +1,34 @@
+{
+  "name": "app-timer-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/app/timer/data-access/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/libs/app/timer/data-access",
+        "main": "libs/app/timer/data-access/src/index.ts",
+        "tsConfig": "libs/app/timer/data-access/tsconfig.lib.json",
+        "assets": [
+          "libs/app/timer/data-access/*.md"
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/app/timer/data-access/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

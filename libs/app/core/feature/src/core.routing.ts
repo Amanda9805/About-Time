@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import {
-    AuthGuard,
-    redirectLoggedInTo,
-    redirectUnauthorizedTo
+  AuthGuard,
+  redirectLoggedInTo,
+  redirectUnauthorizedTo
 } from '@angular/fire/auth-guard';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -11,23 +11,18 @@ const redirectLoggedIn = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'welcome',
     pathMatch: 'full',
     canActivate: [AuthGuard],
     data: { authGuardPipe: redirectLoggedIn },
     loadChildren: () =>
       import('@mp/app/welcome/feature').then((m) => m.WelcomeModule),
   },
-  // {
-  //   path: 'response',
-  //   loadChildren: () =>
-  //     import('./response/response.module').then((m) => m.ResponsePageModule),
-  // },
-  // {
-  //   path: 'responses',
-  //   loadChildren: () =>
-  //     import('./responses/responses.module').then((m) => m.ResponsesPageModule),
-  // },
+  {
+    path: '',
+    loadChildren: () =>
+      import('@mp/app/splash/feature').then((m) => m.SplashModule),
+  },
   {
     path: 'home',
     canActivate: [AuthGuard],
@@ -37,37 +32,21 @@ const routes: Routes = [
   },
   {
     path: 'tos',
+    pathMatch: 'full',
     loadChildren: () => import('@mp/app/tos/feature').then((m) => m.TosModule),
   },
   {
     path: 'privacy',
+    pathMatch: 'full',
     loadChildren: () =>
       import('@mp/app/privacy/feature').then((m) => m.PrivacyModule),
   },
-  // {
-  //   path: 'verify',
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import('./verify/verify.module').then((m) => m.VerifyPageModule),
-  // },
-  // {
-  //   path: 'reset',
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import('./reset/reset.module').then((m) => m.ResetPageModule),
-  // },
-  // {
-  //   path: 'forgot',
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import('./forgot/forgot.module').then((m) => m.ForgotPageModule),
-  // },
+  {
+    path: 'forgot',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('@mp/app/forgot/feature').then((m) => m.ForgotModule),
+  },
   {
     path: 'register',
     pathMatch: 'full',
@@ -84,6 +63,52 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/login/feature').then((m) => m.LoginModule),
   },
+  {
+    path: 'loading',
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: redirectLoggedIn },
+    loadChildren: () =>
+      import('@mp/app/loading/feature').then((m) => m.LoadingModule),
+  },
+  // {
+  //   path: 'settings',
+
+  //   pathMatch: 'full',
+  //   canActivate: [AuthGuard],
+  //   data: { authGuardPipe: redirectLoggedIn },
+  //   loadChildren: () =>
+  //     import ('@mp/app/settings/feature').then((m)=>m.SettingsModule),
+  // },
+  {
+    path: 'death-screen',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('@mp/app/death-screen/feature').then((m) => m.DeathScreenModule),
+  },
+  // {
+  //   path: 'messages',
+  //   pathMatch: 'full',
+  //   canActivate: [AuthGuard],
+  //   data: { authGuardPipe: redirectLoggedIn },
+  //   loadChildren: () =>
+  //     import ('@mp/app/messages/feature').then((m)=>m.MessagesModule),
+  // },
+  // {
+  //   path: 'create-post',
+  //   pathMatch: 'full',
+  //   canActivate: [AuthGuard],
+  //   data: { authGuardPipe: redirectLoggedIn },
+  //   loadChildren: () =>
+  //     import ('@mp/app/create-post/feature').then((m)=>m.CreatePostModule),
+  // },
+  // {
+  //   path: 'other-user',
+  //   pathMatch: 'full',
+  //   loadChildren: () =>
+  //     import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
+  // },
+
 ];
 
 @NgModule({
@@ -92,4 +117,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class CoreRouting {}
+export class CoreRouting { }
