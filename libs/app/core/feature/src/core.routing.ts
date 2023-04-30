@@ -71,6 +71,44 @@ const routes: Routes = [
     loadChildren: () =>
       import('@mp/app/loading/feature').then((m) => m.LoadingModule),
   },
+  // {
+  //   path: 'settings',
+
+  //   pathMatch: 'full',
+  //   canActivate: [AuthGuard],
+  //   data: { authGuardPipe: redirectLoggedIn },
+  //   loadChildren: () =>
+  //     import ('@mp/app/settings/feature').then((m)=>m.SettingsModule),
+  // },
+  {
+    path: 'death-screen',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import('@mp/app/death-screen/feature').then((m) => m.DeathScreenModule),
+  },
+  // {
+  //   path: 'messages',
+  //   pathMatch: 'full',
+  //   canActivate: [AuthGuard],
+  //   data: { authGuardPipe: redirectLoggedIn },
+  //   loadChildren: () =>
+  //     import ('@mp/app/messages/feature').then((m)=>m.MessagesModule),
+  // },
+  // {
+  //   path: 'create-post',
+  //   pathMatch: 'full',
+  //   canActivate: [AuthGuard],
+  //   data: { authGuardPipe: redirectLoggedIn },
+  //   loadChildren: () =>
+  //     import ('@mp/app/create-post/feature').then((m)=>m.CreatePostModule),
+  // },
+  // {
+  //   path: 'other-user',
+  //   pathMatch: 'full',
+  //   loadChildren: () =>
+  //     import('@mp/app/other-user/feature').then((m) => m.OtherUserModule),
+  // },
+
 ];
 
 @NgModule({
