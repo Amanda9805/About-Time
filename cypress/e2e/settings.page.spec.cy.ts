@@ -69,6 +69,21 @@ describe('Settins Page Test', () => {
             cy.get('ion-input').contains('Username').parent().find('ion-input').should('exist');
         });
     });
+
+    // Update Profile Picture Setting
+    describe('Update Profile Picture Test', () => {
+        it('Contains Update Profile Picture Tab', () => {
+            cy.get('ion-label').contains('Update Profile Picture').should('be.visible');
+        });
+
+        it('Contains Slot for Uploading Picture', () => {
+            cy.get('ion[type="file"]').should('be.visible');
+        });
+
+        it('Contains Button to Submit', () => {
+            cy.get('ion-button').contains('Update your profile picture').should('be.visible');
+        })
+    });
     
     // Update Password Setting
     describe('Update Password Setting Test', () => {
