@@ -1,3 +1,10 @@
+#timer-container{
+  display: grid;
+  place-items: center;
+  height: fit-content;
+  width: 100%;
+}
+
 ion-col {
   display: flex;
   place-items: center;
