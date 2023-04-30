@@ -101,9 +101,10 @@ describe('Settins Page Test', () => {
             cy.url().should('include', '/forgot');
         });
 
-        /*it('Navigates back to Settings Page', () => {
-            will do this later on
-        });*/
+        it('Navigates back to Settings Page', () => {
+            cy.get('ion-back-button').click();
+            cy.url().should('include', '/settings');
+        });
     });
 
     // Terms of Service 
@@ -173,10 +174,9 @@ describe('Settins Page Test', () => {
             cy.get('ion-button').contains('Delete Account').should('be.visible');
         })
 
-        /* Functionality has not been added
         it('Navigate to Register Page', () => {
             cy.get('ion-button').contains('Delete Account').click();
-            cy.url().should('include', '/register');
-        });*/
+            cy.url().should('include', '/welcome');
+        });
     });
 });
