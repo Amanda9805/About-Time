@@ -3,11 +3,13 @@ $vibrantGreen: #0E8C00;
 
 // Custom styles for ion-header
 ion-header {
-  --ion-background-color: black;
+  --background: black;
 
   ion-toolbar {
+    --background: black;
     ion-title {
-      color: white;
+      --background: black;
+      --color: white;
     }
   }
 }
