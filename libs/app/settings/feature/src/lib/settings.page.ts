@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Router, NavigationExtras } from '@angular/router';
-import { IFetchProfileRequest, PrivacyStatus, IUpdatePrivacySettingsRequest } from '@mp/api/profiles/util';
+import { PrivacyStatus, IUpdatePrivacySettingsRequest, IProfile } from '@mp/api/profiles/util';
 import { ProfilesApi } from '@mp/app/profile/data-access';
 import { Store } from '@ngxs/store';
 import { AuthState } from '@mp/app/auth/data-access';
@@ -12,6 +12,8 @@ import { OtherUserApi } from '@mp/app/other-user/data-access';
 import { SetError } from '@mp/app/errors/util';
 import { SettingsApi } from '@mp/app/settings/data-access';
 import { Logout } from '@mp/app/auth/util';
+import { SetSuccess } from '@mp/app/success/util';
+import { UpdatePrivacy } from '@mp/app/profile/util';
 
 @Component({
   selector: 'app-settings',
@@ -88,15 +90,10 @@ export class SettingsPage {
 
   async toggleProfileVisibility() {
     const userID = this.store.selectSnapshot(AuthState).user.uid;
-    const request: IFetchProfileRequest = {
-      user: {
-        id: userID,
-      }
-    }
 
-    // First call the api fetchUserPosts function
-    const responseRef = await this.otherUserApi.fetchProfile(request);
-    const response = responseRef.data;
+    const user: IProfile = {
+      userId: userID
+    }
 
     let newPrivacy;
     if (this.toggle?.ariaChecked) {
@@ -109,11 +106,18 @@ export class SettingsPage {
     const updateRequest = {
       privacySettings: {
         newStatus: newPrivacy,
-        profile: response.profile,
+        profile: user,
       }
     } as IUpdatePrivacySettingsRequest;
 
-    const result = this.profilesApi.updatePrivacySetting(updateRequest);
+    const result = await this.profilesApi.updatePrivacySetting(updateRequest);
+
+    if (result) {
+      this.store.dispatch(new UpdatePrivacy(newPrivacy === PrivacyStatus.PRIVATE ? true : false));
+      this.store.dispatch(new SetSuccess("Successfully updated privacy"));
+    }
+
+
     console.log(result);
   }
 
