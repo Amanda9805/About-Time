@@ -18,7 +18,7 @@ https://github.com/COS301-MP-AboutTime
     * Primary Role: Service Engineer (Lead)
     * Secondary Role: Project Manager
     * Additional contributions: Integration Engineer, Data Engineer, Automated testing
-* Franco van Vuuren
+* Franco van Vuuren - u21463702
     * Primary Role: UI Engineer (Lead)
     * Secondary Role: Integration Engineer
 * Stefan van Beek
