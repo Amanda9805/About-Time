@@ -114,7 +114,7 @@ export class ProfilePage {
       // Get the info for the user
       this.user.name = profile?.accountDetails?.userName;
       this.user.pfp = profile?.accountDetails?.photoURL;
-      console.log("Profile picture URL: ",this.user.pfp);
+      console.log("Profile picture URL: ", this.user.pfp);
       this.user.title = profile?.accountDetails?.title;
       this.user.time = profile?.time;
 
@@ -139,7 +139,7 @@ export class ProfilePage {
     // Get the user's posts from the state
     this.store.select(ProfileState.posts).subscribe((posts) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-      if (posts?.list?.length! > 0) {
+      if (posts && posts.list && posts?.list?.length > 0) {
         this.hasPosts = true;
       }
       this.posts = posts?.list?.map((post) => {
