@@ -11,7 +11,7 @@ https://github.com/COS301-MP-AboutTime
 * Ettiene van Zyl
     * Primary Role: Project Manager
     * Secondary Role: Testing
-* Michael Tarr
+* Michael Tarr - u20537833
     * Primary Role: DevOps (Lead)
     * Secondary Role: UI Engineer, Integration Engineer
 * Luke Lawson - u21433811
