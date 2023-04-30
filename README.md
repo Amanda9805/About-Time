@@ -31,6 +31,8 @@ dev - Current development code\
     * Secondary Role: Service Engineer
 * Dharshan Gopaul
     * Primary Role: 
+* Thapelo Thoka
+    * Primary Role: 
 * Dharhan Pillay
     * Primary Role: 
 * Keabetswe Madumo
