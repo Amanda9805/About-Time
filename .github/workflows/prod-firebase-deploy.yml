@@ -5,7 +5,7 @@ name: Prod | Deploy to Firebase
       - main
 jobs:
   build:
-    name: "Building App"
+    name: "Building Apps"
     environment: firebase
     runs-on: ubuntu-latest
     steps:
