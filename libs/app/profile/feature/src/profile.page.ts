@@ -114,6 +114,7 @@ export class ProfilePage {
       // Get the info for the user
       this.user.name = profile?.accountDetails?.userName;
       this.user.pfp = profile?.accountDetails?.photoURL;
+      console.log("Profile picture URL: ",this.user.pfp);
       this.user.title = profile?.accountDetails?.title;
       this.user.time = profile?.time;
 
@@ -145,6 +146,54 @@ export class ProfilePage {
       })!;
     })
   }
+
+  // ngAfterViewInit() {
+  //   console.log('Profile page loaded');
+
+  //   this.store.dispatch(new SetProfile());
+  //   console.log('Profile = set!');
+
+  //   // Get the profile from the state
+  //   this.store.select(ProfileState.profile).subscribe((profile) => {
+  //     // const profile = profileObj?.model;
+
+  //     // Get the info for the user
+  //     this.user.name = profile?.accountDetails?.userName;
+  //     this.user.pfp = profile?.accountDetails?.photoURL;
+  //     this.user.title = profile?.accountDetails?.title;
+  //     this.user.time = profile?.time;
+
+  //     // Determine the title/status
+  //     if (profile?.time === 0)
+  //     {
+  //       this.user.title = 'Dead';
+  //     }
+  //     else if (this.user.time < 24*3600) 
+  //     {
+  //       this.user.title = 'Normal';
+  //     }
+  //     else
+  //     {
+  //       this.user.title = 'Deus';
+  //     }
+  //     // this.badges = profile?.accountDetails?.badgesReceived!;
+  //     // this.meters = profile?.accountDetails?.meters!;
+
+  //     this.setTime();
+  //   })
+
+
+  //   this.store.dispatch(new SetPosts());
+  //   // Get the user's posts from the state
+  //   this.store.select(ProfileState.posts).subscribe((posts) => {
+  //     if (posts?.list?.length! > 0) {
+  //       this.hasPosts = true;
+  //     }
+  //     this.posts = posts?.list?.map((post) => {
+  //       return {caption: post.title, imagePath: post.image}
+  //     })!;
+  //   })
+  // }
 
   setTime() {
     this.hours = Math.floor(this.user.time / 3600);
