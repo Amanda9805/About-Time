@@ -3,11 +3,9 @@ import { Location } from '@angular/common';
 import { CreatePost } from '@mp/app/create-post/util';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { CreatePostState } from '@mp/app/create-post/data-access';
 import { NewPost } from '@mp/api/createpost/util';
 import { ActionsExecuting, actionsExecuting } from '@ngxs-labs/actions-executing';
 import { FormBuilder, Validators } from '@angular/forms';
-import { SetSuccess } from '@mp/app/success/util';
 import { SetError } from '@mp/app/errors/util';
 
 @Component({

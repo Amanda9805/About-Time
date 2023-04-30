@@ -4,6 +4,7 @@ $vibrantGreen: #0E8C00;
 .cust_button_var1 {
   --background: #0E8C00;
   --color: white;
+  border: none;
 }
 
 p {
@@ -78,11 +79,10 @@ ion-accordion.accordion-expanded ion-item[slot="header"] {
 }
 
 ion-button {
-  --background: #242423;
-  color: #0E8C00;
-  border: #0E8C00 solid 3px;
-  border-radius: 6px;
-  text-transform: none
+  --background: black;
+  --color: white;
+  border: #0E8C00 solid 2px;
+  text-transform: none;
 }
 
 .smalltext {

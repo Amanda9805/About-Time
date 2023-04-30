@@ -4,7 +4,6 @@ import { Discipline, Status } from '@mp/api/feed/util';
 import { CreatePostApi } from './create-post.api';
 import { Injectable } from '@angular/core';
 
-
 export interface CreatePostStateModel {
   post: {
     model: {
