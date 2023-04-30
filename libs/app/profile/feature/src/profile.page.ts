@@ -32,10 +32,10 @@ export class ProfilePage {
     private: true
   }
 
-  hasPosts: boolean = false;
-  hours: number = 0;
-  minutes: number = 0;
-  seconds: number = 0;
+  hasPosts = false;
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
   posts: IPostList = {
     postsFound: false,
     list: [],
