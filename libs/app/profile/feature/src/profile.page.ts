@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Component} from '@angular/core';
-import { IBadge, IMeter, IProfile } from '@mp/api/profiles/util';
+import { IBadge, IMeter, IPostList, IProfile } from '@mp/api/profiles/util';
 import { ProfileState } from '@mp/app/profile/data-access';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
@@ -36,28 +36,11 @@ export class ProfilePage {
   hours: number = 0;
   minutes: number = 0;
   seconds: number = 0;
-  posts: any[] = [
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-    {
-      caption: 'I know nothing',
-      imagePath: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-    },
-  ];
+  posts: IPostList = {
+    postsFound: false,
+    list: [],
+    
+  };
 
   // badges: IBadge[] = [
   //   {
@@ -115,14 +98,14 @@ export class ProfilePage {
       this.user.name = profile?.accountDetails?.userName;
       this.user.pfp = profile?.accountDetails?.photoURL;
       this.user.title = profile?.accountDetails?.title;
-      this.user.time = profile?.time;
+      this.user.time = profile?.time?.toFixed(0);
 
       // Determine the title/status
       if (profile?.time === 0)
       {
         this.user.title = 'Dead';
       }
-      else if (this.user.time < 24*3600) 
+      else if (this.user.time < 24*3600)
       {
         this.user.title = 'Normal';
       }
@@ -143,10 +126,11 @@ export class ProfilePage {
       if (posts?.list?.length! > 0) {
         this.hasPosts = true;
       }
-      this.posts = posts?.list?.map((post) => {
-        return {caption: post.title, imagePath: post.image}
-      })!;
-    })
+      this.posts = posts!;
+      // list?.map((post) => {
+      //   return {caption: post.title, imagePath: post.image}
+      // })!;
+    });
   }
 
   setTime() {

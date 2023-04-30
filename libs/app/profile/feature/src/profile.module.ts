@@ -12,7 +12,6 @@ import { OtherUserUIModule } from '@mp/app/other-user/ui';
 import { RouterModule } from '@angular/router';
 
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -24,7 +23,7 @@ import { RouterModule } from '@angular/router';
     NgxSkeletonLoaderModule,
     NgxsModule.forFeature([ProfileState]),
     OtherUserUIModule,
-    RouterModule
+    RouterModule,
   ],
   declarations: [ProfilePage],
   providers: [ProfilesApi],
