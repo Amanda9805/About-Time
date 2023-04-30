@@ -16,8 +16,8 @@ https://github.com/COS301-MP-AboutTime
     * Secondary Role: UI Engineer, Integration Engineer
 * Luke Lawson - u21433811
     * Primary Role: Service Engineer (Lead)
-    * Secondary Role: Project Manager
-    * Additional contributions: Integration Engineer, Data Engineer, Automated testing
+    * Secondary Role: Assistant Project Manager, Integration Engineer
+    * Additional contributions: Data Engineer, Automated Testing
 * Franco van Vuuren - u21463702
     * Primary Role: UI Engineer (Lead)
     * Secondary Role: Integration Engineer
