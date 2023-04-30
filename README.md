@@ -10,7 +10,7 @@ https://github.com/COS301-MP-AboutTime
 ### Branching Strategy
 main - Production code\
 dev - Current development code\
--> <feature> branches are branched off of dev to develop a specific feature
+-> contributors branch off of dev to develop a specific feature
 
 ### Group Members
 * Ettiene van Zyl
