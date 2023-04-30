@@ -122,14 +122,12 @@ const routes: Routes = [
   //   loadChildren: () =>
   //     import ('@mp/app/settings/feature').then((m)=>m.SettingsModule),
   // },
-  // {
-  //   path: 'death-screen',
-  //   pathMatch: 'full',
-  //   canActivate: [AuthGuard],
-  //   data: { authGuardPipe: redirectLoggedIn },
-  //   loadChildren: () =>
-  //     import ('@mp/app/death-screen/feature').then((m)=>m.DeathScreenModule),
-  // },
+  {
+    path: 'death-screen',
+    pathMatch: 'full',
+    loadChildren: () =>
+      import ('@mp/app/death-screen/feature').then((m)=>m.DeathScreenModule),
+  },
   // {
   //   path: 'messages',
   //   pathMatch: 'full',
