@@ -1,8 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
-import {
-  ActionsExecuting,
-  actionsExecuting
-} from '@ngxs-labs/actions-executing';
+import { Component } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { SetFilterList, SetPost, SetPostList, SetTimeModification } from '@mp/app/feed/util';
@@ -21,20 +17,20 @@ export class FeedPage {
   feedOpen: boolean;
   userTime!: number | null;
   postsData: PostList = {
-    postsFound : false,
-    list : [],
+    postsFound: false,
+    list: [],
   };
 
   constructor(private store: Store) {
     this.feedOpen = false;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.store.dispatch(new SetPostList());
     //  this.store.dispatch(new SetUserTime());
 
     this.store.select(FeedState.postList).subscribe((feed) => {
-      if (feed.model.list != null){
+      if (feed.model.list != null) {
 
         this.postsData.postsFound = true;
         this.postsData.list = [];//reset the posts data
@@ -42,7 +38,7 @@ export class FeedPage {
           this.postsData.list?.push(post);
         })
       }
-     })
+    })
 
     //  this.store.select(FeedState.userTime).subscribe((userTime) => {
     //   if (userTime.model != null){
@@ -54,14 +50,14 @@ export class FeedPage {
     list: [],
   };
 
-  setFilters($data:FilterType){
+  setFilters($data: FilterType) {
 
     this.postsData.list = [];//reset the posts data
 
-    if(this.activeFilters.list?.includes($data)){
+    if (this.activeFilters.list?.includes($data)) {
       this.activeFilters.list = this.activeFilters.list?.filter((item) => item !== $data);
     } else {
-    this.activeFilters.list = this.activeFilters.list?.concat([$data]);
+      this.activeFilters.list = this.activeFilters.list?.concat([$data]);
     }
 
     if (this.activeFilters.list) {
@@ -72,22 +68,22 @@ export class FeedPage {
 
   selectedPost = 0;
 
-  setPost($data:Post){
-    if(this.postsData.list?.indexOf($data)){
+  setPost($data: Post) {
+    if (this.postsData.list?.indexOf($data)) {
       this.selectedPost = this.postsData.list?.indexOf($data);
       console.log('selected post: ' + this.selectedPost);
     }
 
-    this.store.dispatch(new SetPost({post : $data}));
+    this.store.dispatch(new SetPost({ post: $data }));
     this.feedOpen = true;//user clicked on a post, the post is set and then the feed is open
   }
 
-  closeFeed(){
+  closeFeed() {
     this.feedOpen = false;
   }
 
-  updatePostTime($data:TimeModification){
-    this.store.dispatch(new SetTimeModification({postID:$data.postID, time : $data.time}));
+  updatePostTime($data: TimeModification) {
+    this.store.dispatch(new SetTimeModification({ postID: $data.postID, time: $data.time }));
   }
 
 }

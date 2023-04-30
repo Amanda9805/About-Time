@@ -40,8 +40,6 @@ export class FeedClosedComponent{
       FilterType.TRAVEL_FILTER,
       FilterType.MUSIC_FILTER,
       FilterType.GAMING_FILTER)
-
-      //const app = firestore.app;
   }
 
   alreadyAdded = false;

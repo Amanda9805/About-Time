@@ -9,6 +9,7 @@ import { doc, docSnapshots, Firestore, collection, collectionChanges } from '@an
 import {map} from 'rxjs';
 import { AuthState } from '@mp/app/auth/data-access';
 import { set } from 'immer/dist/internal';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'mp-timer',
@@ -26,7 +27,7 @@ export class TimerComponent {
   protected seconds = 0;
   protected allocatedTime = 0;
 
-  constructor(private readonly firestore : Firestore, private store: Store) {
+  constructor(private router: Router, private readonly firestore : Firestore, private store: Store) {
 
     this.store.dispatch(new SetUserTime());
 
@@ -78,9 +79,14 @@ export class TimerComponent {
 
   startTimer() {
     console.log("start TImer");
-    setInterval(() => {
+    const inter = setInterval(() => {
       this.allocatedTime--;
       this.setTime();
+      if(this.allocatedTime <= 0){
+        this.router.navigate(['/death-screen']);
+        console.log("death screen");
+        clearInterval(inter);
+      }
     }, 1000);
   }
 

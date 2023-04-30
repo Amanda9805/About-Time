@@ -7,10 +7,11 @@ import { NgxsFeatureModule } from '@ngxs/store/src/modules/ngxs-feature.module';
 import { TimerState } from '@mp/app/timer/data-access';
 import { NgxsModule } from '@ngxs/store';
 import { FeedApi } from '@mp/app/feed/data-access';
+import { TimerRouting } from './timer.routing';
 
 @NgModule({
   declarations: [TimerComponent],
-  imports: [CommonModule, IonicModule, RouterModule, NgxsModule.forFeature([TimerState])],
+  imports: [CommonModule, IonicModule, RouterModule, NgxsModule.forFeature([TimerState]), TimerRouting],
   exports: [TimerComponent],
   providers: [FeedApi],
 })

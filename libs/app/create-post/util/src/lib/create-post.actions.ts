@@ -1,5 +1,3 @@
-import { StateContext } from '@ngxs/store';
-import { Post } from '@mp/api/feed/util';
 import { NewPost } from '@mp/api/createpost/util';
 
 export class CreatePost {
