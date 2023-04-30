@@ -22,14 +22,14 @@ export class OtherUserPage {
     private store: Store
   ) { }
 
-  private: boolean = true;
-  friends: boolean = true;
-  deus: boolean = true;
-  dead: boolean = false;
-  hasPosts: boolean = false;
-  hours: number = 0;
-  minutes: number = 0;
-  seconds: number = 0;
+  private = true;
+  friends = true;
+  deus = true;
+  dead = false;
+  hasPosts = false;
+  hours = 0;
+  minutes = 0;
+  seconds = 0;
 
   user: any = {
     name: 'Jon Snow',
@@ -65,48 +65,6 @@ export class OtherUserPage {
     },
   ];
 
-  // badges: IBadge[] = [
-  //   {
-  //     name: 'Rockstar',
-  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-  //   },
-  //   {
-  //     name: 'Einstein',
-  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-  //   },
-  //   {
-  //     name: 'Ramsy',
-  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-  //   },
-  //   {
-  //     name: 'Rockstar',
-  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-  //   },
-  //   {
-  //     name: 'Einstein',
-  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-  //   },
-  //   {
-  //     name: 'Ramsy',
-  //     iconURL: 'https://ionicframework.com/docs/img/demos/avatar.svg',
-  //   },
-  // ]
-
-  // meters: IMeter[] = [
-  //   {
-  //     discipline: 'Science',
-  //     time_accumulated: 60,
-  //   },
-  //   {
-  //     discipline: 'Music',
-  //     time_accumulated: 70,
-  //   },
-  //   {
-  //     discipline: 'Food',
-  //     time_accumulated: 50,
-  //   },
-  // ]
-
   ngOnInit() {
 
     // Get the profile from the state
@@ -118,16 +76,13 @@ export class OtherUserPage {
       this.user.time = profile?.time!;
 
       // Determine the title/status
-      if (profile?.time === 0)
-      {
+      if (profile?.time === 0) {
         this.user.title = 'Dead';
       }
-      else if (this.user.time < 24*3600) 
-      {
+      else if (this.user.time < 24 * 3600) {
         this.user.title = 'Normal';
       }
-      else
-      {
+      else {
         this.user.title = 'Deus';
       }
 
@@ -135,8 +90,7 @@ export class OtherUserPage {
       if (profile?.accountDetails?.private) {
         this.private = true;
       }
-      else
-      {
+      else {
         this.private = false;
       }
 
@@ -150,7 +104,7 @@ export class OtherUserPage {
         this.hasPosts = true;
       }
       this.posts = posts?.list?.map((post) => {
-        return {caption: post.title, imagePath: post.image}
+        return { caption: post.title, imagePath: post.image }
       })!;
     })
   }
@@ -158,15 +112,15 @@ export class OtherUserPage {
 
   setTime() {
     this.hours = Math.floor(this.user.time / 3600);
-    this.minutes = Math.floor((this.user.time  % 3600) / 60);
-    this.seconds = Math.floor(this.user.time  % 60);
+    this.minutes = Math.floor((this.user.time % 3600) / 60);
+    this.seconds = Math.floor(this.user.time % 60);
   }
 
 
 
   // Test to see
   ngAfterViewInit() {
-    
+
     // Get the profile from the state
     this.store.select(OtherUserState.profile).subscribe((profile) => {
       // Get the info for the user
@@ -176,16 +130,13 @@ export class OtherUserPage {
       this.user.time = profile?.time!;
 
       // Determine the title/status
-      if (profile?.time === 0)
-      {
+      if (profile?.time === 0) {
         this.user.title = 'Dead';
       }
-      else if (this.user.time < 24*3600) 
-      {
+      else if (this.user.time < 24 * 3600) {
         this.user.title = 'Normal';
       }
-      else
-      {
+      else {
         this.user.title = 'Deus';
       }
 
@@ -193,8 +144,7 @@ export class OtherUserPage {
       if (profile?.accountDetails?.private) {
         this.private = true;
       }
-      else
-      {
+      else {
         this.private = false;
       }
 
@@ -207,7 +157,7 @@ export class OtherUserPage {
         this.hasPosts = true;
       }
       this.posts = posts?.list?.map((post) => {
-        return {caption: post.title, imagePath: post.image}
+        return { caption: post.title, imagePath: post.image }
       })!;
     })
   }

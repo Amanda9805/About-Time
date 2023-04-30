@@ -24,9 +24,10 @@ export class SettingsApi {
         const uploadTask = uploadBytesResumable(storageRef, file);
         uploadTask.on('state_changed',
             (snapshot) => {
+                console.log("update")
             },
             (error) => {
-                // Handle unsuccessful uploads
+                console.log(error);
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
