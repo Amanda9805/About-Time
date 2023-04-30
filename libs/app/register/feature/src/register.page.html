@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/welcome" class="green" ></ion-back-button>
+      <ion-back-button defaultHref="/welcome" class="green"></ion-back-button>
     </ion-buttons>
     <ion-title>Register</ion-title>
   </ion-toolbar>
@@ -10,49 +10,26 @@
 <ion-content [fullscreen]="true">
 
   <div class="container ion-text-center">
-    <img src = "https://i.imgur.com/PCGUzLY.png">
+    <img src="https://i.imgur.com/PCGUzLY.png">
   </div>
-  <form
-    [formGroup]="registerForm"
-    ngxsForm="register.registerForm"
-    (submit)="register()">
+  <form [formGroup]="registerForm" ngxsForm="register.registerForm" (submit)="register()">
     <ion-list class="ion-padding-vertical">
       <ion-item>
         <ion-label position="floating" class="required off-white white">Email</ion-label>
-        <ion-input
-          type="email"
-          minlength="6"
-          maxlength="64"
-          placeholder="Enter email"
-          required="true"
-          autocomplete="email"
-          formControlName="email"></ion-input>
+        <ion-input type="email" minlength="6" maxlength="64" placeholder="Enter email" required="true"
+          autocomplete="email" formControlName="email"></ion-input>
       </ion-item>
-      <ion-text
-        *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-        class="ion-padding-start"
-        color="danger">
+      <ion-text *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="ion-padding-start" color="danger">
         <small>{{ emailError }}</small>
       </ion-text>
       <ion-item>
         <ion-label position="floating" class="required off-white white">Password</ion-label>
-        <ion-input
-          [type]="showPassword ? 'text' : 'password'"
-          minlength="6"
-          maxlength="64"
-          placeholder="Enter password"
-          required="true"
-          autocomplete="password"
-          formControlName="password"></ion-input>
-        <ion-icon
-          [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
-          slot="end"
-          class="ion-align-self-center off-white"
-          (click)="toggleShowPassword()"></ion-icon>
+        <ion-input [type]="showPassword ? 'text' : 'password'" minlength="6" maxlength="64" placeholder="Enter password"
+          required="true" autocomplete="password" formControlName="password"></ion-input>
+        <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" slot="end"
+          class="ion-align-self-center off-white" (click)="toggleShowPassword()"></ion-icon>
       </ion-item>
-      <ion-text
-        *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-        class="ion-padding-start"
+      <ion-text *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="ion-padding-start"
         color="danger">
         <small>{{ passwordError }}</small>
       </ion-text>
@@ -61,10 +38,7 @@
     <ion-grid class="ion-padding">
       <ion-row>
         <ion-col>
-          <ion-button
-            expand="block"
-            [disabled]="!this.registerForm.valid || (busy$ | async)"
-            type="submit">
+          <ion-button expand="block" [disabled]="!this.registerForm.valid || (busy$ | async)" type="submit">
             <ion-spinner *ngIf="busy$ | async"></ion-spinner>
             <ion-text>It's about time!</ion-text>
           </ion-button>
@@ -80,6 +54,32 @@
       </ion-row>
     </ion-grid>
   </form>
+
+  <ion-row>
+    <ion-col>
+      <ion-nav-link>
+        <ion-button expand="full" fill="outline" (click)="continueWithGoogle()">
+          <ion-icon name="logo-google"></ion-icon>
+          <ion-text style="padding-left: 5px">
+            Register with Google
+          </ion-text>
+        </ion-button>
+      </ion-nav-link>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-nav-link>
+        <ion-button expand="full" fill="outline" (click)="continueWithGoogle()">
+          <ion-icon name="logo-facebook"></ion-icon>
+          <ion-text style="padding-left: 5px">
+            Register with Facebook
+          </ion-text>
+        </ion-button>
+      </ion-nav-link>
+    </ion-col>
+  </ion-row>
+
 </ion-content>
 
 <!-- <ion-footer collapse="condense" class="ion-padding ion-text-center">

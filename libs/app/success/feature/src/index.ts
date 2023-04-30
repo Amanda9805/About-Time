@@ -1,1 +1,1 @@
-export * from './lib/app-success-feature';
+export * from './success.module';

@@ -4,11 +4,6 @@ import { Functions, httpsCallable } from '@angular/fire/functions';
 import {
   AddTimeRequest,
   AddTimeResponse,
-  // FilterList,
-  // Post,
-  // PostList,
-  // TimeModification,
-  // UserTime,
   FetchPostsRequest,
   FetchPostsResponse,
   GetUserTimeRequest,
@@ -20,7 +15,6 @@ import {
 @Injectable()
 export class FeedApi {
   constructor(
-    private readonly firestore: Firestore,
     private readonly functions: Functions
   ) { }
 
@@ -51,6 +45,4 @@ export class FeedApi {
       'modifyUserTime'
     )(request);
   }
-
-
 }

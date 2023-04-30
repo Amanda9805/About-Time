@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
 })
 
 export class ForgotPage {
-    title: string = "Forgot Password";
+    title = "Forgot Password";
     @Select(actionsExecuting([ForgotPassword, SendConfirmCode])) busy$!: Observable<ActionsExecuting>;
 
     forgotForm = this.fb.group({

@@ -88,6 +88,14 @@
         <ion-button expand="block" (click)="navigate('pp')">View our Privacy Policy</ion-button>
       </div>
     </ion-accordion>
+    <ion-accordion value="logout">
+      <ion-item slot="header" color="dark">
+        <ion-label>Logout</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-button expand="block" (click)="logout()">Logout of your account</ion-button>
+      </div>
+    </ion-accordion>
     <ion-accordion value="version">
       <ion-item slot="header" color="dark">
         <ion-label>Version</ion-label>

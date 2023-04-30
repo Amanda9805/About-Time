@@ -6,7 +6,6 @@ import {
   SetPost,
   SetPostList,
   SetTimeModification,
-  AddToPostList,
   liveUpdatePostTime
 } from '@mp/app/feed/util';
 import { SetUserTimeModification } from '@mp/app/timer/util'
@@ -19,13 +18,9 @@ import {
   Discipline,
   FilterType,
   FetchPostsRequest,
-  FetchPostsResponse,
 } from '@mp/api/feed/util';
-import { IUser } from '@mp/api/users/util';
 import { FeedApi } from './feed.api';
 import { SetError } from '@mp/app/errors/util';
-import { fetchPosts } from '@mp/api/core/feature';
-import { AuthState } from '@mp/app/auth/data-access';
 
 export interface FeedStateModel {
 
@@ -300,28 +295,10 @@ export class FeedState {
       ctx.setState(
         produce((draft) => {
           draft.Post = { model: { ...draft.Post.model, time: payload.time }, dirty: false, status: '', errors: {} };
-          }));
+        }));
       return;
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
     }
   }
-
-  // @Action(SetUserTime)
-  // async setUserTime(ctx: StateContext<FeedStateModel>){
-  //   const userTimeRqst = {
-  //     user : this.store.selectSnapshot(AuthState).user,
-  //   }
-
-  //   const userTime = await this.feedApi.getUserTime$(userTimeRqst);
-  //   //console.log('userTime: ', userTime);
-  //   ctx.setState(
-  //     produce((draft) => {
-  //       draft.userTime = {
-  //         timeRemaining: userTime.data.userTime.timeRemaining,
-  //         timeAmount: userTime.data.userTime.timeAmount,
-  //       }
-  //     })
-  //   )
-  // }
 }

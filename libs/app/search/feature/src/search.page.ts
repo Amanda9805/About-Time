@@ -39,6 +39,8 @@ export class SearchPage {
         })
       }
     })
+
+    this.profilesData.list = [];//reset the list
   }
 
 

@@ -6,9 +6,7 @@ import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import produce from 'immer';
 import { OtherUserApi } from './other-user.api';
 import { SetCurrentProfile, SetOtherProfile, SetPosts, SetRelation, UpdateRelation } from '@mp/app/other-user/util';
-// import { IRelation } from 'libs/api/profiles/util/src/interfaces/relation.interface';
 import { AuthState } from '@mp/app/auth/data-access';
-
 
 export interface OtherUserStateModel {
   currentUser: IProfile | null;
@@ -34,19 +32,19 @@ export class OtherUserState {
     private readonly toastController: ToastController,
     private readonly store: Store,
     private readonly otherUserApi: OtherUserApi
-  ) {}
+  ) { }
 
-  @Selector() 
+  @Selector()
   static profile(state: OtherUserStateModel) {
     return state.otherUser;
   }
 
-  @Selector() 
+  @Selector()
   static posts(state: OtherUserStateModel) {
     return state.posts;
   }
 
-  @Selector() 
+  @Selector()
   static relation(state: OtherUserStateModel) {
     return state.relation;
   }
@@ -55,26 +53,23 @@ export class OtherUserState {
   async updateRelation(ctx: StateContext<OtherUserStateModel>, { relation }: UpdateRelation) {
     try {
       const state = ctx.getState();
-      var relType;
+      let relType;
 
       // Determine what the relation type is
-      if ( relation=="FRIEND")
-      {
+      if (relation == "FRIEND") {
         relType = RelationEnum.FRIEND;
       }
-      else if ( relation=="BLOCKED")
-      {
+      else if (relation == "BLOCKED") {
         relType = RelationEnum.BLOCKED;
       }
-      else
-      {
+      else {
         relType = RelationEnum.NOTFRIEND;
       }
-      
+
       const request: IUpdateRelationRequest = {
         newRelation: {
-          userID : state.currentUser?.userId,
-          otherUserID : state.otherUser?.userId,
+          userID: state.currentUser?.userId,
+          otherUserID: state.otherUser?.userId,
           newRelationship: relType,
         }
       };
@@ -82,7 +77,7 @@ export class OtherUserState {
       // Call api function to update the relation
       const responseRef = await this.otherUserApi.updateRelation(request);
       const response = responseRef.data;
-      return ;
+      return;
 
     } catch (error) {
       return ctx.dispatch(new SetError((error as Error).message));
@@ -115,10 +110,12 @@ export class OtherUserState {
     const request: FetchUserPostsRequest = {
       userProfile: ctx.getState().otherUser!,
     }
-    
+    console.log("SetPosts: Other user's profile", request.userProfile);
+
     // First call the api fetchUserPosts function
     const responseRef = await this.otherUserApi.fetchUserPosts(request);
     const response = responseRef.data;
+    console.log("Set:Posts: Other user's posts:", response.posts);
 
     // then set the posts in the state
     return ctx.setState(
@@ -156,7 +153,7 @@ export class OtherUserState {
     const request: IFetchProfileRequest = {
       user: user!,
     }
-    
+
     // First call the api fetchUserPosts function
     const responseRef = await this.otherUserApi.fetchProfile(request);
     const response = responseRef.data;
@@ -172,7 +169,7 @@ export class OtherUserState {
   @Action(SetCurrentProfile)
   setCurrentProfile(ctx: StateContext<OtherUserStateModel>) {
     // Get current user from AUTH state
-    var user = this.store.selectSnapshot(AuthState).user;
+    const user = this.store.selectSnapshot(AuthState).user;
 
     return ctx.setState(
       produce((draft) => {
@@ -180,5 +177,5 @@ export class OtherUserState {
       })
     );
   }
-  
+
 }

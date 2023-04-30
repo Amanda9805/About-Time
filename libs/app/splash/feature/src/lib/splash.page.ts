@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { timeout } from 'rxjs';
-
 
 @Component({
   selector: 'mp-splash',
@@ -8,18 +6,10 @@ import { timeout } from 'rxjs';
   styleUrls: ['./splash.page.scss']
 })
 export class SplashPage {
-
-    constructor() {};
-
-  
-    ngOnInit(){
-
-    
-      setTimeout(() => {
-        let element:HTMLElement = document.getElementById('trigger') as HTMLElement;
-        element.click();
-        
+  ngOnInit() {
+    setTimeout(() => {
+      const element: HTMLElement = document.getElementById('trigger') as HTMLElement;
+      element.click();
     }, 3000);
-    }
   }
-
+}
