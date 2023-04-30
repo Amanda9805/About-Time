@@ -35,7 +35,7 @@ export class CreatePostApi {
             },
             () => {
                 getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-                    let newPost: NewPost = { ...post };
+                    const newPost: NewPost = { ...post };
                     newPost.author = getAuth().currentUser?.uid as string;
                     newPost.image = downloadURL as string;
                     const CPRequest: CreatePostRequest = { post: newPost };

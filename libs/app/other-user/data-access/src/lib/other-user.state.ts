@@ -169,7 +169,7 @@ export class OtherUserState {
   @Action(SetCurrentProfile)
   setCurrentProfile(ctx: StateContext<OtherUserStateModel>) {
     // Get current user from AUTH state
-    let user = this.store.selectSnapshot(AuthState).user;
+    const user = this.store.selectSnapshot(AuthState).user;
 
     return ctx.setState(
       produce((draft) => {

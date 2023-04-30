@@ -63,7 +63,7 @@ export class ProfileState {
   @Action(SetProfile)
   async setProfile(ctx: StateContext<ProfileStateModel>) {
     // Get current user from AUTH state
-    let user = { "id": this.store.selectSnapshot(AuthState).user.uid };
+    const user = { "id": this.store.selectSnapshot(AuthState).user.uid };
 
     // Create the request using the passed in user
     const request: IFetchProfileRequest = {
