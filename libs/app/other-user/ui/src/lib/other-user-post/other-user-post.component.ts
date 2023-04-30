@@ -7,14 +7,8 @@ import { Discipline, Post } from '@mp/api/profiles/util';
   styleUrls: ['./other-user-post.component.scss']
 })
 export class OtherUserPostComponent {
-  @Input() post: Post = {
-    id: '',
-    title: '',
-    content: '',
-    author: '',
-    description: '',
-    discipline: Discipline.ART,
-    time: 0,
-    image: '',
-  };
+  @Input() post: any = { 
+    caption: "", 
+    imagePath: ""
+  }
 }
