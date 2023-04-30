@@ -368,8 +368,20 @@ export class ProfilesRepository {
   }
 
   async updateProfileImage(update: ProfileImageUpdate) {
+
     const userID = update.userId;
     const newURL = update.newImageURL;
+
+
+    const obj: IProfile = {
+      userId: userID,
+      accountDetails: {
+        photoURL: newURL
+      }
+    }
+
+    return this.updateProfile(obj);
+
     const doc = await admin.firestore()
       .collection("profiles")
       .where("userId", "==", userID)
