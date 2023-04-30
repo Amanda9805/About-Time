@@ -2,10 +2,7 @@
 
 import { Test } from "@nestjs/testing";
 import { ProfilesRepository } from "@mp/api/profiles/data-access";
-import { CheckRelationshipResponse, CheckRelationshipCommand, ICheckRelationshipResponse } from '@mp/api/profiles/util';
 import { CheckRelationshipHandler } from "../src/commands";
-import { RelationEnum } from '@mp/api/profiles/util';
-import { IProfile } from '@mp/api/profiles/util'l
 
 describe('Test for checking relationship\' handler:', () => {
     let checkRelationshipHandler: CheckRelationshipHandler;
@@ -23,9 +20,9 @@ describe('Test for checking relationship\' handler:', () => {
                 },
             ],
         }).compile();
-        
+
         checkRelationshipHandler = moduleRef.get<CheckRelationshipHandler>(CheckRelationshipHandler);
-        profilesRepository = moduleRef.get<ProfilesRepository>(ProfilesRepository);
+        // profilesRepository = moduleRef.get<ProfilesRepository>(ProfilesRepository);
     });
 
     it('1. Handler should be defined.', () => {
