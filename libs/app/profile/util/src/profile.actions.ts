@@ -47,3 +47,8 @@ export class UpdateUsername {
   static readonly type = '[Profile] UpdateUsername';
   constructor(public readonly username: string | null) {}
 }
+
+export class UpdatePrivacy {
+  static readonly type = '[Profile] UpdatePrivacy';
+  constructor(public readonly privacy: boolean | null) {}
+}

@@ -17,6 +17,7 @@ import {
   SetProfile,
   SubscribeToProfile,
   UpdateAccountDetails,
+  UpdatePrivacy,
   UpdateProfilePicture,
   UpdateUsername,
 } from '@mp/app/profile/util';
@@ -121,6 +122,17 @@ export class ProfileState {
       produce((draft) => {
         if (draft.profile?.accountDetails)
           draft.profile.accountDetails.userName = username.username;
+      })
+    );
+  }
+
+  @Action(UpdatePrivacy)
+  async updatePrivacy(ctx: StateContext<ProfileStateModel>, privacy: UpdatePrivacy) {
+    // Change the privacy in the state profile
+    return ctx.setState(
+      produce((draft) => {
+        if (draft.profile?.accountDetails)
+          draft.profile.accountDetails.private = privacy.privacy;
       })
     );
   }
