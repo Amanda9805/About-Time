@@ -152,7 +152,7 @@ export class ProfilePage {
   setTime() {
     this.hours = Math.floor(this.user.time / 3600);
     this.minutes = Math.floor((this.user.time  % 3600) / 60);
-    this.seconds = this.user.time  % 60;
+    this.seconds = Math.floor(this.user.time  % 60);
   }
 
 }

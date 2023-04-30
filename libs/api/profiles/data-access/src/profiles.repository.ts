@@ -186,22 +186,26 @@ export class ProfilesRepository {
 
   async fetchUserPosts(userProfile: IProfile) {
     const userID = userProfile.userId;
-
+    console.log("FUP: userId: " ,userID);
+    
     const toReturn: {
       id: string; title: string; author: string; description: string;
       content: string; time: number; discipline: Discipline; image: string | undefined
     }[] = [];
-
+    
     const userPostDocument = await admin.firestore()
-      .collection("Posts")
-      .where("userId", "==", userID)
-      .orderBy("created", "desc")
-      .get();
-
-
+    .collection("Posts")
+    .where("userId", "==", userID)
+    .orderBy("created", "desc")
+    .get();
+    
+    console.log("FUP: userPostDocument: ", userPostDocument);
+    
     if (userPostDocument) {
+      // console.log("FUP: userPostDocument: " ,userPostDocument);
       userPostDocument.forEach((userPost) => {
         const data = userPost.data();
+        console.log("FUP: userPostDocument.userPost.data(): " , data);
         const dataDetails = data["postDetails"]
         toReturn.push({
           id: data['id'],
