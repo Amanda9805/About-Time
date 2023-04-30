@@ -37,8 +37,10 @@ dev - Current development code\
     * Primary Role: 
 * Keabetswe Madumo
     * Primary Role: 
-* Edwin Chang
-    * Primary Role: 
+* Edwin Chang - u20424575
+    * Primary Role: Service Engineer
+    * Secondary Role: DevOps
+    * Additional Contributions: Testing
 * Elias Makhonjwa
     * Primary Role: 
 * Amanda Khuzwayo
