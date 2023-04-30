@@ -1,17 +1,13 @@
-import { IProfile } from '@mp/api/profiles/util';
 import { IUser } from '@mp/api/users/util';
-import { IRelation } from 'libs/api/profiles/util/src/interfaces/relation.interface';
-
-
 export class SetError {
   static readonly type = '[Errors] SetError';
-  constructor(public readonly error: string | null) {}
+  constructor(public readonly error: string | null) { }
 }
 
 
 export class UpdateRelation {
   static readonly type = '[OtherUser] UpdateRelation';
-  constructor(public readonly relation: string | null) {}
+  constructor(public readonly relation: string | null) { }
 }
 
 export class SetRelation {
@@ -26,7 +22,7 @@ export class SetPosts {
 
 export class SetOtherProfile {
   static readonly type = '[OtherUser] SetOtherProfile';
-  constructor(public readonly user: IUser | null) {}
+  constructor(public readonly user: IUser | null) { }
 }
 
 export class SetCurrentProfile {
