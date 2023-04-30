@@ -130,9 +130,10 @@ describe('Settins Page Test', () => {
             cy.url().should('include', '/privacy');
         });
 
-        /*it('Navigates back to Settings Page', () => {
-            will do this lateron
-        }); */ 
+        it('Navigates back to Settings Page', () => {
+            cy.get('ion-back-button').click();
+            cy.url().should('include', '/settings');
+        });
     });
 
     // Version
