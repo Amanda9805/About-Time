@@ -62,12 +62,12 @@ export class ProfilesRepository {
       .get();
 
     if (doc) {
-      const ref = doc.docs[0].data()["accountDetails"];
+      const ref = doc.docs[0].ref;
       const updateRef = ref.update({
-        private: isPrivate,
+        "accountDetails.private": isPrivate,
       });
 
-      if (updateRef) {
+      if (ref) {
         return Status.SUCCESS;
       } else {
         return Status.FAILURE;
@@ -380,7 +380,7 @@ export class ProfilesRepository {
       }
     }
 
-    return this.updateProfile(obj);
+    // return this.updateProfile(obj);
 
     const doc = await admin.firestore()
       .collection("profiles")
