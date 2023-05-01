@@ -34,8 +34,9 @@ dev - Current development code\
     * Secondary Role: Designer, Tester
 * Thapelo Thoka
     * Primary Role: 
-* Dharhan Pillay
-    * Primary Role: 
+* Dharhan Pillay - u19027487
+    * Primary Role: Tester
+    * Secondary Role: Designer, UI Engineer
 * Keabetswe Madumo - u20438614
     * Primary Role: Design (Lead)
     * Secondary Role: UI Engineer, Service Engineer
