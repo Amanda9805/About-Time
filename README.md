@@ -35,8 +35,9 @@ dev - Current development code\
     * Primary Role: 
 * Dharhan Pillay
     * Primary Role: 
-* Keabetswe Madumo
-    * Primary Role: 
+* Keabetswe Madumo - u20438614
+    * Primary Role: Design (Lead)
+    * Secondary Role: UI Engineer, Service Engineer
 * Edwin Chang - u20424575
     * Primary Role: Service Engineer
     * Secondary Role: DevOps
