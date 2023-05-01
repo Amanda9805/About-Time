@@ -238,7 +238,7 @@ const animal = [
 export class CreateProfileHandler
   implements ICommandHandler<CreateProfileCommand>
 {
-  static ASSIGNED_MINUTES = 60; // User is assigned 1 hour of time
+  static ASSIGNED_SECONDS = 60; // User is assigned 1 hour of time
   constructor(private publisher: EventPublisher) { }
 
   async execute(command: CreateProfileCommand) {
@@ -259,7 +259,7 @@ export class CreateProfileHandler
       },
       status: ProfileStatus.INCOMPLETE,
       created: Timestamp.fromDate(new Date()),
-      time: (CreateProfileHandler.ASSIGNED_MINUTES * 60 * 1000),
+      time: (CreateProfileHandler.ASSIGNED_SECONDS * 90),
     };
     const profile = this.publisher.mergeObjectContext(Profile.fromData(data));
 
