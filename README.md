@@ -45,5 +45,6 @@ dev - Current development code\
     * Additional Contributions: Testing
 * Elias Makhonjwa
     * Primary Role: 
-* Amanda Khuzwayo
-    * Primary Role: 
+* Amanda Khuzwayo - u16032889
+    * Primary Role: Service Engineer
+    * Secondary Role: Testing
