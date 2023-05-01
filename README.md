@@ -30,7 +30,8 @@ dev - Current development code\
     * Primary Role: UI Engineer
     * Secondary Role: Service Engineer
 * Dharshan Gopaul
-    * Primary Role: 
+    * Primary Role: Service Engineer
+    * Secondary Role: Designer, Tester
 * Thapelo Thoka
     * Primary Role: 
 * Dharhan Pillay
