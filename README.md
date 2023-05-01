@@ -26,9 +26,9 @@ dev - Current development code\
 * Franco van Vuuren - u21463702
     * Primary Role: UI Engineer (Lead)
     * Secondary Role: Integration Engineer
-* Stefan van Beek
+* Stefan van Beek - u21451452
     * Primary Role: UI Engineer
-    * Secondary Role: Service Engineer
+    * Secondary Role: Service Engineer, Integration Engineer
 * Dharshan Gopaul
     * Primary Role: Service Engineer
     * Secondary Role: Designer, Tester
