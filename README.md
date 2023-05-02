@@ -26,15 +26,18 @@ dev - Current development code\
 * Franco van Vuuren - u21463702
     * Primary Role: UI Engineer (Lead)
     * Secondary Role: Integration Engineer
-* Stefan van Beek
+* Stefan van Beek - u21451452
     * Primary Role: UI Engineer
-    * Secondary Role: Service Engineer
-* Dharshan Gopaul
-    * Primary Role: 
-* Thapelo Thoka
-    * Primary Role: 
-* Dharhan Pillay
-    * Primary Role: 
+    * Secondary Role: Service Engineer, Integration Engineer
+* Dharshan Gopaul - u21637386
+    * Primary Role: Service Engineer
+    * Secondary Role: Designer, Tester
+* Thapelo Thoka - u21499749
+    * Primary Role: UI Engineer
+    * Secondary Role: Testing
+* Dharhan Pillay - u19027487
+    * Primary Role: Tester
+    * Secondary Role: Designer, UI Engineer
 * Keabetswe Madumo - u20438614
     * Primary Role: Design (Lead)
     * Secondary Role: UI Engineer, Service Engineer
@@ -42,7 +45,8 @@ dev - Current development code\
     * Primary Role: Service Engineer
     * Secondary Role: DevOps
     * Additional Contributions: Testing
-* Elias Makhonjwa
-    * Primary Role: 
-* Amanda Khuzwayo
-    * Primary Role: 
+* Elias Makhonjwa - u18034332
+    * Primary Role: UI Engineer
+* Amanda Khuzwayo - u16032889
+    * Primary Role: Service Engineer
+    * Secondary Role: Testing
