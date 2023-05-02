@@ -13,9 +13,9 @@ dev - Current development code\
 -> contributors branch off of dev to develop a specific feature
 
 ### Group Members
-* Ettiene van Zyl
+* Marthinus Ettienne van Zyl - u19012366
     * Primary Role: Project Manager
-    * Secondary Role: Testing
+    * Secondary Role: Business Analyst, Tester, Automated Testing
 * Michael Tarr - u20537833
     * Primary Role: DevOps (Lead)
     * Secondary Role: UI Engineer, Integration Engineer
