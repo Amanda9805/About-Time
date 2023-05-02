@@ -33,7 +33,7 @@ describe('Post Page Tests', () => {
 
   it('Contains Create Post Form', () => {
     cy.get('form').should('be.visible');
-    cy.get('ion-button').contains('Submit').should('be.visible');
+    cy.get('ion-button').contains('Add post').should('be.visible');
   });
 
   describe('Form Input Field Tests', () => {
@@ -43,26 +43,26 @@ describe('Post Page Tests', () => {
       .should('exist');
     });
 
-    it('Contains Caption Input field', () => {
-      cy.get('ion-item').contains('Caption')
+    it('Contains Description Input field', () => {
+      cy.get('ion-item').contains('Description')
       .parent().find('ion-input[type="text"]')
       .should('exist');
     });
 
-    it('Contains Link Input field', () => {
-      cy.get('ion-item').contains('Link')
-      .parent().find('ion-input[type="text"]')
+    it('Contains Content Input field', () => {
+      cy.get('ion-item').contains('Content')
+      .parent().find('ion-textarea')
       .should('exist');
     });
 
-    it('Contains Tag Input field', () => {
-      cy.get('ion-item').contains('Tag')
+    it('Contains Discipline Input field', () => {
+      cy.get('ion-item').contains('Discipline')
       .parent().find('ion-select')
       .should('exist');
     });
 
-    it('Contains Photo Input field', () => {
-      cy.get('ion-item').contains('Photo')
+    it('Contains Image Input field', () => {
+      cy.get('ion-item').contains('Image')
       .parent().find('input[type="file"]')
       .should('exist');
     });
