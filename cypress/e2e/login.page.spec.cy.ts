@@ -19,7 +19,7 @@ describe('Login Page Test', () => {
 
   it('Contains Login Form', () => {
     cy.get('form').should('be.visible');
-    cy.get('ion-button').contains("It's about time!").should('be.visible');
+    cy.get('ion-button').contains("Welcome. You're late!").should('be.visible');
   });
 
   it('Contains Email Input field', () => {
@@ -35,11 +35,11 @@ describe('Login Page Test', () => {
   });
 
   it('Contains Forgot Password Option', () => {
-    cy.get('ion-text').contains('Forgot Password').should('be.visible');
+    cy.get('ion-text').contains('Forgot Password?').should('be.visible');
   });
 
   it('Navigates to Forgot Password Page', () => {
-    cy.get('ion-text').contains('Forgot Password').click();
+    cy.get('ion-text').contains('Forgot Password?').click();
     cy.url().should('include', '/forgot');
   });
 
@@ -48,7 +48,7 @@ describe('Login Page Test', () => {
   });
 
   it('Contains Sign In With Facebook Option', () => {
-    cy.get('ion-button').contains('Continue with Google').should('be.visible');
+    cy.get('ion-button').contains('Continue with Facebook').should('be.visible');
   });
 
   it('Contains Register Option', () => {
@@ -69,12 +69,13 @@ describe('Login Page Test', () => {
     .find('input')
     .type('Testing123?');
 
-    cy.get('ion-button').contains("It's about time!").click();
+    cy.get('ion-button').contains("Welcome. You're late!").click();
     cy.location('pathname').then((current) => {
       if(!current.includes('home/feed')) {
-        cy.get('ion-button').contains("It's about time!").click();
+        cy.get('ion-button').contains("Welcome. You're late!").click();
       }
     });
+    cy.wait(2000);
     cy.url().should('include', '/home/feed');
   });
-})
+});
